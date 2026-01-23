@@ -1,27 +1,66 @@
 {
-    "points": [
+    "trajectories": [
         {
             "name": "MoveToHome",
-            "position": [
-                {"name":  "position_2", "motion":  "line"},
-                {"name":  "position_3", "motion":  "line"},
-                {"name":  "position_4", "motion":  "line"}
+            "positions": [
+                {
+                    "name": "position_2",
+                    "motion": "line"
+                },
+                {
+                    "name": "position_3",
+                    "motion": "line"
+                },
+                {
+                    "name": "position_4",
+                    "motion": "line"
+                }
             ]
         },
         {
             "name": "MoveToDrone1",
-            "position": [
-                {"name":  "position_3", "motion":  "line"},
-                {"name":  "position_2", "motion":  "line"},
-                {"name":  "position_1", "motion":  "line"}
+            "positions": [
+                {
+                    "name": "position_3",
+                    "motion": "line"
+                },
+                {
+                    "name": "position_2",
+                    "motion": "line"
+                },
+                {
+                    "name": "position_1",
+                    "motion": "line"
+                }
             ]
         },
         {
             "name": "MoveToDrone2",
-            "position": [
-                {"name":  "position_2", "motion":  "joint"},
-                {"name":  "position_1", "motion":  "joint"},
-                {"name":  "position_3", "motion":  "joint"}
+            "positions": [
+                {
+                    "name": "position_2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "position_1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "position_3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "2_VTPreMove",
+                    "motion": "joint"
+                },
+                {
+                    "name": "3_VTPreBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "6_MidBattPrePut",
+                    "motion": "joint"
+                }
             ]
         }
     ]

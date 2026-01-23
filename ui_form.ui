@@ -373,11 +373,29 @@
    <widget class="QWebEngineView" name="webView" native="true">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>590</x>
       <y>30</y>
-      <width>391</width>
+      <width>411</width>
       <height>361</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AddPointToTrajectory">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>270</y>
+      <width>201</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Add Point to Trajectory</string>
     </property>
    </widget>
   </widget>
