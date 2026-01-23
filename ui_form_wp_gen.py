@@ -4,7 +4,7 @@ from typing import Dict
 from PyQt5.QtWidgets import QMainWindow
 
 from commands import Command, CmdType
-from config import POINTS_PATH
+from config import POINTS_PATH, TRAJ_PATH
 from robot_controller import trajectories_dict
 from ui_form import Ui_Form
 from utils import atomic_write_json
@@ -49,9 +49,11 @@ class MainWindow(QMainWindow):
         self.ui.MoveTrajectory.clicked.connect(self.move_by_selected_trajectory)
         self.ui.OutputControl.toggled.connect(self.manipulator_gripper_control)
         self.ui.SavePoint.clicked.connect(self.save_current_position)
+        self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)
+
         self.ui.comboBox.currentTextChanged.connect(self.waypoint_selected)
         self.update_combo_box()
-        self.ui.TrajectoriesComboBox.currentTextChanged.connect(self.trajectory_selected)
+        # self.ui.TrajectoriesComboBox.currentTextChanged.connect(self.trajectory_selected)
         self.update_trajectories_combo_box()
         self.ui.PowerOn.clicked.connect(lambda: self.cmd_queue.put(
             Command(CmdType.POWER, {'state': 1}, source="GUI")
@@ -60,6 +62,7 @@ class MainWindow(QMainWindow):
             Command(CmdType.POWER, {'state': 2}, source="GUI")
         ))
         self.ui.MoveToPoint.clicked.connect(self.move_to_selected_point)
+        self.ui.webView.load(QtCore.QUrl("https://stackoverflow.com/"))
 
         self.show()
 
@@ -82,6 +85,16 @@ class MainWindow(QMainWindow):
                                            f"Failed to save waypoints: {e}")
             return False
 
+    def save_trajectories(self) -> bool:
+        try:
+            trajectories_list = list(self.Trajectories.values())
+            atomic_write_json(TRAJ_PATH, {"trajectories": trajectories_list})
+            return True
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(None, "Error",
+                                           f"Failed to save trajectories: {e}")
+            return False
+
     def update_combo_box(self):
         self.ui.comboBox.clear()
         for point_name in self.Waypoints.keys():
@@ -100,8 +113,8 @@ class MainWindow(QMainWindow):
             self.ui.SetAccel.setText(str(wp.get('accel', 0.5)))
             self.ui.SetBlend.setText(str(wp.get('blend', 0.0)))
 
-    def trajectory_selected(self, trajectory_name):
-        print(trajectory_name)
+    # def trajectory_selected(self, trajectory_name):
+    #     print(trajectory_name)
 
     def manipulator_command(self, cmd: Command):
         self.cmd_queue.put(cmd)
@@ -144,6 +157,36 @@ class MainWindow(QMainWindow):
             QtWidgets.QMessageBox.critical(None, "Error",
                                            f"Zero Gravity toggle failed: {e}")
             self.ui.ActivateZG.setChecked(False)
+
+    def add_current_point_to_trajectory(self):
+        point_name = self.ui.PointName.text().strip()
+        if not point_name:
+            QtWidgets.QMessageBox.warning(None, "Warning",
+                                          "Please select existing point!")
+            return
+
+        trajectory_name = self.ui.TrajectoriesComboBox.currentText().strip()
+        if not trajectory_name:
+            QtWidgets.QMessageBox.warning(None, "Warning",
+                                          "Please select trajectory!")
+            return
+
+        if point_name in self.Waypoints and trajectory_name in self.Trajectories:
+            positions = self.Trajectories[trajectory_name].get('positions')
+            positions.append({'name': point_name, 'motion': 'joint'})
+
+            new_trajectory = {
+                "name": trajectory_name,
+                "positions": positions
+            }
+
+            self.Trajectories[trajectory_name] = new_trajectory
+            if self.save_trajectories():
+                self.update_trajectories_combo_box()
+                QtWidgets.QMessageBox.information(
+                    None,
+                    "Success",
+                    f"Point '{point_name}' successfully added to trajectory {trajectory_name}!")
 
     def save_current_position(self):
         point_name = self.ui.PointName.text().strip()

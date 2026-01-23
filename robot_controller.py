@@ -9,7 +9,7 @@ from typing import Dict, List, Optional
 from queue import Queue, Empty
 
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO
-from utils import atomic_write_json
+# from utils import atomic_write_json
 from commands import Command, CmdType
 
 # sys.path.append("/home/user/robot-api")
@@ -191,28 +191,11 @@ class RobotController:
             self.log.warning(f"Error loading positions from {POINTS_PATH}: {e}")
             return {}
 
-    def save_waypoints(self) -> bool:
-        try:
-            waypoints_list = list(self.Waypoints.values())
-            atomic_write_json(POINTS_PATH, {"waypoints": waypoints_list})
-            return True
-        except Exception as e:
-            self.log.error(f"Failed to save waypoints to {POINTS_PATH}: {e}")
-            return False
-
     def load_trajectories(self) -> Dict[str, Dict]:
         try:
             with open(TRAJ_PATH, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                out = {}
-                for item in data['points']:
-                    name = item['name']
-                    positions = item.get('position', 0)
-                    if not positions:
-                        self.log.warning(f"Trajectory {name} has no positions")
-                        continue
-                    out[name] = {'positions': positions}
-                return out
+                return {traj['name']: traj for traj in data['trajectories']}
         except Exception as e:
             self.log.warning(f"Error loading trajectories from {TRAJ_PATH}: {e}")
             return {}
