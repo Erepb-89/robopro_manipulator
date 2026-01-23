@@ -8,7 +8,7 @@ from config import ROBOT_IP, OPC_ENDPOINT, LOG_PATH
 from utils import setup_logging
 from robot_controller import RobotController
 from opc_handler import OPCHandler
-from ui_form_wp_gen import Ui_Form, MainWindow
+from ui_form_wp_gen import MainWindow
 from commands import Command, CmdType
 
 from heartbeat import Heartbeat
@@ -47,10 +47,6 @@ class MainAppClass:
         self.watchdog.start()
 
         self.App = QtWidgets.QApplication([])
-        # self.App.setQuitOnLastWindowClosed(True)
-        # self.Form = QtWidgets.QWidget()
-        # self.Ui = Ui_Form(self.RobotController, self.cmd_queue)
-        # self.Ui.setupUi(self.Form)
 
         self.Form = MainWindow(self.RobotController, self.cmd_queue)
         self.Form.closeEvent = self.on_close

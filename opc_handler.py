@@ -6,6 +6,7 @@ from commands import Command, CmdType
 from config import GRIPPER_DO_INDEX
 from typing import Optional
 
+
 class OPCHandler:
 
     def __init__(self, url: str, robot_controller, cmd_queue: Queue, logger,
@@ -24,9 +25,9 @@ class OPCHandler:
 
         self.TcpPosition = self.Manipulator.add_variable(self.ns, "TcpPosition",
                                                          [0.0] * 6)
-        #self.Speed = self.Manipulator.add_variable(self.ns, "Speed",
+        # self.Speed = self.Manipulator.add_variable(self.ns, "Speed",
         #                                           0.0)  # для будущего
-        #self.Accel = self.Manipulator.add_variable(self.ns, "Accel", 0.0)
+        # self.Accel = self.Manipulator.add_variable(self.ns, "Accel", 0.0)
         self.qCmd = self.Manipulator.add_variable(self.ns, "qCmd",
                                                   0)  # EXECUTE_ENUM
         self.qCmd.set_writable()
@@ -48,16 +49,16 @@ class OPCHandler:
         self.qFindNearest.set_writable()
 
         self.NearestWaypoint = self.Manipulator.add_variable(self.ns,
-                                                        "NearestWaypoint", "")
+                                                             "NearestWaypoint", "")
 
         self.NearestTrajList = self.Manipulator.add_variable(self.ns,
-                                                         "NearestTrajList", "")
+                                                             "NearestTrajList", "")
 
         self.NearestDist = self.Manipulator.add_variable(self.ns,
-                                                             "NearestDist", "")
+                                                         "NearestDist", "")
 
         self.ControllerState = self.Manipulator.add_variable(self.ns,
-                                                         "ControllerState", "")
+                                                             "ControllerState", "")
         self.SafetyStatus = self.Manipulator.add_variable(self.ns,
                                                           "SafetyStatus", "")
         self.Mode = self.Manipulator.add_variable(self.ns, "Mode", "")
@@ -73,7 +74,7 @@ class OPCHandler:
         self._last_nearest_wp: Optional[str] = None
         self._last_nearest_traj: Optional[str] = None
         self._last_nearest_dist: Optional[float] = None
-        self._last_cmd_state:  Optional[int] = 0
+        self._last_cmd_state: Optional[int] = 0
 
     def update_nearest_info(self):
         try:
@@ -105,12 +106,12 @@ class OPCHandler:
         except Exception as e:
             raise RuntimeError(f"update nearest info Error")
 
-    def handle_gripper_cmd(self): #1 = ON, 2 = OFF
+    def handle_gripper_cmd(self):  # 1 = ON, 2 = OFF
         try:
             gcmd = int(self.qGripperCmd.get_value())
             if gcmd == 1:
                 self.cmd_queue.put(Command(CmdType.IO_SET,
-                    {'index': GRIPPER_DO_INDEX, 'value': True}, source="OPC"))
+                                           {'index': GRIPPER_DO_INDEX, 'value': True}, source="OPC"))
                 self.qGripperCmd.set_value(0)
 
             if gcmd == 2:

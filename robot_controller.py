@@ -13,7 +13,7 @@ from utils import atomic_write_json
 from commands import Command, CmdType
 
 # sys.path.append("/home/user/robot-api")
-sys.path.append("C:/Projects/robot-api")
+sys.path.append("robot-api")
 from API.rc_api import RobotApi
 from API.source.core.exceptions.data_validation_error.generic_error import (
     AddWaypointError, FunctionTimeOutError)
