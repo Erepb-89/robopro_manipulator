@@ -62,7 +62,8 @@ class MainWindow(QMainWindow):
             Command(CmdType.POWER, {'state': 2}, source="GUI")
         ))
         self.ui.MoveToPoint.clicked.connect(self.move_to_selected_point)
-        self.ui.webView.load(QtCore.QUrl("https://stackoverflow.com/"))
+        # self.ui.webView.load(QtCore.QUrl("https://stackoverflow.com/"))
+        self.ui.webView.load(QtCore.QUrl("http://192.168.88.100:8080/"))
 
         self.show()
 
