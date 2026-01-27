@@ -29,11 +29,6 @@ class RobotCommands(enum.Enum):
     MoveToDrone1 = 2
     MoveToDrone2 = 3
 
-trajectories_dict = {
-    'MoveToHome': 1,
-    'MoveToDrone1': 2,
-    'MoveToDrone2': 3,
-}
 
 @dataclass
 class RobotState:
@@ -134,9 +129,9 @@ class RobotController:
         for name, wp in self.Waypoints.items():
             tcp = wp.get("tcp")
 
-            dist = math.sqrt((current_tcp[0]-float(tcp["x"]))**2 +
-                             (current_tcp[1]-float(tcp["y"]))**2 +
-                             (current_tcp[2]-float(tcp["z"]))**2)
+            dist = math.sqrt((current_tcp[0] - float(tcp["x"])) ** 2 +
+                             (current_tcp[1] - float(tcp["y"])) ** 2 +
+                             (current_tcp[2] - float(tcp["z"])) ** 2)
             if dist < best_dist:
                 best_dist, best_name = dist, name
         if best_name is None:
@@ -220,7 +215,7 @@ class RobotController:
             orientation_units='deg')
 
     def add_waypoint_joint(self, anglePose: List[float], speed: float,
-                           accel:float, blend: float):
+                           accel: float, blend: float):
         self.Robot.motion.joint.add_new_waypoint(
             angle_pose=anglePose,
             speed=speed,

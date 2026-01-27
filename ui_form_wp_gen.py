@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 from commands import Command, CmdType
 from config import POINTS_PATH, TRAJ_PATH
-from robot_controller import trajectories_dict
+from robot_controller import RobotCommands
 from ui_form import Ui_Form
 from utils import atomic_write_json
 
@@ -267,8 +267,9 @@ class MainWindow(QMainWindow):
                                           "Please select a point first!")
             return
         try:
+            cmd_enum = getattr(RobotCommands, trajectory_name)
             self.manipulator_command(
-                Command(CmdType.EXECUTE_ENUM, {'cmd': trajectories_dict.get(trajectory_name)}, source="GUI"))
+                Command(CmdType.EXECUTE_ENUM, {'cmd': cmd_enum}, source="GUI"))
 
             QtWidgets.QMessageBox.information(None, "Success",
                                               f"Moving by trajectory '{trajectory_name}'")
