@@ -1,4 +1,4 @@
-from opcua import Server
+from opcua import Server, Client
 import time
 import threading
 from queue import Queue
@@ -22,6 +22,8 @@ class OPCHandler:
         self.AERI = self.Server.get_objects_node()
         self.ns = self.Server.register_namespace("AERI_ROBOT_NS")
         self.Manipulator = self.AERI.add_object(self.ns, "Manipulator")
+
+        self.Client = Client("opc.tcp://0.0.0.0:4840")
 
         self.TcpPosition = self.Manipulator.add_variable(self.ns, "TcpPosition",
                                                          [0.0] * 6)
@@ -148,10 +150,16 @@ class OPCHandler:
                         self.qPowerOn.set_value(0)
 
                     if qCmd != 0:
-                        self.cmd_queue.put(
-                            Command(CmdType.EXECUTE_ENUM, {'cmd': int(qCmd)},
-                                    source="OPC"))
-                        self.qCmd.set_value(0)
+                        if qCmd < 200:
+                            self.cmd_queue.put(
+                                Command(CmdType.EXECUTE_ENUM, {'cmd': int(qCmd - 100)},
+                                        source="OPC"))
+                            self.qCmd.set_value(0)
+                        if qCmd in range(200, 300):
+                            self.cmd_queue.put(
+                                Command(CmdType.STOP_MOVE, {'cmd': int(qCmd)},
+                                        source="OPC"))
+                            self.qCmd.set_value(0)
 
                     if qFreeDrive != 0:
                         self.cmd_queue.put(Command(CmdType.FREE_DRIVE,
