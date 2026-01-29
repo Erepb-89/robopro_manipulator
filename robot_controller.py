@@ -25,9 +25,45 @@ from API.source.core.exceptions.data_validation_error.version_error import \
 
 
 class RobotCommands(enum.Enum):
-    MoveToHome = 1
-    MoveToDrone1 = 2
-    MoveToDrone2 = 3
+    pHomePosition_to_pHelicopterModule = 1
+    pHelicopterModule_to_pHomePosition = 2
+    pHelicopterModule_to_pHelicopter1 = 3
+    pHelicopter1_to_pHelicopterModule = 4
+    pHelicopter1_to_pHelicopter1Load = 5
+    pHelicopter1Load_to_pHelicopter1 = 6
+    pHelicopterModule_to_pHelicopter2 = 7
+    pHelicopter2_to_pHelicopterModule = 8
+    pHelicopter2_to_pHelicopter2Load = 9
+    pHomePosition_to_pLoad = 10
+    pLoad_to_pHomePosition = 11
+    pLoad_to_pLoad1 = 12
+    pLoad1_to_pLoad = 13
+    pLoad_to_pLoad2 = 14
+    pLoad2_to_pLoad = 15
+    pHomePosition_to_pGrippers = 16
+    pGrippers_to_pHomePosition = 17
+    pGrippers_to_pGrippers1 = 18
+    pGrippers1_to_pGrippers = 19
+    pGrippers_to_pGrippers2 = 20
+    pGrippers2_to_pGrippers = 21
+    pHomePosition_to_pStation = 22
+    pStation_to_pHomePosition = 23
+    pStation_to_pStation1 = 24
+    pStation1_to_pStation = 25
+    pStation_to_pStation2 = 26
+    pStation2_to_pStation = 27
+    pHomePosition_to_pVTOLModule = 28
+    pVTOLModule_to_pHomePosition = 29
+    pVTOLModule_to_pVTOL1 = 30
+    pVTOL1_to_pVTOLModule = 31
+    pVTOL1_to_pVTOL1Load = 32
+    pVTOL1Load_to_pVTOL1 = 33
+    pVTOL1_to_pVTOL1C = 34
+    pVTOL1C_to_pVTOL1 = 35
+    pVTOLModule_to_pVTOL2 = 36
+    pVTOL2_to_pVTOLModule = 37
+    pVTOL2_to_pVTOL2C = 38
+    pVTOL2C_to_pVTOL2 = 39
 
 
 @dataclass
@@ -117,6 +153,10 @@ class RobotController:
 
     def get_nearest_info(self):
         return self._nearest_info or None
+
+    def search_common_point(self, dest_point):
+        self.find_nearest_waypoint()
+        current_point = self._nearest_info.get("waypoint")
 
     def find_nearest_waypoint(self) -> dict:
         current_tcp = self.get_current_tcp_position()
@@ -289,6 +329,13 @@ class RobotController:
         except Exception as e:
             self._set_state(last_error=str(e))
             self.log.error(f"Error in ManipulatorPowerControl: {e}")
+
+    def manipulator_stop_drive(self):
+        try:
+            self.Robot.motion.mode.set('hold')
+        except Exception as e:
+            self._set_state(last_error=str(e))
+            self.log.error(f"Stop Mode Switching Error: {e}")
 
     def manipulator_free_drive(self, qFreeDrive: int):
         try:
@@ -486,6 +533,8 @@ class RobotController:
                                                  cmd.payload['value'])
                 elif cmd.type == CmdType.REFRESH_WAYPOINTS:
                     self.refresh_waypoints()
+                elif cmd.type == CmdType.STOP_MOVE:
+                    self.manipulator_stop_drive()
                 elif cmd.type == CmdType.FIND_NEAREST:
                     self.find_nearest_waypoint()
                 elif cmd.type == CmdType.START_SIMPLE_JOYSTICK:
