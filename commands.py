@@ -9,6 +9,7 @@ class CmdType(Enum):
     MOVE_TO_POINT = auto()   # {'name': str}
     IO_SET = auto()          # {'index': int, 'value': bool}
     REFRESH_WAYPOINTS = auto()
+    STOP_MOVE = auto()
     SHUTDOWN = auto()
     FIND_NEAREST = auto()
     START_SIMPLE_JOYSTICK = auto()
