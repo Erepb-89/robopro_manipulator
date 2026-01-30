@@ -1,11 +1,11 @@
 from PyQt5 import QtCore, QtWidgets
 from typing import Dict
 
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QMainWindow
 
-from commands import Command, CmdType
+from commands import Command, CmdType, RobotCommands
 from config import POINTS_PATH, TRAJ_PATH
-from robot_controller import RobotCommands
 from ui_form import Ui_Form
 from utils import atomic_write_json
 
@@ -15,11 +15,10 @@ class MainWindow(QMainWindow):
     Класс - основное окно пользователя.
     """
 
-    def __init__(self, robot_controller, cmd_queue):
+    def __init__(self, robot_controller, cmd_queue, opc_handler):
         super().__init__()
         self.RobotController = robot_controller
         self.cmd_queue = cmd_queue
-        self.WaypointsFile = str(POINTS_PATH)
         self.Waypoints: Dict[str, dict] = {}
         self.Trajectories: Dict[str, dict] = {}
         self.io0_state: bool = False  # 2025_09_29
@@ -28,6 +27,7 @@ class MainWindow(QMainWindow):
             Command(CmdType.REFRESH_WAYPOINTS, {}, source="GUI"))
         self.Waypoints = self.RobotController.get_waypoints_snapshot()
         self.Trajectories = self.RobotController.get_trajectories_snapshot()
+        self.opc_handler = opc_handler
 
         self.ZGTimer = QtCore.QTimer()
         self.ZGTimer.setInterval(100)  # мс
@@ -52,9 +52,10 @@ class MainWindow(QMainWindow):
         self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)
 
         self.ui.comboBox.currentTextChanged.connect(self.waypoint_selected)
+        self.ui.TrajectoriesComboBox.currentTextChanged.connect(self.trajectory_selected)
+        self.ui.trajListView.clicked.connect(self.on_list_clicked)
         self.update_combo_box()
-        # self.ui.TrajectoriesComboBox.currentTextChanged.connect(self.trajectory_selected)
-        self.update_trajectories_combo_box()
+        self.update_trajectories()
         self.ui.PowerOn.clicked.connect(lambda: self.cmd_queue.put(
             Command(CmdType.POWER, {'state': 1}, source="GUI")
         ))
@@ -62,6 +63,7 @@ class MainWindow(QMainWindow):
             Command(CmdType.POWER, {'state': 2}, source="GUI")
         ))
         self.ui.MoveToPoint.clicked.connect(self.move_to_selected_point)
+        self.ui.StopMove.clicked.connect(self.stop_drive)
         # self.ui.webView.load(QtCore.QUrl("https://stackoverflow.com/"))
         self.ui.webView.load(QtCore.QUrl("http://192.168.88.100:8080/"))
 
@@ -97,14 +99,28 @@ class MainWindow(QMainWindow):
             return False
 
     def update_combo_box(self):
-        self.ui.comboBox.clear()
-        for point_name in self.Waypoints.keys():
-            self.ui.comboBox.addItem(point_name)
+        items_model = QStandardItemModel()
+        for point in self.Waypoints.keys():
+            item = QStandardItem(point)
+            item.setEditable(False)
+            items_model.appendRow(item)
+        self.ui.comboBox.setModel(items_model)
 
-    def update_trajectories_combo_box(self):
-        self.ui.TrajectoriesComboBox.clear()
-        for trajectory_name in self.Trajectories.keys():
-            self.ui.TrajectoriesComboBox.addItem(trajectory_name)
+    def update_trajectories(self):
+        items_model = QStandardItemModel()
+        for traj in self.Trajectories.keys():
+            item = QStandardItem(traj)
+            item.setEditable(False)
+            items_model.appendRow(item)
+        self.ui.TrajectoriesComboBox.setModel(items_model)
+        self.ui.trajListView.setModel(items_model)
+
+    def on_list_clicked(self) -> None:
+        selected = self.ui.trajListView.currentIndex().data()
+        self.ui.TrajectoryName.setText(selected)
+
+    def trajectory_selected(self, traj_name):
+        self.ui.TrajectoryName.setText(traj_name)
 
     def waypoint_selected(self, point_name):
         self.ui.PointName.setText(point_name)
@@ -166,7 +182,7 @@ class MainWindow(QMainWindow):
                                           "Please select existing point!")
             return
 
-        trajectory_name = self.ui.TrajectoriesComboBox.currentText().strip()
+        trajectory_name = self.ui.TrajectoryName.text().strip()
         if not trajectory_name:
             QtWidgets.QMessageBox.warning(None, "Warning",
                                           "Please select trajectory!")
@@ -183,7 +199,7 @@ class MainWindow(QMainWindow):
 
             self.Trajectories[trajectory_name] = new_trajectory
             if self.save_trajectories():
-                self.update_trajectories_combo_box()
+                self.update_trajectories()
                 QtWidgets.QMessageBox.information(
                     None,
                     "Success",
@@ -230,6 +246,7 @@ class MainWindow(QMainWindow):
 
             if self.save_waypoints():
                 self.update_combo_box()
+                self.update_list_view()
                 QtWidgets.QMessageBox.information(None, "Success",
                                                   f"Point '{point_name}' saved successfully!")
         except ValueError:
@@ -238,6 +255,13 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Error",
                                            f"Failed to save point: {e}")
+
+    def stop_drive(self):
+        self.manipulator_command(
+            Command(CmdType.STOP_MOVE, {}, source="GUI"))
+
+    def move_by_trajectory_1(self):
+        self.opc_handler.set_command(1)
 
     def move_to_selected_point(self):
         point_name = self.ui.comboBox.currentText()
@@ -261,15 +285,19 @@ class MainWindow(QMainWindow):
                                            f"Failed to move to point: {e}")
 
     def move_by_selected_trajectory(self):
-        trajectory_name = self.ui.TrajectoriesComboBox.currentText()
+        trajectory_name = self.ui.TrajectoryName.text()
         if not trajectory_name:
             QtWidgets.QMessageBox.warning(None, "Warning",
                                           "Please select a point first!")
             return
         try:
             cmd_enum = getattr(RobotCommands, trajectory_name)
-            self.manipulator_command(
-                Command(CmdType.EXECUTE_ENUM, {'cmd': cmd_enum}, source="GUI"))
+            # команда через OPC
+            self.opc_handler.set_command(cmd_enum.value)
+
+            # команда напрямую в манипулятор
+            # self.manipulator_command(
+            #     Command(CmdType.EXECUTE_ENUM, {'cmd': cmd_enum}, source="GUI"))
 
             QtWidgets.QMessageBox.information(None, "Success",
                                               f"Moving by trajectory '{trajectory_name}'")
