@@ -108,6 +108,11 @@
         <height>30</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
      </widget>
      <widget class="QPushButton" name="PowerOn">
       <property name="geometry">
@@ -130,7 +135,7 @@
      <widget class="QPushButton" name="ActivateZG">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>200</x>
         <y>100</y>
         <width>120</width>
         <height>50</height>
@@ -221,7 +226,7 @@
       <property name="geometry">
        <rect>
         <x>630</x>
-        <y>290</y>
+        <y>330</y>
         <width>161</width>
         <height>50</height>
        </rect>
@@ -253,7 +258,7 @@
      <widget class="QPushButton" name="OutputControl">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>200</x>
         <y>40</y>
         <width>120</width>
         <height>50</height>
@@ -402,6 +407,98 @@
         <width>200</width>
         <height>30</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="StopMove">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>270</y>
+        <width>161</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Stop Move</string>
+      </property>
+     </widget>
+     <widget class="QListView" name="trajListView">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>40</y>
+        <width>351</width>
+        <height>721</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="MoveTrajectory_1">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>440</y>
+        <width>161</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Move Trajectory 1</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="TrajectoryName">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>170</y>
+        <width>391</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>TrajectoryName</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="TrajectoryNameText">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>140</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Trajectory Name:</string>
       </property>
      </widget>
     </widget>
