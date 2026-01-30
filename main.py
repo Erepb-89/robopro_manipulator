@@ -48,7 +48,7 @@ class MainAppClass:
 
         self.App = QtWidgets.QApplication([])
 
-        self.Form = MainWindow(self.RobotController, self.cmd_queue)
+        self.Form = MainWindow(self.RobotController, self.cmd_queue, self.OpcHandler)
         self.Form.closeEvent = self.on_close
         self.Form.show()
 
