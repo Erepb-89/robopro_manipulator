@@ -1,7 +1,7 @@
 {
     "trajectories": [
         {
-            "name": "MoveToHome",
+            "name": "tHomePosition_To_HelicopterModule",
             "positions": [
                 {
                     "name": "position_2",
@@ -18,7 +18,7 @@
             ]
         },
         {
-            "name": "MoveToDrone1",
+            "name": "tHelicopterModule_To_HomePosition",
             "positions": [
                 {
                     "name": "position_3",
@@ -35,7 +35,7 @@
             ]
         },
         {
-            "name": "MoveToDrone2",
+            "name": "tHelicopterModule_To_Helicopter1",
             "positions": [
                 {
                     "name": "position_2",
@@ -61,6 +61,228 @@
                     "name": "6_MidBattPrePut",
                     "motion": "joint"
                 }
+            ]
+        },
+        {
+            "name": "tHelicopter1_To_HelicopterModule",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHelicopter1_To_Helicopter1Load",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHelicopter1Load_To_Helicopter1",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHelicopterModule_To_Helicopter2",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHelicopter2_To_HelicopterModule",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHelicopter2_To_Helicopter2Load",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHelicopter2Load_To_Helicopter2",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHomePosition_To_Load",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tLoad_To_HomePosition",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tLoad_To_Load1",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tLoad1_To_Load",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tLoad_To_Load2",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tLoad2_To_Load",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHomePosition_To_Grippers",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tGrippers_To_HomePosition",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tGrippers_To_Grippers1",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tGrippers1_To_Grippers",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tGrippers_To_Grippers2",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tGrippers2_To_Grippers",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHomePosition_To_Charger",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tCharger_To_HomePosition",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tCharger_To_Charger1",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tCharger1_To_Charger",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tCharger_To_Charger2",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tCharger2_To_Charger",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tHomePosition_To_VTOLModule",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOLModule_To_HomePosition",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOLModule_To_VTOL1",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL1_To_VTOLModule",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL1_To_VTOL1Load",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL1Load_To_VTOL1",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL1_To_VTOL1Battery",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL1Battery_To_VTOL1",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOLModule_To_VTOL2",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL2_To_VTOLModule",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL2_To_VTOL2Battery",
+            "positions": [
+
+            ]
+        },
+        {
+            "name": "tVTOL2Battery_To_VTOL2",
+            "positions": [
+
             ]
         }
     ]

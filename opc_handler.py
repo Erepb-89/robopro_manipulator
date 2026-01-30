@@ -124,7 +124,11 @@ class OPCHandler:
         except Exception as e:
             raise RuntimeError(f"qGripperCmd Error")
 
+    def set_command(self, value):
+        self.qCmd.set_value(value)
+
     def start(self):
+        qCmdPrev = 0
         self.running = True
         self.Server.start()
         self.log.info(f"OPC UA server running at {self.Url}")
@@ -149,17 +153,17 @@ class OPCHandler:
                                     source="OPC"))
                         self.qPowerOn.set_value(0)
 
-                    if qCmd != 0:
-                        if qCmd < 200:
-                            self.cmd_queue.put(
-                                Command(CmdType.EXECUTE_ENUM, {'cmd': int(qCmd - 100)},
-                                        source="OPC"))
-                            self.qCmd.set_value(0)
-                        if qCmd in range(200, 300):
+                    if qCmdPrev != qCmd:
+                        if qCmd == 0:
                             self.cmd_queue.put(
                                 Command(CmdType.STOP_MOVE, {'cmd': int(qCmd)},
                                         source="OPC"))
-                            self.qCmd.set_value(0)
+                        else:
+                            if qCmd in range(1, 100):
+                                self.cmd_queue.put(
+                                    Command(CmdType.EXECUTE_ENUM, {'cmd': int(qCmd)},
+                                            source="OPC"))
+                    qCmdPrev = qCmd
 
                     if qFreeDrive != 0:
                         self.cmd_queue.put(Command(CmdType.FREE_DRIVE,

@@ -1,7 +1,6 @@
 import json
 import sys
 import math
-import enum
 import threading
 import dataclasses
 from dataclasses import dataclass, field
@@ -9,61 +8,15 @@ from typing import Dict, List, Optional
 from queue import Queue, Empty
 
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO
-# from utils import atomic_write_json
-from commands import Command, CmdType
+from commands import Command, CmdType, RobotCommands
 
 # sys.path.append("/home/user/robot-api")
 sys.path.append("robot-api")
-from API.rc_api import RobotApi
 from API.source.core.exceptions.data_validation_error.generic_error import (
     AddWaypointError, FunctionTimeOutError)
 from API.source.models.classes.enum_classes.state_classes import (
     InComingControllerState as Ics,
     InComingSafetyStatus as Iss)
-from API.source.core.exceptions.data_validation_error.version_error import \
-    VersionError
-
-
-class RobotCommands(enum.Enum):
-    pHomePosition_to_pHelicopterModule = 1
-    pHelicopterModule_to_pHomePosition = 2
-    pHelicopterModule_to_pHelicopter1 = 3
-    pHelicopter1_to_pHelicopterModule = 4
-    pHelicopter1_to_pHelicopter1Load = 5
-    pHelicopter1Load_to_pHelicopter1 = 6
-    pHelicopterModule_to_pHelicopter2 = 7
-    pHelicopter2_to_pHelicopterModule = 8
-    pHelicopter2_to_pHelicopter2Load = 9
-    pHomePosition_to_pLoad = 10
-    pLoad_to_pHomePosition = 11
-    pLoad_to_pLoad1 = 12
-    pLoad1_to_pLoad = 13
-    pLoad_to_pLoad2 = 14
-    pLoad2_to_pLoad = 15
-    pHomePosition_to_pGrippers = 16
-    pGrippers_to_pHomePosition = 17
-    pGrippers_to_pGrippers1 = 18
-    pGrippers1_to_pGrippers = 19
-    pGrippers_to_pGrippers2 = 20
-    pGrippers2_to_pGrippers = 21
-    pHomePosition_to_pStation = 22
-    pStation_to_pHomePosition = 23
-    pStation_to_pStation1 = 24
-    pStation1_to_pStation = 25
-    pStation_to_pStation2 = 26
-    pStation2_to_pStation = 27
-    pHomePosition_to_pVTOLModule = 28
-    pVTOLModule_to_pHomePosition = 29
-    pVTOLModule_to_pVTOL1 = 30
-    pVTOL1_to_pVTOLModule = 31
-    pVTOL1_to_pVTOL1Load = 32
-    pVTOL1Load_to_pVTOL1 = 33
-    pVTOL1_to_pVTOL1C = 34
-    pVTOL1C_to_pVTOL1 = 35
-    pVTOLModule_to_pVTOL2 = 36
-    pVTOL2_to_pVTOLModule = 37
-    pVTOL2_to_pVTOL2C = 38
-    pVTOL2C_to_pVTOL2 = 39
 
 
 @dataclass
@@ -153,10 +106,6 @@ class RobotController:
 
     def get_nearest_info(self):
         return self._nearest_info or None
-
-    def search_common_point(self, dest_point):
-        self.find_nearest_waypoint()
-        current_point = self._nearest_info.get("waypoint")
 
     def find_nearest_waypoint(self) -> dict:
         current_tcp = self.get_current_tcp_position()
