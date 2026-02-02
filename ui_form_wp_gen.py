@@ -290,6 +290,17 @@ class MainWindow(QMainWindow):
             QtWidgets.QMessageBox.warning(None, "Warning",
                                           "Please select a point first!")
             return
+
+        nearest_point = self.RobotController.find_nearest_waypoint()
+        nearest_wp = nearest_point.get("waypoint")
+        print(nearest_wp)
+        if nearest_wp not in self.Trajectories.get(trajectory_name)["positions"]:
+            QtWidgets.QMessageBox.warning(
+                None,
+                "Warning",
+                "Manipulator can't be moved by the selected trajectory from current point!")
+            return
+
         try:
             cmd_enum = getattr(RobotCommands, trajectory_name)
             # команда через OPC

@@ -4,16 +4,12 @@
             "name": "tHomePosition_To_HelicopterModule",
             "positions": [
                 {
-                    "name": "position_2",
-                    "motion": "line"
+                    "name": "pHomePosition",
+                    "motion": "joint"
                 },
                 {
-                    "name": "position_3",
-                    "motion": "line"
-                },
-                {
-                    "name": "position_4",
-                    "motion": "line"
+                    "name": "pHelicopterModule",
+                    "motion": "joint"
                 }
             ]
         },
