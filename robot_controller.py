@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from queue import Queue, Empty
 
+from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO
 from commands import Command, CmdType, RobotCommands
 
@@ -308,47 +309,58 @@ class RobotController:
             if self.Robot.controller_state.get() != 'run':
                 self.Robot.controller_state.set('off', await_sec=1)
                 self.Robot.controller_state.set('run', await_sec=10)
-            trajName = command.name
-            if trajName not in self.Trajectories:
+            traj_name = command.name
+            if traj_name not in self.Trajectories:
                 raise ValueError(f"No trajectory mapped for command {command}")
-            traj = self.Trajectories[trajName]
-            for position in traj['positions']:
-                if position["name"] not in self.Waypoints:
-                    raise ValueError(f"Waypoint {position['name']} not found")
-                if not (isinstance(position, dict) and "name" in position and
-                        "motion" in position):
-                    raise ValueError(f"Bad traj position in "
-                                     f"'{trajName}': {position}")
-                wp_name = position["name"]
-                motion_type = position["motion"]
-                data = self.get_waypoint_data(wp_name)
-                mp = data['move_params']
-                if motion_type == "line":
-                    tcp = self.get_tcp_pose(wp_name)
-                    self.add_waypoint_line(tcp,
-                                           mp['speed'] / 100,
-                                           mp['accel'] / 100,
-                                           mp['blend'] / 100)
-                elif motion_type == "joint":
-                    joint = self.get_joint_pose(wp_name)
-                    self.add_waypoint_joint(joint,
-                                            mp['speed'],
-                                            mp['accel'],
-                                            mp['blend'])
-                else:
-                    raise ValueError(f"Unknown motion type {motion_type} "
-                                     f"for waypoint {wp_name}")
 
-            self.Robot.motion.mode.set('move')
-            self._set_state(mode='move', last_command=trajName)
-            self.log.info(f"Executing trajectory: {trajName}")
+            nearest_point = self.find_nearest_waypoint()
+            nearest_wp = nearest_point.get("waypoint")
+            print(nearest_wp)
+            if traj_name not in available_trajectories[nearest_wp]:
+                self._set_cmd_state(command.value + 400)
+                self._set_state(last_error="Manipulator can't be moved by "
+                                           "the selected trajectory from current point!")
+                self.log.error("Manipulator can't be moved by "
+                               "the selected trajectory from current point!")
+            else:
+                traj = self.Trajectories[traj_name]
+                for position in traj['positions']:
+                    if position["name"] not in self.Waypoints:
+                        raise ValueError(f"Waypoint {position['name']} not found")
+                    if not (isinstance(position, dict) and "name" in position and
+                            "motion" in position):
+                        raise ValueError(f"Bad traj position in "
+                                         f"'{traj_name}': {position}")
+                    wp_name = position["name"]
+                    motion_type = position["motion"]
+                    data = self.get_waypoint_data(wp_name)
+                    mp = data['move_params']
+                    if motion_type == "line":
+                        tcp = self.get_tcp_pose(wp_name)
+                        self.add_waypoint_line(tcp,
+                                               mp['speed'] / 100,
+                                               mp['accel'] / 100,
+                                               mp['blend'] / 100)
+                    elif motion_type == "joint":
+                        joint = self.get_joint_pose(wp_name)
+                        self.add_waypoint_joint(joint,
+                                                mp['speed'],
+                                                mp['accel'],
+                                                mp['blend'])
+                    else:
+                        raise ValueError(f"Unknown motion type {motion_type} "
+                                         f"for waypoint {wp_name}")
 
-            if command:
-                self._set_cmd_state(command.value + 100)
+                self.Robot.motion.mode.set('move')
+                self._set_state(mode='move', last_command=traj_name)
+                self.log.info(f"Executing trajectory: {traj_name}")
 
-            finish_motion = self.wait_motion_complete(await_sec=-1)
-            if command and finish_motion:
-                self._set_cmd_state(command.value + 200)
+                if command:
+                    self._set_cmd_state(command.value + 100)
+
+                finish_motion = self.wait_motion_complete(await_sec=-1)
+                if command and finish_motion:
+                    self._set_cmd_state(command.value + 200)
 
         except AddWaypointError as e:
             if command:
