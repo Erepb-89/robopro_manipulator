@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 from commands import Command, CmdType, RobotCommands
 from config import POINTS_PATH, TRAJ_PATH
+from available_trajectories import available_trajectories
 from ui_form import Ui_Form
 from utils import atomic_write_json
 
@@ -294,7 +295,8 @@ class MainWindow(QMainWindow):
         nearest_point = self.RobotController.find_nearest_waypoint()
         nearest_wp = nearest_point.get("waypoint")
         print(nearest_wp)
-        if nearest_wp not in self.Trajectories.get(trajectory_name)["positions"]:
+        # if nearest_wp not in self.Trajectories.get(trajectory_name)["positions"]:
+        if trajectory_name not in available_trajectories[nearest_wp]:
             QtWidgets.QMessageBox.warning(
                 None,
                 "Warning",
