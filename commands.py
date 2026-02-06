@@ -8,6 +8,7 @@ class CmdType(Enum):
     POWER = auto()  # {'state': 1|2}
     FREE_DRIVE = auto()  # {'state': 1|2}
     EXECUTE_ENUM = auto()  # {'cmd': int}
+    EXECUTE_ACTION = auto()  # {'name': str}
     MOVE_TO_POINT = auto()  # {'name': str}
     IO_SET = auto()  # {'index': int, 'value': bool}
     REFRESH_WAYPOINTS = auto()

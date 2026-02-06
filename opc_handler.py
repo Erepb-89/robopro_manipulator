@@ -34,6 +34,10 @@ class OPCHandler:
                                                   0)  # EXECUTE_ENUM
         self.qCmd.set_writable()
 
+        self.qAction = self.Manipulator.add_variable(self.ns, "qAction",
+                                                     0)  # EXECUTE_ACTION
+        self.qAction.set_writable()
+
         self.qPowerOn = self.Manipulator.add_variable(self.ns, "qPowerOn",
                                                       0)  # 1/2
         self.qPowerOn.set_writable()
@@ -78,7 +82,7 @@ class OPCHandler:
         self._last_nearest_dist: Optional[float] = None
         self._last_cmd_state: Optional[int] = 0
 
-    def update_nearest_info(self):
+    def update_nearest_info(self) -> None:
         try:
             trigger = int(self.qFindNearest.get_value())
             if trigger == 1:
@@ -108,18 +112,21 @@ class OPCHandler:
         except Exception as e:
             raise RuntimeError(f"update nearest info Error")
 
-    def handle_gripper_cmd(self):  # 1 = ON, 2 = OFF
+    def handle_gripper_cmd(self) -> None:  # 1 = ON, 2 = OFF
         try:
             gcmd = int(self.qGripperCmd.get_value())
             if gcmd == 1:
                 self.cmd_queue.put(Command(CmdType.IO_SET,
-                                           {'index': GRIPPER_DO_INDEX, 'value': True}, source="OPC"))
+                                           {'index': GRIPPER_DO_INDEX,
+                                            'value': True},
+                                           source="OPC"))
                 self.qGripperCmd.set_value(0)
 
             if gcmd == 2:
                 self.cmd_queue.put(Command(CmdType.IO_SET,
                                            {'index': GRIPPER_DO_INDEX,
-                                            'value': False}, source="OPC"))
+                                            'value': False},
+                                           source="OPC"))
                 self.qGripperCmd.set_value(0)
         except Exception as e:
             raise RuntimeError(f"qGripperCmd Error")
@@ -127,7 +134,10 @@ class OPCHandler:
     def set_command(self, value):
         self.qCmd.set_value(value)
 
-    def start(self):
+    def set_action(self, action_name):
+        self.qAction.set_value(action_name)
+
+    def start(self) -> None:
         qCmdPrev = 0
         self.running = True
         self.Server.start()
@@ -196,5 +206,5 @@ class OPCHandler:
                 self.log.error(f"OPC stop error: {e}")
             self.log.info("OPC UA server stopped.")
 
-    def stop(self):
+    def stop(self) -> None:
         self.stop_event.set()
