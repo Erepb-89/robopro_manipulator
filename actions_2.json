@@ -1,0 +1,30 @@
+{
+  "actions": [
+    {
+      "name": "rVTOL2_To_VTOL2Battery",
+      "commands": [
+        {
+          "name": "tVTOL2_To_VTOL2Battery",
+          "cmd_type": "EXECUTE_ENUM"
+        },
+        {
+          "name": "True",
+          "cmd_type": "IO_SET"
+        }
+      ]
+    },
+    {
+      "name": "rVTOL2Battery_To_VTOL2",
+      "commands": [
+        {
+          "name": "tVTOL2Battery_To_VTOL2",
+          "cmd_type": "EXECUTE_ENUM"
+        },
+        {
+          "name": "False",
+          "cmd_type": "IO_SET"
+        }
+      ]
+    }
+  ]
+}
