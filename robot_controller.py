@@ -7,8 +7,9 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from queue import Queue, Empty
 
+from actions import actions
 from available_trajectories import available_trajectories
-from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO
+from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX
 from commands import Command, CmdType, RobotCommands
 
 # sys.path.append("/home/user/robot-api")
@@ -38,7 +39,7 @@ class RobotController:
 
     def __init__(self, robot_ip: str, cmd_queue: Queue, logger, heartbeat_cb=None):
         self.log = logger
-        # раскомментить для работы с манипулятором
+        # раскомментить для отладки с манипулятором по месту
         # try:
         #     self.Robot = RobotApi(robot_ip, show_std_traceback=True)
         # except VersionError as e:
@@ -52,6 +53,7 @@ class RobotController:
 
         self.Waypoints: Dict[str, Dict] = self.load_waypoints()
         self.Trajectories = self.load_trajectories()
+        self.Actions = actions
 
         self._heartbeat_cb = heartbeat_cb
         self._nearest_info = None
@@ -92,6 +94,9 @@ class RobotController:
 
     def get_trajectories_snapshot(self) -> dict:
         return dict(self.Trajectories)
+
+    def get_actions_snapshot(self) -> dict:
+        return dict(self.Actions)
 
     def get_current_tcp_position(self) -> List[float]:
         with self._state_lock:
@@ -146,7 +151,7 @@ class RobotController:
         with self._state_lock:
             self._state.cmd_state = code
 
-    def _joystick_worker(self, coord_sys=None):
+    def _joystick_worker(self, coord_sys=None) -> None:
         self._joystick_running = True
         self.log.info("simple joystick started")
         try:
@@ -189,7 +194,11 @@ class RobotController:
         self.Waypoints = self.load_waypoints()
 
     # ---------- Операции движения/IO ----------
-    def add_waypoint_line(self, tcpPose: list, speed: float, accel: float, blend: float):
+    def add_waypoint_line(self,
+                          tcp_pose: list,
+                          speed: float,
+                          accel: float,
+                          blend: float):
         n_speed = self._normalize_ratio(speed)
         n_accel = self._normalize_ratio(accel)
 
@@ -198,53 +207,56 @@ class RobotController:
                            f"speed {speed}→{n_speed}, accel {accel}→{n_accel}")
 
         self.Robot.motion.linear.add_new_waypoint(
-            tcp_pose=tcpPose,
+            tcp_pose=tcp_pose,
             speed=n_speed,
             accel=n_accel,
             blend=blend,
             orientation_units='deg')
 
-    def add_waypoint_joint(self, anglePose: List[float], speed: float,
-                           accel: float, blend: float):
+    def add_waypoint_joint(self,
+                           angle_pose: List[float],
+                           speed: float,
+                           accel: float,
+                           blend: float):
         self.Robot.motion.joint.add_new_waypoint(
-            angle_pose=anglePose,
+            angle_pose=angle_pose,
             speed=speed,
             accel=accel,
             blend=blend,
             units='deg'
         )
 
-    def get_tcp_pose(self, waypointName: str) -> List[float]:
-        wp = self.Waypoints.get(waypointName)
+    def get_tcp_pose(self, waypoint_name: str) -> List[float]:
+        wp = self.Waypoints.get(waypoint_name)
 
         if not wp:
-            raise ValueError(f"Waypoint {waypointName} not found")
+            raise ValueError(f"Waypoint {waypoint_name} not found")
         pos = wp.get('tcp')
         return [pos['x'], pos['y'], pos['z'], pos['Rx'], pos['Ry'], pos['Rz']]
 
-    def get_joint_pose(self, waypointName: str) -> List[float]:
-        wp = self.Waypoints.get(waypointName)
+    def get_joint_pose(self, waypoint_name: str) -> List[float]:
+        wp = self.Waypoints.get(waypoint_name)
 
         if not wp:
-            raise ValueError(f"Waypoint {waypointName} not found")
+            raise ValueError(f"Waypoint {waypoint_name} not found")
         joints = wp.get('joints')
         return [joints['J1'], joints['J2'], joints['J3'], joints['J4'], joints['J5'], joints['J6']]
 
-    def get_move_params(self, waypointName: str) -> Dict[str, float]:
-        wp = self.Waypoints.get(waypointName)
+    def get_move_params(self, waypoint_name: str) -> Dict[str, float]:
+        wp = self.Waypoints.get(waypoint_name)
         if not wp:
-            raise ValueError(f"Waypoint {waypointName} not found")
+            raise ValueError(f"Waypoint {waypoint_name} not found")
         return {
             'speed': float(wp['speed']),
             'accel': float(wp['accel']),
             'blend': float(wp['blend'])
         }
 
-    def get_waypoint_data(self, waypointName: str) -> Dict:
+    def get_waypoint_data(self, waypoint_name: str) -> Dict:
         return {
-            'tcp_pose': self.get_tcp_pose(waypointName),
-            'joint_pose': self.get_joint_pose(waypointName),
-            'move_params': self.get_move_params(waypointName)
+            'tcp_pose': self.get_tcp_pose(waypoint_name),
+            'joint_pose': self.get_joint_pose(waypoint_name),
+            'move_params': self.get_move_params(waypoint_name)
         }
 
     def control_digital_outputs(self, index: int, value: bool) -> bool:
@@ -258,7 +270,7 @@ class RobotController:
             return False
 
     # ---------- Управление режимами ----------
-    def manipulator_power_control(self, qPowerOn: int):
+    def manipulator_power_control(self, qPowerOn: int) -> None:
         try:
             if qPowerOn == 2:
                 self.Robot.controller_state.set('off', await_sec=10)
@@ -280,14 +292,14 @@ class RobotController:
             self._set_state(last_error=str(e))
             self.log.error(f"Error in ManipulatorPowerControl: {e}")
 
-    def manipulator_stop_drive(self):
+    def manipulator_stop_drive(self) -> None:
         try:
             self.Robot.motion.mode.set('hold')
         except Exception as e:
             self._set_state(last_error=str(e))
             self.log.error(f"Stop Mode Switching Error: {e}")
 
-    def manipulator_free_drive(self, qFreeDrive: int):
+    def manipulator_free_drive(self, qFreeDrive: int) -> None:
         try:
             if qFreeDrive == 1:
                 self.log.info("Activating Zero Gravity Mode")
@@ -304,7 +316,7 @@ class RobotController:
             self.log.error(f"Zero Gravity Mode Switching Error: {e}")
 
     # Выполнение траектории по enum-команде
-    def execute_enum_command(self, command: RobotCommands):
+    def execute_enum_command(self, command: RobotCommands) -> None:
         try:
             if self.Robot.controller_state.get() != 'run':
                 self.Robot.controller_state.set('off', await_sec=1)
@@ -354,8 +366,22 @@ class RobotController:
             self._set_state(last_error=str(e))
             self.log.error(f"ExecuteEnumCommand failed: {e}")
 
+    def execute_action(self, action_name) -> None:
+        for command in self.Actions.get(action_name).commands:
+            if command.cmd_type == "EXECUTE_ENUM":
+                self.cmd_queue.put(Command(
+                    CmdType.EXECUTE_ENUM,
+                    {'cmd': int(getattr(RobotCommands, command.name))},
+                    source="GUI"))
+            if command.cmd_type == "IO_SET":
+                self.cmd_queue.put(Command(
+                    CmdType.IO_SET,
+                    {'index': GRIPPER_DO_INDEX,
+                     'value': bool(command.name)},
+                    source="GUI"))
+
     # Точка-в-точку по имени waypoint (для GUI)
-    def move_to_point(self, point_name: str, motion: str = 'line'):
+    def move_to_point(self, point_name: str, motion: str = 'line') -> None:
         if self.Robot.controller_state.get() != 'run':
             self.Robot.controller_state.set('off', await_sec=1)
             self.Robot.controller_state.set('run', await_sec=10)
@@ -404,7 +430,7 @@ class RobotController:
         self._joystick_thread.start()
 
     # ---------- Мониторинг/диагностика ----------
-    def check_controller_state(self):
+    def check_controller_state(self) -> None:
         try:
             safety = self.Robot.safety_status.get()
             ctrl = self.Robot.controller_state.get()
@@ -415,7 +441,7 @@ class RobotController:
             self._set_state(last_error=str(e))
             self.log.error(f"CheckControllerState error: {e}")
 
-    def _update_telemetry(self):
+    def _update_telemetry(self) -> None:
         try:
             tcp = self.Robot.motion.linear.get_actual_position()
             joints = self.Robot.motion.joint.get_actual_position()  # НОВОЕ
@@ -431,7 +457,7 @@ class RobotController:
             self.log.debug(f"Telemetry error: {e}")
 
     # ---------- Главный цикл ----------
-    def run(self):
+    def run(self) -> None:
         self.log.info("RobotController started")
         while not self.stop_event.is_set():
             try:
@@ -464,6 +490,8 @@ class RobotController:
                 elif cmd.type == CmdType.EXECUTE_ENUM:
                     self.refresh_waypoints()
                     self.execute_enum_command(RobotCommands(cmd.payload['cmd']))
+                elif cmd.type == CmdType.EXECUTE_ACTION:
+                    self.execute_action(RobotCommands(cmd.payload['name']))
                 elif cmd.type == CmdType.MOVE_TO_POINT:
                     self.refresh_waypoints()
                     motion = cmd.payload.get('motion', 'line')
@@ -492,5 +520,5 @@ class RobotController:
         self.log.info("RobotController stopped")
 
     # ---------- Завершение ----------
-    def stop(self):
+    def stop(self) -> None:
         self.stop_event.set()
