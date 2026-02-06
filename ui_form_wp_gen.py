@@ -45,9 +45,12 @@ class MainWindow(QMainWindow):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
+        self.ui.ActivateZG.setCheckable(True)
         self.ui.ActivateZG.toggled.connect(self.manipulator_free_drive)
         self.ui.ActivateSJ.clicked.connect(self.start_simple_joystick)
         self.ui.MoveTrajectory.clicked.connect(self.move_by_selected_trajectory)
+        self.ui.MoveTrajectory.clicked.connect(self.move_by_selected_trajectory)
+        self.ui.OutputControl.setCheckable(True)
         self.ui.OutputControl.toggled.connect(self.manipulator_gripper_control)
         self.ui.SavePoint.clicked.connect(self.save_current_position)
         self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)

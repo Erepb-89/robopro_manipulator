@@ -325,31 +325,10 @@ class RobotController:
             else:
                 traj = self.Trajectories[traj_name]
                 for position in traj['positions']:
-                    if position["name"] not in self.Waypoints:
-                        raise ValueError(f"Waypoint {position['name']} not found")
-                    if not (isinstance(position, dict) and "name" in position and
-                            "motion" in position):
-                        raise ValueError(f"Bad traj position in "
-                                         f"'{traj_name}': {position}")
-                    wp_name = position["name"]
-                    motion_type = position["motion"]
-                    data = self.get_waypoint_data(wp_name)
-                    mp = data['move_params']
-                    if motion_type == "line":
-                        tcp = self.get_tcp_pose(wp_name)
-                        self.add_waypoint_line(tcp,
-                                               mp['speed'] / 100,
-                                               mp['accel'] / 100,
-                                               mp['blend'] / 100)
-                    elif motion_type == "joint":
-                        joint = self.get_joint_pose(wp_name)
-                        self.add_waypoint_joint(joint,
-                                                mp['speed'],
-                                                mp['accel'],
-                                                mp['blend'])
-                    else:
-                        raise ValueError(f"Unknown motion type {motion_type} "
-                                         f"for waypoint {wp_name}")
+                    self.cmd_queue.put(Command(CmdType.MOVE_TO_POINT,
+                                               {"name": position.get("name"),
+                                                "motion": "joint"},
+                                               source="GUI"))
 
                 self.Robot.motion.mode.set('move')
                 self._set_state(mode='move', last_command=traj_name)
