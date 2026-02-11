@@ -138,7 +138,7 @@
       ]
     },
     {
-      "name": "Charger2_To_rHomePosition",
+      "name": "rCharger2_To_HomePosition",
       "trajectories": [
         "tCharger2_To_Charger",
         "tCharger_To_HomePosition"
