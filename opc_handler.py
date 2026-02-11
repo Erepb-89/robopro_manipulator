@@ -30,13 +30,17 @@ class OPCHandler:
         # self.Speed = self.Manipulator.add_variable(self.ns, "Speed",
         #                                           0.0)  # для будущего
         # self.Accel = self.Manipulator.add_variable(self.ns, "Accel", 0.0)
-        self.qCmd = self.Manipulator.add_variable(self.ns, "qCmd",
-                                                  0)  # EXECUTE_ENUM
-        self.qCmd.set_writable()
+        self.qTrajectory = self.Manipulator.add_variable(self.ns, "qTrajectory",
+                                                         0)  # EXECUTE_TRAJECTORY
+        self.qTrajectory.set_writable()
 
         self.qAction = self.Manipulator.add_variable(self.ns, "qAction",
                                                      0)  # EXECUTE_ACTION
         self.qAction.set_writable()
+
+        self.qRoute = self.Manipulator.add_variable(self.ns, "qRoute",
+                                                    0)  # EXECUTE_ROUTE
+        self.qRoute.set_writable()
 
         self.qPowerOn = self.Manipulator.add_variable(self.ns, "qPowerOn",
                                                       0)  # 1/2
@@ -132,10 +136,13 @@ class OPCHandler:
             raise RuntimeError(f"qGripperCmd Error")
 
     def set_command(self, value):
-        self.qCmd.set_value(value)
+        self.qTrajectory.set_value(value)
 
-    def set_action(self, action_name):
-        self.qAction.set_value(action_name)
+    def set_route(self, value):
+        self.qRoute.set_value(value)
+
+    def set_action(self, value):
+        self.qAction.set_value(value)
 
     def start(self) -> None:
         qCmdPrev = 0
@@ -154,7 +161,7 @@ class OPCHandler:
                     self.LastError.set_value(st.last_error or "")
 
                     qPowerOn = self.qPowerOn.get_value()
-                    qCmd = self.qCmd.get_value()
+                    qCmd = self.qTrajectory.get_value()
                     qFreeDrive = self.qFreeDrive.get_value()
 
                     if qPowerOn != 0:
@@ -166,12 +173,12 @@ class OPCHandler:
                     if qCmdPrev != qCmd:
                         if qCmd == 0:
                             self.cmd_queue.put(
-                                Command(CmdType.STOP_MOVE, {'cmd': int(qCmd)},
+                                Command(CmdType.STOP_MOVE, {},
                                         source="OPC"))
                         else:
                             if qCmd in range(1, 100):
                                 self.cmd_queue.put(
-                                    Command(CmdType.EXECUTE_ENUM, {'cmd': int(qCmd)},
+                                    Command(CmdType.EXECUTE_TRAJECTORY, {'traj': int(qCmd)},
                                             source="OPC"))
                     qCmdPrev = qCmd
 

@@ -7,8 +7,9 @@ from typing import Dict, Any, Optional
 class CmdType(Enum):
     POWER = auto()  # {'state': 1|2}
     FREE_DRIVE = auto()  # {'state': 1|2}
-    EXECUTE_ENUM = auto()  # {'cmd': int}
-    EXECUTE_ACTION = auto()  # {'name': str}
+    EXECUTE_TRAJECTORY = auto()  # {'traj': int}
+    EXECUTE_ROUTE = auto()  # {'route': int}
+    EXECUTE_ACTION = auto()  # {'action': int}
     MOVE_TO_POINT = auto()  # {'name': str}
     IO_SET = auto()  # {'index': int, 'value': bool}
     REFRESH_WAYPOINTS = auto()
@@ -25,7 +26,7 @@ class Command:
     source: Optional[str] = None
 
 
-class RobotCommands(enum.Enum):
+class RobotTrajectories(enum.Enum):
     tHomePosition_To_HelicopterModule = 1
     tHelicopterModule_To_HomePosition = 2
     tHelicopterModule_To_Helicopter1 = 3
@@ -66,3 +67,41 @@ class RobotCommands(enum.Enum):
     tVTOL2_To_VTOLModule = 38
     tVTOL2_To_VTOL2Battery = 39
     tVTOL2Battery_To_VTOL2 = 40
+
+
+class RobotRoutes(enum.Enum):
+    rHomePosition_To_Helicopter1 = 1
+    rHelicopter1_To_HomePosition = 2
+    rHomePosition_To_Helicopter2 = 3
+    rHelicopter2_To_HomePosition = 4
+    rHomePosition_To_Helicopter1Load = 5
+    rHelicopter1Load_To_HomePosition = 6
+    rHomePosition_To_Helicopter2Load = 7
+    rHelicopter2Load_To_HomePosition = 8
+    rHomePosition_To_Load1 = 9
+    rLoad1_To_HomePosition = 10
+    rHomePosition_To_Load2 = 11
+    rLoad2_To_HomePosition = 12
+    rHomePosition_To_Grippers1 = 13
+    rGrippers1_To_HomePosition = 14
+    rHomePosition_To_Grippers2 = 15
+    rGrippers2_To_HomePosition = 16
+    rHomePosition_To_Charger1 = 17
+    rCharger1_To_HomePosition = 18
+    rHomePosition_To_Charger2 = 19
+    rCharger2_To_HomePosition = 20
+    rHomePosition_To_VTOL1 = 21
+    rVTOL1_To_HomePosition = 22
+    rHomePosition_To_VTOL2 = 23
+    rVTOL2_To_HomePosition = 24
+    rHomePosition_To_VTOL1Load = 25
+    rVTOL1Load_To_HomePosition = 26
+    rHomePosition_To_VTOL1Battery = 27
+    rVTOL1Battery_To_HomePosition = 28
+    rHomePosition_To_VTOL2Battery = 29
+    rVTOL2Battery_To_HomePosition = 30
+
+
+class RobotActions(enum.Enum):
+    aVTOL2_To_VTOL2Battery = 1
+    aVTOL2Battery_To_VTOL2 = 2

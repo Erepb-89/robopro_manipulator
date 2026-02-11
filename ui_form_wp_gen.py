@@ -4,7 +4,7 @@ from typing import Dict
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QMainWindow
 
-from commands import Command, CmdType, RobotCommands
+from commands import Command, CmdType, RobotTrajectories, RobotRoutes, RobotActions
 from config import POINTS_PATH, TRAJ_PATH
 from ui_form import Ui_Form
 from utils import atomic_write_json
@@ -305,19 +305,36 @@ class MainWindow(QMainWindow):
             return
 
         try:
-            cmd_enum = getattr(RobotCommands, trajectory_name)
+            cmd_enum = getattr(RobotTrajectories, trajectory_name)
             # команда через OPC
             self.opc_handler.set_command(cmd_enum.value)
 
             # команда напрямую в манипулятор
             # self.manipulator_command(
-            #     Command(CmdType.EXECUTE_ENUM, {'cmd': cmd_enum}, source="GUI"))
+            #     Command(CmdType.EXECUTE_TRAJECTORY, {'traj': cmd_enum}, source="GUI"))
 
             QtWidgets.QMessageBox.information(None, "Success",
                                               f"Moving by trajectory '{trajectory_name}'")
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Error",
                                            f"Failed to move by trajectory: {e}")
+
+    def execute_selected_route(self) -> None:
+        route_name = self.ui.ActionName.text()
+        if not route_name:
+            QtWidgets.QMessageBox.warning(None, "Warning",
+                                          "Please select a route first!")
+            return
+        try:
+            # команда через OPC
+            route_enum = getattr(RobotRoutes, route_name)
+            self.opc_handler.set_route(route_enum.value)
+
+            QtWidgets.QMessageBox.information(None, "Success",
+                                              f"Executing route '{route_name}'")
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(None, "Error",
+                                           f"Failed to execute route: {e}")
 
     def execute_selected_action(self) -> None:
         action_name = self.ui.ActionName.text()
@@ -327,7 +344,8 @@ class MainWindow(QMainWindow):
             return
         try:
             # команда через OPC
-            self.opc_handler.set_action(action_name)
+            action_enum = getattr(RobotActions, action_name)
+            self.opc_handler.set_action(action_enum.value)
 
             QtWidgets.QMessageBox.information(None, "Success",
                                               f"Executing action '{action_name}'")
