@@ -328,7 +328,7 @@ class MainWindow(QMainWindow):
         try:
             # команда через OPC
             route_enum = getattr(RobotRoutes, route_name)
-            self.opc_handler.set_action(route_enum.value)
+            self.opc_handler.set_route(route_enum.value)
 
             QtWidgets.QMessageBox.information(None, "Success",
                                               f"Executing route '{route_name}'")
