@@ -116,22 +116,15 @@ class OPCHandler:
         except Exception as e:
             raise RuntimeError(f"update nearest info Error")
 
-    def handle_gripper_cmd(self) -> None:  # 1 = ON, 2 = OFF
+    def handle_gripper_cmd(self) -> None:  # 1 = ON, 0 = OFF
         try:
+            gcmd_prev = 0
             gcmd = int(self.qGripperCmd.get_value())
-            if gcmd == 1:
+            if gcmd_prev != gcmd:
                 self.cmd_queue.put(Command(CmdType.IO_SET,
                                            {'index': GRIPPER_DO_INDEX,
-                                            'value': True},
+                                            'value': bool(gcmd)},
                                            source="OPC"))
-                self.qGripperCmd.set_value(0)
-
-            if gcmd == 2:
-                self.cmd_queue.put(Command(CmdType.IO_SET,
-                                           {'index': GRIPPER_DO_INDEX,
-                                            'value': False},
-                                           source="OPC"))
-                self.qGripperCmd.set_value(0)
         except Exception as e:
             raise RuntimeError(f"qGripperCmd Error")
 
