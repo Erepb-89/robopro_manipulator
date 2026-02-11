@@ -1,11 +1,11 @@
 {
   "actions": [
     {
-      "name": "rVTOL2_To_VTOL2Battery",
+      "name": "aVTOL2_To_VTOL2Battery",
       "commands": [
         {
           "name": "tVTOL2_To_VTOL2Battery",
-          "cmd_type": "EXECUTE_ENUM"
+          "cmd_type": "EXECUTE_TRAJECTORY"
         },
         {
           "name": "True",
@@ -14,11 +14,11 @@
       ]
     },
     {
-      "name": "rVTOL2Battery_To_VTOL2",
+      "name": "aVTOL2Battery_To_VTOL2",
       "commands": [
         {
           "name": "tVTOL2Battery_To_VTOL2",
-          "cmd_type": "EXECUTE_ENUM"
+          "cmd_type": "EXECUTE_TRAJECTORY"
         },
         {
           "name": "False",
