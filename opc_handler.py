@@ -43,11 +43,11 @@ class OPCHandler:
         self.qRoute.set_writable()
 
         self.qPowerOn = self.Manipulator.add_variable(self.ns, "qPowerOn",
-                                                      0)  # 1/2
+                                                      0)  # 0/1
         self.qPowerOn.set_writable()
 
         self.qFreeDrive = self.Manipulator.add_variable(self.ns, "qFreeDrive",
-                                                        0)  # 1/2
+                                                        0)  # 0/1
         self.qFreeDrive.set_writable()
 
         self.qGripperCmd = self.Manipulator.add_variable(self.ns,
@@ -80,6 +80,11 @@ class OPCHandler:
         self.stop_event = threading.Event()
 
         self._heartbeat_cb = heartbeat_cb
+
+        self.q_traj_prev = 0
+        self.gcmd_prev = 0
+        self.q_power_on_prev = 0
+        self.q_free_drive_prev = 0
 
         self._last_nearest_wp: Optional[str] = None
         self._last_nearest_traj: Optional[str] = None
@@ -116,25 +121,6 @@ class OPCHandler:
         except Exception as e:
             raise RuntimeError(f"update nearest info Error")
 
-    def handle_gripper_cmd(self) -> None:  # 1 = ON, 2 = OFF
-        try:
-            gcmd = int(self.qGripperCmd.get_value())
-            if gcmd == 1:
-                self.cmd_queue.put(Command(CmdType.IO_SET,
-                                           {'index': GRIPPER_DO_INDEX,
-                                            'value': True},
-                                           source="OPC"))
-                self.qGripperCmd.set_value(0)
-
-            if gcmd == 2:
-                self.cmd_queue.put(Command(CmdType.IO_SET,
-                                           {'index': GRIPPER_DO_INDEX,
-                                            'value': False},
-                                           source="OPC"))
-                self.qGripperCmd.set_value(0)
-        except Exception as e:
-            raise RuntimeError(f"qGripperCmd Error")
-
     def set_command(self, value):
         self.qTrajectory.set_value(value)
 
@@ -145,7 +131,6 @@ class OPCHandler:
         self.qAction.set_value(value)
 
     def start(self) -> None:
-        qCmdPrev = 0
         self.running = True
         self.Server.start()
         self.log.info(f"OPC UA server running at {self.Url}")
@@ -160,34 +145,9 @@ class OPCHandler:
                     self.Mode.set_value(st.mode or "")
                     self.LastError.set_value(st.last_error or "")
 
-                    qPowerOn = self.qPowerOn.get_value()
-                    qCmd = self.qTrajectory.get_value()
-                    qFreeDrive = self.qFreeDrive.get_value()
-
-                    if qPowerOn != 0:
-                        self.cmd_queue.put(
-                            Command(CmdType.POWER, {'state': int(qPowerOn)},
-                                    source="OPC"))
-                        self.qPowerOn.set_value(0)
-
-                    if qCmdPrev != qCmd:
-                        if qCmd == 0:
-                            self.cmd_queue.put(
-                                Command(CmdType.STOP_MOVE, {},
-                                        source="OPC"))
-                        else:
-                            if qCmd in range(1, 100):
-                                self.cmd_queue.put(
-                                    Command(CmdType.EXECUTE_TRAJECTORY, {'traj': int(qCmd)},
-                                            source="OPC"))
-                    qCmdPrev = qCmd
-
-                    if qFreeDrive != 0:
-                        self.cmd_queue.put(Command(CmdType.FREE_DRIVE,
-                                                   {'state': int(qFreeDrive)},
-                                                   source="OPC"))
-                        self.qFreeDrive.set_value(0)
-
+                    self.handle_power_cmd()
+                    self.handle_traj_cmd()
+                    self.handle_free_drive_cmd()
                     self.handle_gripper_cmd()
                     self.update_nearest_info()
 
@@ -212,6 +172,48 @@ class OPCHandler:
             except Exception as e:
                 self.log.error(f"OPC stop error: {e}")
             self.log.info("OPC UA server stopped.")
+
+    def handle_power_cmd(self) -> None:  # 1 = ON, 0 = OFF
+        q_power_on = self.qPowerOn.get_value()
+        if self.q_power_on_prev != q_power_on:
+            self.cmd_queue.put(Command(CmdType.POWER,
+                                       {'state': int(q_power_on)},
+                                       source="OPC"))
+        self.q_power_on_prev = q_power_on
+
+    def handle_traj_cmd(self):
+        q_trajectory = self.qTrajectory.get_value()
+        if self.q_traj_prev != q_trajectory:
+            if q_trajectory == 0:
+                self.cmd_queue.put(
+                    Command(CmdType.STOP_MOVE, {},
+                            source="OPC"))
+            else:
+                if q_trajectory in range(1, 100):
+                    self.cmd_queue.put(
+                        Command(CmdType.EXECUTE_TRAJECTORY, {'traj': int(q_trajectory)},
+                                source="OPC"))
+        self.q_traj_prev = q_trajectory
+
+    def handle_free_drive_cmd(self) -> None:  # 1 = ON, 0 = OFF
+        q_free_drive = self.qFreeDrive.get_value()
+        if self.q_free_drive_prev != q_free_drive:
+            self.cmd_queue.put(Command(CmdType.FREE_DRIVE,
+                                       {'state': int(q_free_drive)},
+                                       source="OPC"))
+        self.q_free_drive_prev = q_free_drive
+
+    def handle_gripper_cmd(self) -> None:  # 1 = ON, 0 = OFF
+        try:
+            gcmd = int(self.qGripperCmd.get_value())
+            if self.gcmd_prev != gcmd:
+                self.cmd_queue.put(Command(CmdType.IO_SET,
+                                           {'index': GRIPPER_DO_INDEX,
+                                            'value': bool(gcmd)},
+                                           source="OPC"))
+            self.gcmd_prev = gcmd
+        except Exception as e:
+            raise RuntimeError(f"qGripperCmd Error, {e}")
 
     def stop(self) -> None:
         self.stop_event.set()

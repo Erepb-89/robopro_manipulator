@@ -274,7 +274,7 @@ class RobotController:
     # ---------- Управление режимами ----------
     def manipulator_power_control(self, qPowerOn: int) -> None:
         try:
-            if qPowerOn == 2:
+            if qPowerOn == 0:
                 self.Robot.controller_state.set('off', await_sec=10)
                 self._set_state(powered=False, last_command="PowerOff")
                 self.log.info("Manipulator deactivated")
@@ -307,7 +307,7 @@ class RobotController:
                 self.log.info("Activating Zero Gravity Mode")
                 self.Robot.motion.free_drive()
                 self._set_state(free_drive=True, mode='hold')
-            elif qFreeDrive == 2:
+            elif qFreeDrive == 0:
                 self.log.info("Deactivating Zero Gravity Mode")
                 self.Robot.motion.mode.set('hold')
                 self._set_state(free_drive=False, mode='hold')
