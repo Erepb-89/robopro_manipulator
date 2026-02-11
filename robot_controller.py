@@ -8,9 +8,10 @@ from typing import Dict, List, Optional
 from queue import Queue, Empty
 
 from actions import actions
+from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX
-from commands import Command, CmdType, RobotCommands
+from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotRoutes
 
 # sys.path.append("/home/user/robot-api")
 sys.path.append("robot-api")
@@ -54,6 +55,7 @@ class RobotController:
         self.Waypoints: Dict[str, Dict] = self.load_waypoints()
         self.Trajectories = self.load_trajectories()
         self.Actions = actions
+        self.Routes = routes
 
         self._heartbeat_cb = heartbeat_cb
         self._nearest_info = None
@@ -316,7 +318,7 @@ class RobotController:
             self.log.error(f"Zero Gravity Mode Switching Error: {e}")
 
     # Выполнение траектории по enum-команде
-    def execute_enum_command(self, command: RobotCommands) -> None:
+    def execute_trajectory(self, command: RobotTrajectories) -> None:
         try:
             if self.Robot.controller_state.get() != 'run':
                 self.Robot.controller_state.set('off', await_sec=1)
@@ -368,10 +370,10 @@ class RobotController:
 
     def execute_action(self, action_name) -> None:
         for command in self.Actions.get(action_name).commands:
-            if command.cmd_type == "EXECUTE_ENUM":
+            if command.cmd_type == "EXECUTE_TRAJECTORY":
                 self.cmd_queue.put(Command(
-                    CmdType.EXECUTE_ENUM,
-                    {'cmd': int(getattr(RobotCommands, command.name))},
+                    CmdType.EXECUTE_TRAJECTORY,
+                    {'traj': int(getattr(RobotTrajectories, command.name))},
                     source="GUI"))
             if command.cmd_type == "IO_SET":
                 self.cmd_queue.put(Command(
@@ -379,6 +381,13 @@ class RobotController:
                     {'index': GRIPPER_DO_INDEX,
                      'value': bool(command.name)},
                     source="GUI"))
+
+    def execute_route(self, route_name) -> None:
+        for traj in self.Routes.get(route_name).trajectories:
+            self.cmd_queue.put(Command(
+                CmdType.EXECUTE_TRAJECTORY,
+                {'traj': int(getattr(RobotTrajectories, traj.name))},
+                source="GUI"))
 
     # Точка-в-точку по имени waypoint (для GUI)
     def move_to_point(self, point_name: str, motion: str = 'line') -> None:
@@ -479,7 +488,7 @@ class RobotController:
                             self.log.exception(f"Initial nearest calc failed: {e}")
                         finally:
                             self._nearest_boot_done = True
-                            self.log.warning(f"sgfjgksbglbkjdfgb {self._nearest_boot_done}")
+                            self.log.warning(f"_nearest_boot_done {self._nearest_boot_done}")
 
                     continue
 
@@ -487,11 +496,13 @@ class RobotController:
                     self.manipulator_power_control(cmd.payload['state'])
                 elif cmd.type == CmdType.FREE_DRIVE:
                     self.manipulator_free_drive(cmd.payload['state'])
-                elif cmd.type == CmdType.EXECUTE_ENUM:
+                elif cmd.type == CmdType.EXECUTE_TRAJECTORY:
                     self.refresh_waypoints()
-                    self.execute_enum_command(RobotCommands(cmd.payload['cmd']))
+                    self.execute_trajectory(RobotTrajectories(cmd.payload['traj']))
+                elif cmd.type == CmdType.EXECUTE_ROUTE:
+                    self.execute_route(RobotRoutes(cmd.payload['route']))
                 elif cmd.type == CmdType.EXECUTE_ACTION:
-                    self.execute_action(RobotCommands(cmd.payload['name']))
+                    self.execute_action(RobotActions(cmd.payload['action']))
                 elif cmd.type == CmdType.MOVE_TO_POINT:
                     self.refresh_waypoints()
                     motion = cmd.payload.get('motion', 'line')
