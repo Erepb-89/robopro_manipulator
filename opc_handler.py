@@ -43,11 +43,11 @@ class OPCHandler:
         self.qRoute.set_writable()
 
         self.qPowerOn = self.Manipulator.add_variable(self.ns, "qPowerOn",
-                                                      0)  # 1/2
+                                                      0)  # 0/1
         self.qPowerOn.set_writable()
 
         self.qFreeDrive = self.Manipulator.add_variable(self.ns, "qFreeDrive",
-                                                        0)  # 1/2
+                                                        0)  # 0/1
         self.qFreeDrive.set_writable()
 
         self.qGripperCmd = self.Manipulator.add_variable(self.ns,
@@ -146,6 +146,8 @@ class OPCHandler:
 
     def start(self) -> None:
         qCmdPrev = 0
+        q_power_on_prev = 0
+        q_free_drive_prev = 0
         self.running = True
         self.Server.start()
         self.log.info(f"OPC UA server running at {self.Url}")
@@ -160,33 +162,33 @@ class OPCHandler:
                     self.Mode.set_value(st.mode or "")
                     self.LastError.set_value(st.last_error or "")
 
-                    qPowerOn = self.qPowerOn.get_value()
-                    qCmd = self.qTrajectory.get_value()
-                    qFreeDrive = self.qFreeDrive.get_value()
+                    q_power_on = self.qPowerOn.get_value()
+                    q_trajectory = self.qTrajectory.get_value()
+                    q_free_drive = self.qFreeDrive.get_value()
 
-                    if qPowerOn != 0:
-                        self.cmd_queue.put(
-                            Command(CmdType.POWER, {'state': int(qPowerOn)},
-                                    source="OPC"))
-                        self.qPowerOn.set_value(0)
+                    if q_power_on_prev != q_power_on:
+                        self.cmd_queue.put(Command(CmdType.POWER,
+                                                   {'state': int(q_power_on)},
+                                                   source="OPC"))
+                    q_power_on_prev = q_power_on
 
-                    if qCmdPrev != qCmd:
-                        if qCmd == 0:
+                    if qCmdPrev != q_trajectory:
+                        if q_trajectory == 0:
                             self.cmd_queue.put(
                                 Command(CmdType.STOP_MOVE, {},
                                         source="OPC"))
                         else:
-                            if qCmd in range(1, 100):
+                            if q_trajectory in range(1, 100):
                                 self.cmd_queue.put(
-                                    Command(CmdType.EXECUTE_TRAJECTORY, {'traj': int(qCmd)},
+                                    Command(CmdType.EXECUTE_TRAJECTORY, {'traj': int(q_trajectory)},
                                             source="OPC"))
-                    qCmdPrev = qCmd
+                    qCmdPrev = q_trajectory
 
-                    if qFreeDrive != 0:
+                    if q_free_drive_prev != q_free_drive:
                         self.cmd_queue.put(Command(CmdType.FREE_DRIVE,
-                                                   {'state': int(qFreeDrive)},
+                                                   {'state': int(q_free_drive)},
                                                    source="OPC"))
-                        self.qFreeDrive.set_value(0)
+                    q_free_drive_prev = q_free_drive
 
                     self.handle_gripper_cmd()
                     self.update_nearest_info()

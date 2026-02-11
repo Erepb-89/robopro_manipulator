@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
             Command(CmdType.POWER, {'state': 1}, source="GUI")
         ))
         self.ui.PowerOff.clicked.connect(lambda: self.cmd_queue.put(
-            Command(CmdType.POWER, {'state': 2}, source="GUI")
+            Command(CmdType.POWER, {'state': 0}, source="GUI")
         ))
         self.ui.MoveToPoint.clicked.connect(self.move_to_selected_point)
         self.ui.StopMove.clicked.connect(self.stop_drive)
