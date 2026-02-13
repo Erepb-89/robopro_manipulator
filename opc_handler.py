@@ -68,11 +68,11 @@ class OPCHandler:
                                                          "NearestDist", "")
 
         self.ControllerState = self.Manipulator.add_variable(self.ns,
-                                                             "ControllerState", "")
+                                                             "ControllerState", 0)
         self.SafetyStatus = self.Manipulator.add_variable(self.ns,
-                                                          "SafetyStatus", "")
-        self.Mode = self.Manipulator.add_variable(self.ns, "Mode", "")
-        self.LastError = self.Manipulator.add_variable(self.ns, "LastError", "")
+                                                          "SafetyStatus", 0)
+        self.Mode = self.Manipulator.add_variable(self.ns, "Mode", 0)
+        self.LastError = self.Manipulator.add_variable(self.ns, "LastError", 0)
 
         self.CmdState = self.Manipulator.add_variable(self.ns, "CmdState", 0)
 
