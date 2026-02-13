@@ -489,7 +489,131 @@
                     "motion": "joint"
                 },
                 {
-                    "name": "pVTOLModule",
+                    "name": "pVTOL2Battery",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOut",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOnCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryUp",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOnCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOut",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Out",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Out",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2OutPreMove",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2OutMove",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Up",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreStation",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Charge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2AfterCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2AfterCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Charge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2AfterCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreStation",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Up",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2OutMove2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreMove2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2BatteryIn",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreStop",
                     "motion": "joint"
                 }
             ]
@@ -504,6 +628,54 @@
                 {
                     "name": "pVTOL2Battery",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOut",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOnCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryUp",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOnCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryPreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOut",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryIn",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BatteryOut",
+                    "motion": "joint"
                 }
             ]
         },
@@ -511,11 +683,95 @@
             "name": "tVTOL2Battery_To_VTOL2",
             "positions": [
                 {
-                    "name": "pVTOL2Battery",
+                    "name": "pVTOL2",
                     "motion": "joint"
                 },
                 {
-                    "name": "VTOL2",
+                    "name": "pVTOL2Battery2Out",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Out",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2OutPreMove",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2OutMove",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Up",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreStation",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Charge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2AfterCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2AfterCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Charge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2AfterCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreCharge",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreStation",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2Up",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2OutMove2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreMove2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2BatteryIn",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2PreStop",
                     "motion": "joint"
                 }
             ]
