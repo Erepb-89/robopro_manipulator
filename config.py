@@ -15,3 +15,9 @@ OPC_ENDPOINT = "opc.tcp://127.0.0.1:4840"  # для теста
 NUM_DIGITAL_IO = 24
 GRIPPER_DO_INDEX = 0
 LOG_PATH = BASE_DIR / "robopro.log"
+
+"""Состояния выполнения команды"""
+EXECUTION = 100
+FINISHED = 200
+EXCEPTION = 300
+BLOCK = 400
