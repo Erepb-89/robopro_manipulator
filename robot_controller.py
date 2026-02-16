@@ -479,9 +479,9 @@ class RobotController:
             )
             self.log.error("Can't move by selected trajectory from current point!")
 
-    def execute_action(self, action_name) -> None:
+    def execute_action(self, action: RobotActions) -> None:
         """Выполнить действие"""
-        for command in self.Actions.get(action_name).commands:
+        for command in self.Actions.get(action.name).commands:
             if command.cmd_type == "EXECUTE_TRAJECTORY":
                 self.cmd_queue.put(Command(
                     CmdType.EXECUTE_TRAJECTORY,
@@ -495,9 +495,9 @@ class RobotController:
                     source="GUI"
                 ))
 
-    def execute_route(self, route_name) -> None:
+    def execute_route(self, route: RobotRoutes) -> None:
         """Выполнить маршрут"""
-        for traj in self.Routes.get(route_name).trajectories:
+        for traj in self.Routes.get(route.name).trajectories:
             self.cmd_queue.put(Command(
                 CmdType.EXECUTE_TRAJECTORY,
                 {'traj': int(getattr(RobotTrajectories, traj.name))},
