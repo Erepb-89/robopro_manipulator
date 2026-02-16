@@ -2,7 +2,7 @@
 
 import asyncio
 
-from asyncua import Client
+from asyncua import Client, ua
 
 
 async def main():
@@ -24,6 +24,9 @@ async def main():
 
         node = client.get_node("ns=4;s=|var|HCFA-PLC.Application.OPC.BladeStoppers.Stopper2.qCmd")
         value = await node.read_value()
+        print('BladeStoppers.Stopper2.qCmd: ', value)
+
+        await node.set_value(ua.DataValue(ua.Variant(1, ua.VariantType.Int16)))
         print('BladeStoppers.Stopper2.qCmd: ', value)
 
 
