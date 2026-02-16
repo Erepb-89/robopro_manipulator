@@ -52,6 +52,7 @@ class MainWindow(QMainWindow):
         self.ui.ExecuteAction.clicked.connect(self.execute_selected_action)
         self.ui.OutputControl.setCheckable(True)
         self.ui.OutputControl.toggled.connect(self.manipulator_gripper_control)
+        # self.ui.ShiftGripper.toggled.connect(self.manipulator_shift_gripper)
         self.ui.SavePoint.clicked.connect(self.save_current_position)
         self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)
 
@@ -161,6 +162,15 @@ class MainWindow(QMainWindow):
             QtWidgets.QMessageBox.critical(None, "I/O error",
                                            f"Не удалось изменить состояние DO0: {e}")
             self.ui.OutputControl.setChecked(False)
+
+    def manipulator_shift_gripper(self, shift: bool) -> None:
+        try:
+            self.manipulator_command(
+                Command(CmdType.IO_SET, {'index': 1, 'value': shift}, source="GUI"))
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(None, "I/O error",
+                                           f"Не удалось изменить состояние DO1: {e}")
+            # self.ui.ShiftGripper.setChecked(False)
 
     def manipulator_free_drive(self, activate: bool) -> None:  # 2025_09_29
         try:
