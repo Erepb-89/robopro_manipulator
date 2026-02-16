@@ -3,7 +3,7 @@ import time
 import threading
 from queue import Queue
 from commands import Command, CmdType
-from config import GRIPPER_DO_INDEX
+from config import GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX
 from typing import Optional
 
 
@@ -53,6 +53,10 @@ class OPCHandler:
         self.qGripperCmd = self.Manipulator.add_variable(self.ns,
                                                          "qGripperCmd", 0)
         self.qGripperCmd.set_writable()
+
+        self.qShiftGripper = self.Manipulator.add_variable(self.ns,
+                                                           "qShiftGripper", 0)
+        self.qShiftGripper.set_writable()
 
         self.qFindNearest = self.Manipulator.add_variable(self.ns,
                                                           "qFindNearest", 0)
@@ -149,6 +153,7 @@ class OPCHandler:
                     self.handle_traj_cmd()
                     self.handle_free_drive_cmd()
                     self.handle_gripper_cmd()
+                    self.handle_shift_gripper_cmd()
                     self.update_nearest_info()
 
                     if self._last_cmd_state != st.cmd_state:
@@ -202,6 +207,18 @@ class OPCHandler:
                                        {'state': int(q_free_drive)},
                                        source="OPC"))
         self.q_free_drive_prev = q_free_drive
+
+    def handle_shift_gripper_cmd(self) -> None:  # 1 = ON, 0 = OFF
+        try:
+            gcmd = int(self.qShiftGripper.get_value())
+            if self.gcmd_prev != gcmd:
+                self.cmd_queue.put(Command(CmdType.IO_SET,
+                                           {'index': SHIFT_GRIPPER_DO_INDEX,
+                                            'value': bool(gcmd)},
+                                           source="OPC"))
+            self.gcmd_prev = gcmd
+        except Exception as e:
+            raise RuntimeError(f"qShiftGripper Error, {e}")
 
     def handle_gripper_cmd(self) -> None:  # 1 = ON, 0 = OFF
         try:
