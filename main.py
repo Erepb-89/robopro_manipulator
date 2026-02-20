@@ -4,7 +4,8 @@ import threading
 from queue import Queue
 from PyQt5 import QtWidgets
 
-from config import ROBOT_IP, OPC_ENDPOINT, LOG_PATH
+from config import ROBOT_IP, OPC_ENDPOINT, LOG_PATH, PLC_MANIPULATOR_ADDRESS
+from opc_client import OPCUAClientManipulator
 from utils import setup_logging
 from robot_controller import RobotController
 from opc_handler import OPCHandler
@@ -20,7 +21,7 @@ class MainAppClass:
         self.logger = setup_logging(LOG_PATH)
         self.intentional_exit = False
 
-        self.heartbit = Heartbeat(names=['rc', 'opc'], ttl_sec=10.0)
+        self.heartbit = Heartbeat(names=['rc', 'opc_server', 'opc_client'], ttl_sec=10.0)
 
         self.cmd_queue = Queue(maxsize=1000)
 
@@ -41,6 +42,11 @@ class MainAppClass:
                                           name="OPCThread", daemon=True)
         self.OpcThread.start()
         self.opc_ready = threading.Event()
+
+        self.OpcClientManipulator = OPCUAClientManipulator(PLC_MANIPULATOR_ADDRESS,
+                                                           self.RobotController,
+                                                           self.logger)
+        self.OpcClientManipulator.start_in_thread()
 
         self.watchdog = WatchdogManager(self.heartbit, interval_sec=5.0,
                                         logger=self.logger)
@@ -69,6 +75,7 @@ class MainAppClass:
             pass
         self.OpcHandler.stop()
         self.RobotController.stop()
+        self.OpcClientManipulator.stop_from_thread()
 
         event.accept()
 
