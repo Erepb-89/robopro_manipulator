@@ -1,6 +1,7 @@
 import time
 import threading
 
+
 class Heartbeat:
     def __init__(self, names, ttl_sec=10.0):
         self.ttl = ttl_sec
@@ -16,4 +17,3 @@ class Heartbeat:
         now = time.monotonic()
         with self._lock:
             return {name: (now - ts <= self.ttl) for name, ts in self._ts.items()}
-

@@ -23,8 +23,6 @@ class OPCHandler:
         self.ns = self.Server.register_namespace("AERI_ROBOT_NS")
         self.Manipulator = self.AERI.add_object(self.ns, "Manipulator")
 
-        self.Client = Client("opc.tcp://0.0.0.0:4840")
-
         self.TcpPosition = self.Manipulator.add_variable(self.ns, "TcpPosition",
                                                          [0.0] * 6)
         # self.Speed = self.Manipulator.add_variable(self.ns, "Speed",
@@ -165,7 +163,7 @@ class OPCHandler:
 
                 if self._heartbeat_cb:
                     try:
-                        self._heartbeat_cb('opc')
+                        self._heartbeat_cb('opc_server')
                     except Exception:
                         pass
 

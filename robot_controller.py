@@ -287,7 +287,7 @@ class RobotController:
         self.state = StateManager()
         self.data = DataManager(POINTS_PATH, TRAJ_PATH, logger)
         # Раскомментить для отладки с манипулятором по месту
-        # self.motion = MotionController(self.Robot, self.data, logger)
+        # self.mc = MotionController(self.Robot, self.data, logger)
         # self.io = IOController(self.Robot, logger, NUM_DIGITAL_IO)
         # self.telemetry = TelemetryMonitor(self.Robot, self.state, logger)
 
@@ -403,14 +403,14 @@ class RobotController:
         params = self.data.get_move_params(point_name)
 
         if motion == 'joint':
-            self.motion.add_waypoint_joint(
+            self.mc.add_waypoint_joint(
                 joint_pose,
                 params['speed'],
                 params['accel'],
                 params['blend']
             )
         else:
-            self.motion.add_waypoint_line(
+            self.mc.add_waypoint_line(
                 tcp_pose,
                 params['speed'] / 100,
                 params['accel'] / 100,
@@ -469,7 +469,7 @@ class RobotController:
             if trajectory:
                 self.state.update(cmd_state=trajectory.value + EXECUTION)
 
-            finish_motion = self.motion.wait_motion_complete(await_sec=-1)
+            finish_motion = self.mc.wait_motion_complete(await_sec=-1)
             if trajectory and finish_motion:
                 self.state.update(cmd_state=trajectory.value + FINISHED)
         else:
