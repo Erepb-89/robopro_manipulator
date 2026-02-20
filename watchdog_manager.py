@@ -1,48 +1,84 @@
-import time
 import threading
+from typing import Dict
+
 from sdnotify import SystemdNotifier
 
 
 class WatchdogManager(threading.Thread):
     def __init__(self, heartbit, interval_sec=5.0, logger=None):
         super().__init__(daemon=True, name="WatchdogThread")
-        self.heartbit = heartbit
-        self.interval = interval_sec
-        self.log = logger
-        self.stop_event = threading.Event()
-        self.notifier = SystemdNotifier()
-        self.ready_sent = False
+        self._heartbit = heartbit
+        self._interval = interval_sec
+        self._logger = logger
+        self._stop_event = threading.Event()
+        self._notifier = SystemdNotifier()
+        self._ready_sent = False
 
     def set_ready(self):
+        """Отправляет сигнал READY в systemd."""
         try:
-            self.notifier.notify("READY=1")
-            self.ready_sent = True
+            self._notifier.notify("READY=1")
+            self._ready_sent = True
         except Exception as e:
-            if self.log: self.log.debug(f"sdnotify READY errr: {e}")
+            self._logger.debug(f"sdnotify READY err: {e}")
 
-    def run(self):
-        while not self.stop_event.is_set():
+    def _get_statuses(self) -> Dict[str, bool]:
+        """Получает статусы компонентов."""
+        try:
+            return self._heartbit.state() or {}
+        except Exception as e:
+            self._logger.error(f"Failed to get heartbit state: {e}")
+            return {}
+
+    @staticmethod
+    def _format_status_line(statuses: Dict[str, bool]) -> str:
+        """Форматирует строку статуса для systemd."""
+        if not statuses:
+            return ""
+
+        return "; ".join(
+            f"{key}={'ok' if val else 'stale'}"
+            for key, val in statuses.items()
+        )
+
+    def _process_statuses(self, statuses: Dict[str, bool]) -> None:
+        """Обрабатывает статусы, отправляет уведомления."""
+        status_line = self._format_status_line(statuses)
+
+        if status_line:
+            self._notifier.notify(f"STATUS={status_line}")
+            self._logger.info(f"Watchdog status: {status_line}")
+
+        # Отправляем WATCHDOG=1, только если все компоненты в порядке
+        if statuses and all(statuses.values()):
+            self._notifier.notify("WATCHDOG=1")
+            self._logger.debug("WATCHDOG=1 sent (all components OK)")
+
+    def run(self) -> None:
+        """Основной цикл watchdog."""
+        self._logger.info("Watchdog thread started")
+
+        while not self._stop_event.is_set():
             try:
-                statuses = self.heartbit.state()
-                all_is_ok = all(statuses.values()) if statuses else True
-                status_line = "; ".join(
-                    f"{k}={'ok' if v else 'stale'}" for k, v in
-                    statuses.items())
-                if status_line:
-                    self.notifier.notify(f"STATUS={status_line}")
-                    self.log.info(f"[WD]={status_line}")
-
-                if all_is_ok:
-                    self.notifier.notify("WATCHDOG=1")
+                statuses = self._get_statuses()
+                self._process_statuses(statuses)
 
             except Exception as e:
-                if self.log:
-                    self.log.debug(f"Watchdog loop error: {e}")
-            time.sleep(self.interval)
+                self._logger.error(f"Unexpected error in watchdog loop: {e}")
 
-    def stop(self):
-        self.stop_event.set()
+            # Ожидаем следующий цикл или сигнал остановки
+            if self._stop_event.wait(timeout=self._interval):
+                break
+
+        self._logger.info("Watchdog thread stopped")
+
+    def stop(self) -> None:
+        """Останавливает watchdog и отправляет сигнал STOPPING."""
+        self._logger.info("Stopping watchdog...")
+        self._stop_event.set()
+
         try:
-            self.notifier.notify("STOPPING=1")
-        except Exception:
-            pass
+            self._notifier.notify("STOPPING=1")
+            self._logger.debug("STOPPING=1 sent to systemd")
+        except Exception as e:
+            self._logger.debug(f"Failed to send STOPPING signal: {e}")
