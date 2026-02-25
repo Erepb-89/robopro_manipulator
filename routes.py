@@ -18,5 +18,5 @@ def get_routes():
 
 
 routes = get_routes()
-print(routes["rHomePosition_To_Helicopter1"].trajectories)
-print(routes["rHelicopter2Load_To_HomePosition"].trajectories)
+# print(routes["rHomePosition_To_Helicopter1"].trajectories)
+# print(routes["rHelicopter2Load_To_HomePosition"].trajectories)
