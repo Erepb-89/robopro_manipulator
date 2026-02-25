@@ -7,9 +7,9 @@ from typing import Dict, Any, Optional
 class CmdType(Enum):
     POWER = auto()  # {'state': 1|2}
     FREE_DRIVE = auto()  # {'state': 1|2}
-    EXECUTE_TRAJECTORY = auto()  # {'traj': int}
-    EXECUTE_ROUTE = auto()  # {'route': int}
-    EXECUTE_ACTION = auto()  # {'action': int}
+    EXECUTE_TRAJECTORY = auto()  # {'num': int}
+    EXECUTE_ROUTE = auto()  # {'num': int}
+    EXECUTE_ACTION = auto()  # {'num': int}
     MOVE_TO_POINT = auto()  # {'name': str}
     IO_SET = auto()  # {'index': int, 'value': bool}
     REFRESH_WAYPOINTS = auto()
