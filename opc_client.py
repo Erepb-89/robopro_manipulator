@@ -8,6 +8,7 @@ from enum import Enum
 
 from asyncua import Client, ua
 
+from commands import Command, CmdType
 from config import HELICOPTER_MODULE, VTOL_MODULE, LOAD_STORAGE, GRIPPERS_STORAGE, \
     CHARGER_H, CHARGER_V, HOME_POSITION, ENABLE_MOVE_TO_MODULE_H, ENABLE_MOVE_TO_MODULE_V, \
     ENABLE_MOVE_TO_PAYLOAD_STORAGE, ENABLE_MOVE_TO_GRIPPERS_STORAGE, ENABLE_MOVE_TO_CHARGER_H, \
@@ -15,12 +16,24 @@ from config import HELICOPTER_MODULE, VTOL_MODULE, LOAD_STORAGE, GRIPPERS_STORAG
     X_POSITION_MODULE_V, X_POSITION_CHARGER_H, X_POSITION_CHARGER_V, X_POSITION_LOAD, \
     X_POSITION_GRIPPER_STORAGE, X_POSITION_HAS_ZEROED, X_POSITION_POWERED, X_POSITION_ALARM, OPC_CLIENT_TIME, \
     H_TABLE_HATCH_OPENED, H_TABLE_HATCH_CLOSED, H_TABLE_HATCH_ALARM, V_TABLE_HATCH_OPENED, V_TABLE_HATCH_CLOSED, \
-    V_TABLE_HATCH_ALARM
+    V_TABLE_HATCH_ALARM, Y_POSITION_MODULE_H, Y_POSITION_MODULE_V, Y_POSITION_CHARGER_H, Y_POSITION_CHARGER_V, \
+    Y_POSITION_LOAD, Y_POSITION_GRIPPER_STORAGE, Y_POSITION_HAS_ZEROED, Y_POSITION_POWERED, Y_POSITION_ALARM, \
+    PLC_CMD_POWER_ON
+
+
+@dataclass
+class ManipulatorPoints:
+    module_h_available: bool = False
+    module_v_available: bool = False
+    charge_h_available: bool = False
+    charge_v_available: bool = False
+    pos_load_available: bool = False
+    pos_grippers_available: bool = False
 
 
 @dataclass
 class WaypointInfo:
-    """Информация о текущей точке маршрута"""
+    """Информация о текущей точке"""
     name: str
     is_valid: bool = True
 
@@ -45,9 +58,11 @@ class OPCUAClient:
 
     def __init__(self,
                  endpoint: str,
+                 cmd_queue,
                  robot_controller,
                  logger):
         self.endpoint = endpoint
+        self.cmd_queue = cmd_queue
         self.client = Client(url=self.endpoint)
         self.rc = robot_controller
         self.logger = logger
@@ -120,14 +135,14 @@ class OPCUAClient:
 
     async def _get_current_waypoint(self) -> WaypointInfo:
         """
-        Получить информацию о текущей точке маршрута
+        Получить информацию о текущей точке
         """
         try:
             waypoint_data = self.rc.find_nearest_waypoint()
             waypoint_name = waypoint_data.get("waypoint")
             return WaypointInfo(name=waypoint_name, is_valid=True)
         except Exception as e:
-            self.logger.error(f"Ошибка получения текущей точки маршрута: {e}")
+            self.logger.error(f"Ошибка получения текущей точки: {e}")
             return WaypointInfo(name="", is_valid=False)
 
     async def run(self):
@@ -177,35 +192,58 @@ class OPCUAClient:
 
 
 class OPCUAClientManipulator(OPCUAClient):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._plc_power_prev = 0
+
+    async def handle_plc_commands(self):
+        """Чтение командных узлов с PLC и пересылка в cmd_queue"""
+        try:
+            plc_power = await self.read_node(PLC_CMD_POWER_ON)
+            if plc_power is not None:
+                plc_power = int(plc_power)
+                if self._plc_power_prev != plc_power:
+                    self.cmd_queue.put(Command(CmdType.POWER,
+                                               {'state': plc_power},
+                                               source="PLC"))
+                    self.logger.info(f"PLC command POWER: {plc_power}")
+                self._plc_power_prev = plc_power
+        except Exception as e:
+            self.logger.error(f"Error reading PLC commands: {e}")
+
     async def read_nodes(self):
         """Чтение всех узлов сервера"""
-        self.x_pos_module_h = self.convert(X_POSITION_MODULE_H)
-        self.x_pos_module_v = self.convert(X_POSITION_MODULE_V)
-        self.x_pos_charge_h = self.convert(X_POSITION_CHARGER_H)
-        self.x_pos_charge_v = self.convert(X_POSITION_CHARGER_V)
-        self.x_pos_load = self.convert(X_POSITION_LOAD)
-        self.x_pos_gripper_storage = self.convert(X_POSITION_GRIPPER_STORAGE)
-        self.x_pos_has_zeroed = self.convert(X_POSITION_HAS_ZEROED)
-        self.x_pos_powered = self.convert(X_POSITION_POWERED)
-        self.x_pos_alarm = self.convert(X_POSITION_ALARM)
-        self.y_pos_module_h = self.convert(X_POSITION_MODULE_H)
-        self.y_pos_module_v = self.convert(X_POSITION_MODULE_V)
-        self.y_pos_charge_h = self.convert(X_POSITION_CHARGER_H)
-        self.y_pos_charge_v = self.convert(X_POSITION_CHARGER_V)
-        self.y_pos_load = self.convert(X_POSITION_LOAD)
-        self.y_pos_gripper_storage = self.convert(X_POSITION_GRIPPER_STORAGE)
-        self.y_pos_has_zeroed = self.convert(X_POSITION_HAS_ZEROED)
-        self.y_pos_powered = self.convert(X_POSITION_POWERED)
-        self.y_pos_alarm = self.convert(X_POSITION_ALARM)
+        self.x_pos_module_h = await self.convert(X_POSITION_MODULE_H)
+        self.x_pos_module_v = await self.convert(X_POSITION_MODULE_V)
+        self.x_pos_charge_h = await self.convert(X_POSITION_CHARGER_H)
+        self.x_pos_charge_v = await self.convert(X_POSITION_CHARGER_V)
+        self.x_pos_load = await self.convert(X_POSITION_LOAD)
+        self.x_pos_gripper_storage = await self.convert(X_POSITION_GRIPPER_STORAGE)
+        self.x_pos_has_zeroed = await self.convert(X_POSITION_HAS_ZEROED)
+        self.x_pos_powered = await self.convert(X_POSITION_POWERED)
+        self.x_pos_alarm = await self.convert(X_POSITION_ALARM)
+        self.y_pos_module_h = await self.convert(Y_POSITION_MODULE_H)
+        self.y_pos_module_v = await self.convert(Y_POSITION_MODULE_V)
+        self.y_pos_charge_h = await self.convert(Y_POSITION_CHARGER_H)
+        self.y_pos_charge_v = await self.convert(Y_POSITION_CHARGER_V)
+        self.y_pos_load = await self.convert(Y_POSITION_LOAD)
+        self.y_pos_gripper_storage = await self.convert(Y_POSITION_GRIPPER_STORAGE)
+        self.y_pos_has_zeroed = await self.convert(Y_POSITION_HAS_ZEROED)
+        self.y_pos_powered = await self.convert(Y_POSITION_POWERED)
+        self.y_pos_alarm = await self.convert(Y_POSITION_ALARM)
+
+        # Чтение команд с PLC, заготовка
+        # await self.handle_plc_commands()
 
     def check_position(self):
         """Проверка позиции манипулятора по осям"""
-        self.module_h_available = True if (self.x_pos_module_h and self.y_pos_module_h) else False
-        self.module_v_available = True if (self.x_pos_module_v and self.y_pos_module_v) else False
-        self.charge_h_available = True if (self.x_pos_charge_h and self.y_pos_charge_h) else False
-        self.charge_v_available = True if (self.x_pos_charge_v and self.y_pos_charge_v) else False
-        self.pos_load_available = True if (self.x_pos_load and self.y_pos_load) else False
-        self.pos_grippers_available = True if (self.x_pos_gripper_storage and self.y_pos_gripper_storage) else False
+        ManipulatorPoints.module_h_available = True if (self.x_pos_module_h and self.y_pos_module_h) else False
+        ManipulatorPoints.module_v_available = True if (self.x_pos_module_v and self.y_pos_module_v) else False
+        ManipulatorPoints.charge_h_available = True if (self.x_pos_charge_h and self.y_pos_charge_h) else False
+        ManipulatorPoints.charge_v_available = True if (self.x_pos_charge_v and self.y_pos_charge_v) else False
+        ManipulatorPoints.pos_load_available = True if (self.x_pos_load and self.y_pos_load) else False
+        ManipulatorPoints.pos_grippers_available = True if (
+                self.x_pos_gripper_storage and self.y_pos_gripper_storage) else False
 
     async def get_wp_info_and_update_opc_data(self):
         """Узнать текущую позицию и обновить данные в OPC"""

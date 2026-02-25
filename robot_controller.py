@@ -10,6 +10,7 @@ from typing import Dict, List, Optional
 from queue import Queue, Empty
 
 from actions import actions
+from opc_client import ManipulatorPoints
 from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION
@@ -275,6 +276,23 @@ class RobotController:
         self.stop_event = threading.Event()
         self._heartbeat_cb = heartbeat_cb
 
+        self.manipulator_points = {
+            'pHelicopterModule': ManipulatorPoints.module_h_available,
+            'pVTOLModule': ManipulatorPoints.module_v_available,
+            'pChargerH': ManipulatorPoints.charge_h_available,
+            'pChargerV': ManipulatorPoints.charge_v_available,
+            'pPayload': ManipulatorPoints.pos_load_available,
+            'pGrippers': ManipulatorPoints.pos_grippers_available
+        }
+
+        # self.helicopter_points = {
+        #     '': self.parent.OpcClientVT.h_table_hatch_opened
+        # }
+
+        self.vtol_points = {
+
+        }
+
         # Раскомментить для отладки с манипулятором по месту
         # Robot API
         # try:
@@ -452,7 +470,7 @@ class RobotController:
 
     def exec_available_trajectory(self, nearest_wp, trajectory) -> None:
         """Выполнить доступную траекторию"""
-        if trajectory.name in available_trajectories.get(nearest_wp):
+        if trajectory.name in available_trajectories.get(nearest_wp) and self.manipulator_points[nearest_wp]:
             for position in self.data.trajectories[trajectory.name]['positions']:
                 self.cmd_queue.put(
                     Command(
@@ -494,6 +512,8 @@ class RobotController:
                     {'index': GRIPPER_DO_INDEX, 'value': bool(command.name)},
                     source="GUI"
                 ))
+            # if command.cmd_type == "PLC_COM":
+            #     pass
 
     def execute_route(self, route: RobotRoutes) -> None:
         """Выполнить маршрут"""

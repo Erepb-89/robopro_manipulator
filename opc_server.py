@@ -1,4 +1,4 @@
-from opcua import Server, Client
+from opcua import Server
 import time
 import threading
 from queue import Queue
@@ -7,7 +7,7 @@ from config import GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX
 from typing import Optional
 
 
-class OPCHandler:
+class OPCUAServer:
 
     def __init__(self, url: str, robot_controller, cmd_queue: Queue, logger,
                  heartbeat_cb=None):
@@ -123,7 +123,7 @@ class OPCHandler:
         except Exception as e:
             raise RuntimeError(f"update nearest info Error")
 
-    def set_command(self, value):
+    def set_trajectory(self, value):
         self.qTrajectory.set_value(value)
 
     def set_route(self, value):
