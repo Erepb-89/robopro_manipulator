@@ -8,7 +8,7 @@ from config import ROBOT_IP, OPC_ENDPOINT, LOG_PATH, PLC_MANIPULATOR_ADDRESS
 from opc_client import OPCUAClientManipulator
 from utils import setup_logging
 from robot_controller import RobotController
-from opc_handler import OPCHandler
+from opc_server import OPCUAServer
 from ui_form_wp_gen import MainWindow
 from commands import Command, CmdType
 
@@ -25,25 +25,29 @@ class MainAppClass:
 
         self.cmd_queue = Queue(maxsize=1000)
 
-        self.RobotController = RobotController(ROBOT_IP, self.cmd_queue,
+        self.RobotController = RobotController(ROBOT_IP,
+                                               self.cmd_queue,
                                                self.logger,
                                                heartbeat_cb=self.heartbit.beat)
         self.ControllerThread = threading.Thread(
             target=self.RobotController.run,
             name="RobotControllerThread", daemon=True)
         self.ControllerThread.start()
+
         self.rc_ready = threading.Event()
 
-        self.OpcHandler = OPCHandler(OPC_ENDPOINT, self.RobotController,
+        self.OpcServer = OPCUAServer(OPC_ENDPOINT,
+                                     self.RobotController,
                                      self.cmd_queue,
                                      self.logger,
                                      heartbeat_cb=self.heartbit.beat)
-        self.OpcThread = threading.Thread(target=self.OpcHandler.start,
-                                          name="OPCThread", daemon=True)
-        self.OpcThread.start()
+        self.OpcServerThread = threading.Thread(target=self.OpcServer.start,
+                                                name="OPCServerThread", daemon=True)
+        self.OpcServerThread.start()
         self.opc_ready = threading.Event()
 
         self.OpcClientManipulator = OPCUAClientManipulator(PLC_MANIPULATOR_ADDRESS,
+                                                           self.cmd_queue,
                                                            self.RobotController,
                                                            self.logger)
         self.OpcClientManipulator.start_in_thread()
@@ -54,7 +58,7 @@ class MainAppClass:
 
         self.App = QtWidgets.QApplication([])
 
-        self.Form = MainWindow(self.RobotController, self.cmd_queue, self.OpcHandler)
+        self.Form = MainWindow(self.RobotController, self.cmd_queue, self.OpcServer)
         self.Form.closeEvent = self.on_close
         self.Form.show()
 
@@ -73,7 +77,7 @@ class MainAppClass:
                 Command(CmdType.SHUTDOWN, {}, source="APP"))
         except Exception:
             pass
-        self.OpcHandler.stop()
+        self.OpcServer.stop()
         self.RobotController.stop()
         self.OpcClientManipulator.stop_from_thread()
 
