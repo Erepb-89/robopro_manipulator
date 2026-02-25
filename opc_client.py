@@ -18,7 +18,9 @@ from config import HELICOPTER_MODULE, VTOL_MODULE, LOAD_STORAGE, GRIPPERS_STORAG
     H_TABLE_HATCH_OPENED, H_TABLE_HATCH_CLOSED, H_TABLE_HATCH_ALARM, V_TABLE_HATCH_OPENED, V_TABLE_HATCH_CLOSED, \
     V_TABLE_HATCH_ALARM, Y_POSITION_MODULE_H, Y_POSITION_MODULE_V, Y_POSITION_CHARGER_H, Y_POSITION_CHARGER_V, \
     Y_POSITION_LOAD, Y_POSITION_GRIPPER_STORAGE, Y_POSITION_HAS_ZEROED, Y_POSITION_POWERED, Y_POSITION_ALARM, \
-    PLC_CMD_POWER_ON
+    PLC_CMD_POWER_ON, PLC_CMD_FREE_DRIVE, PLC_CMD_GRIPPER, PLC_CMD_FIND_NEAREST, GRIPPER_DO_INDEX, \
+    PLC_CMD_SHIFT_GRIPPER, SHIFT_GRIPPER_DO_INDEX, PLC_CMD_TRAJECTORY, PLC_CMD_ACTION, H_TABLE_LIFT_POS_TOP, \
+    H_TABLE_LIFT_POS_BOTTOM, H_TABLE_LIFT_ALARM, V_TABLE_LIFT_POS_TOP, V_TABLE_LIFT_POS_BOTTOM, V_TABLE_LIFT_ALARM
 
 
 @dataclass
@@ -94,7 +96,7 @@ class OPCUAClient:
         await self.client.disconnect()
         print("Клиент отключен")
 
-    async def read_node(self, node_name):
+    async def read_node(self, node_name: str) -> int:
         """Чтение значения узла"""
         try:
             node = self.client.get_node(f"ns=4;s={node_name}")
@@ -161,6 +163,8 @@ class OPCUAClient:
 
                 await self.get_wp_info_and_update_opc_data()
 
+                await self.handle_plc_commands()
+
                 await asyncio.sleep(OPC_CLIENT_TIME)  # задержка для снижения нагрузки
         except asyncio.CancelledError:
             self.logger.info("Получен сигнал остановки клиента")
@@ -184,6 +188,11 @@ class OPCUAClient:
         """Проверка позиции манипулятора по осям"""
         pass
 
+    @abstractmethod
+    def handle_plc_commands(self):
+        """Чтение командных узлов с PLC и пересылка в cmd_queue"""
+        pass
+
     async def convert(self, node):
         try:
             return bool(await self.read_node(node))
@@ -195,21 +204,113 @@ class OPCUAClientManipulator(OPCUAClient):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._plc_power_prev = 0
+        self._plc_free_drive_prev = 0
+        self._plc_gripper_prev = 0
+        self._plc_shift_gripper_prev = 0
+        self._plc_traj_prev = 0
+        self._plc_action_prev = 0
 
-    async def handle_plc_commands(self):
+    async def handle_plc_commands(self) -> None:
         """Чтение командных узлов с PLC и пересылка в cmd_queue"""
+        await self.handle_plc_simple_command(PLC_CMD_POWER_ON,
+                                             self._plc_power_prev,
+                                             CmdType.POWER,
+                                             'POWER')
+
+        await self.handle_plc_simple_command(PLC_CMD_FREE_DRIVE,
+                                             self._plc_free_drive_prev,
+                                             CmdType.FREE_DRIVE,
+                                             'FREE_DRIVE')
+
+        await self.handle_plc_simple_command(PLC_CMD_FIND_NEAREST,
+                                             self._plc_free_drive_prev,
+                                             CmdType.FIND_NEAREST,
+                                             'FIND_NEAREST')
+
+        await self.handle_gripper_command(PLC_CMD_GRIPPER,
+                                          self._plc_gripper_prev,
+                                          GRIPPER_DO_INDEX,
+                                          CmdType.IO_SET,
+                                          'FREE_DRIVE')
+
+        await self.handle_gripper_command(PLC_CMD_SHIFT_GRIPPER,
+                                          self._plc_shift_gripper_prev,
+                                          SHIFT_GRIPPER_DO_INDEX,
+                                          CmdType.IO_SET,
+                                          'FREE_DRIVE')
+
+        await self.handle_traj_cmd(PLC_CMD_TRAJECTORY,
+                                   self._plc_traj_prev,
+                                   CmdType.EXECUTE_TRAJECTORY,
+                                   'EXECUTE_TRAJECTORY')
+
+        await self.handle_traj_cmd(PLC_CMD_ACTION,
+                                   self._plc_action_prev,
+                                   CmdType.EXECUTE_ACTION,
+                                   'EXECUTE_ACTION')
+
+    async def handle_traj_cmd(self,
+                              node_name: str,
+                              prev_val: int,
+                              cmd_type: CmdType,
+                              cmd_text: str) -> None:
+        """Обработка Траектории или Action с PLC"""
         try:
-            plc_power = await self.read_node(PLC_CMD_POWER_ON)
-            if plc_power is not None:
-                plc_power = int(plc_power)
-                if self._plc_power_prev != plc_power:
-                    self.cmd_queue.put(Command(CmdType.POWER,
-                                               {'state': plc_power},
+            plc_cmd = await self.read_node(node_name)
+            if prev_val != plc_cmd:
+                plc_cmd = int(plc_cmd)
+                if plc_cmd == 0:
+                    self.cmd_queue.put(
+                        Command(CmdType.STOP_MOVE, {},
+                                source="OPC"))
+                elif plc_cmd in range(1, 100):
+                    self.cmd_queue.put(Command(cmd_type,
+                                               {'num': int(plc_cmd)},
                                                source="PLC"))
-                    self.logger.info(f"PLC command POWER: {plc_power}")
-                self._plc_power_prev = plc_power
+                    self.logger.info(f"PLC command {cmd_text}: {plc_cmd}")
+                prev_val = plc_cmd
         except Exception as e:
-            self.logger.error(f"Error reading PLC commands: {e}")
+            self.logger.error(f"Error reading PLC {cmd_text} command: {e}")
+
+    async def handle_plc_simple_command(self,
+                                        node_name: str,
+                                        prev_val: int,
+                                        cmd_type: CmdType,
+                                        cmd_text: str) -> None:
+        """Обработка простой команды 0/1 с PLC"""
+        try:
+            plc_cmd = await self.read_node(node_name)
+            if plc_cmd is not None:
+                plc_cmd = int(plc_cmd)
+                if prev_val != plc_cmd:
+                    self.cmd_queue.put(Command(cmd_type,
+                                               {'state': plc_cmd},
+                                               source="PLC"))
+                    self.logger.info(f"PLC command {cmd_text}: {plc_cmd}")
+                prev_val = plc_cmd
+        except Exception as e:
+            self.logger.error(f"Error reading PLC {cmd_text} command: {e}")
+
+    async def handle_gripper_command(self,
+                                     node_name: str,
+                                     prev_val: int,
+                                     grip_index: int,
+                                     cmd_type: CmdType,
+                                     cmd_text: str) -> None:
+        """Обработка команды действия с грипперами с PLC"""
+        try:
+            plc_cmd = await self.read_node(node_name)
+            if plc_cmd is not None:
+                plc_cmd = int(plc_cmd)
+                if prev_val != plc_cmd:
+                    self.cmd_queue.put(Command(cmd_type,
+                                               {'index': grip_index,
+                                                'value': bool(plc_cmd)},
+                                               source="PLC"))
+                    self.logger.info(f"PLC command {cmd_text}: {plc_cmd}")
+                prev_val = plc_cmd
+        except Exception as e:
+            self.logger.error(f"Error reading PLC {cmd_text} command: {e}")
 
     async def read_nodes(self):
         """Чтение всех узлов сервера"""
@@ -260,9 +361,16 @@ class OPCUAClientVT(OPCUAClient):
         self.h_table_hatch_opened = self.convert(H_TABLE_HATCH_OPENED)
         self.h_table_hatch_closed = self.convert(H_TABLE_HATCH_CLOSED)
         self.h_table_hatch_alarm = self.convert(H_TABLE_HATCH_ALARM)
+        self.h_table_lift_pos_top = self.convert(H_TABLE_LIFT_POS_TOP)
+        self.h_table_lift_pos_bottom = self.convert(H_TABLE_LIFT_POS_BOTTOM)
+        self.h_table_lift_alarm = self.convert(H_TABLE_LIFT_ALARM)
 
     def check_position(self):
         """Проверка позиции манипулятора по осям"""
+        pass
+
+    def handle_plc_commands(self):
+        """Чтение командных узлов с PLC и пересылка в cmd_queue"""
         pass
 
     async def get_wp_info_and_update_opc_data(self):
@@ -276,9 +384,16 @@ class OPCUAClientVTOL(OPCUAClient):
         self.v_table_hatch_opened = self.convert(V_TABLE_HATCH_OPENED)
         self.v_table_hatch_closed = self.convert(V_TABLE_HATCH_CLOSED)
         self.v_table_hatch_alarm = self.convert(V_TABLE_HATCH_ALARM)
+        self.v_table_lift_pos_top = self.convert(V_TABLE_LIFT_POS_TOP)
+        self.v_table_lift_pos_bottom = self.convert(V_TABLE_LIFT_POS_BOTTOM)
+        self.v_table_lift_alarm = self.convert(V_TABLE_LIFT_ALARM)
 
     def check_position(self):
         """Проверка позиции манипулятора по осям"""
+        pass
+
+    def handle_plc_commands(self):
+        """Чтение командных узлов с PLC и пересылка в cmd_queue"""
         pass
 
     async def get_wp_info_and_update_opc_data(self):
