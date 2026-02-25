@@ -26,6 +26,9 @@ BLOCK = 400
 
 OPC_CLIENT_TIME = 1
 
+# PLC command nodes (читаются OPC клиентом, пересылаются в cmd_queue)
+PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.qxPowerOn"
+
 ENABLE_MOVE_TO_MODULE_H = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToModuleH"
 ENABLE_MOVE_TO_MODULE_V = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToModuleV"
 ENABLE_MOVE_TO_CHARGER_H = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToChargerH"
