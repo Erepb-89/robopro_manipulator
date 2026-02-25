@@ -317,7 +317,7 @@ class MainWindow(QMainWindow):
         try:
             cmd_enum = getattr(RobotTrajectories, trajectory_name)
             # команда через OPC
-            self.opc_handler.set_command(cmd_enum.value)
+            self.opc_handler.set_trajectory(cmd_enum.value)
 
             # команда напрямую в манипулятор
             # self.manipulator_command(
