@@ -13,7 +13,8 @@ from actions import actions
 from opc_client import ManipulatorPoints
 from routes import routes
 from available_trajectories import available_trajectories
-from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION
+from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION, \
+    EXEC_TRAJ, IO_SET
 from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotRoutes
 
 # sys.path.append("/home/user/robot-api")
@@ -500,13 +501,13 @@ class RobotController:
     def execute_action(self, action: RobotActions) -> None:
         """Выполнить действие"""
         for command in self.Actions.get(action.name).commands:
-            if command.cmd_type == "EXECUTE_TRAJECTORY":
+            if command.cmd_type == EXEC_TRAJ:
                 self.cmd_queue.put(Command(
                     CmdType.EXECUTE_TRAJECTORY,
-                    {'traj': int(getattr(RobotTrajectories, command.name))},
+                    {'num': int(getattr(RobotTrajectories, command.name))},
                     source="GUI"
                 ))
-            if command.cmd_type == "IO_SET":
+            if command.cmd_type == IO_SET:
                 self.cmd_queue.put(Command(
                     CmdType.IO_SET,
                     {'index': GRIPPER_DO_INDEX, 'value': bool(command.name)},
@@ -520,7 +521,7 @@ class RobotController:
         for traj in self.Routes.get(route.name).trajectories:
             self.cmd_queue.put(Command(
                 CmdType.EXECUTE_TRAJECTORY,
-                {'traj': int(getattr(RobotTrajectories, traj.name))},
+                {'num': int(getattr(RobotTrajectories, traj.name))},
                 source="GUI"
             ))
 
@@ -638,13 +639,13 @@ class RobotController:
 
                 elif cmd.type == CmdType.EXECUTE_TRAJECTORY:
                     self.data.load_waypoints()
-                    self.execute_trajectory(RobotTrajectories(cmd.payload['traj']))
+                    self.execute_trajectory(RobotTrajectories(cmd.payload['num']))
 
                 elif cmd.type == CmdType.EXECUTE_ROUTE:
-                    self.execute_route(RobotRoutes(cmd.payload['route']))
+                    self.execute_route(RobotRoutes(cmd.payload['num']))
 
                 elif cmd.type == CmdType.EXECUTE_ACTION:
-                    self.execute_action(RobotActions(cmd.payload['action']))
+                    self.execute_action(RobotActions(cmd.payload['num']))
 
                 elif cmd.type == CmdType.MOVE_TO_POINT:
                     self.data.load_waypoints()
