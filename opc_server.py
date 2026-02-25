@@ -194,7 +194,7 @@ class OPCUAServer:
             else:
                 if q_trajectory in range(1, 100):
                     self.cmd_queue.put(
-                        Command(CmdType.EXECUTE_TRAJECTORY, {'traj': int(q_trajectory)},
+                        Command(CmdType.EXECUTE_TRAJECTORY, {'num': int(q_trajectory)},
                                 source="OPC"))
         self.q_traj_prev = q_trajectory
 
