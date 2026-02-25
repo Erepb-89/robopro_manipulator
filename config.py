@@ -12,6 +12,10 @@ ROBOT_IP = "127.0.0.1"
 OPC_ENDPOINT = "opc.tcp://127.0.0.1:4840"  # для теста
 PLC_MANIPULATOR_ADDRESS = "opc.tcp://192.168.88.100:4840/freeopcua/server/"  # для теста
 
+# Команды
+EXEC_TRAJ = "EXECUTE_TRAJECTORY"
+IO_SET = "IO_SET"
+
 # IO и прочее
 NUM_DIGITAL_IO = 24
 GRIPPER_DO_INDEX = 0
@@ -24,10 +28,17 @@ FINISHED = 200
 EXCEPTION = 300
 BLOCK = 400
 
+# OPC
 OPC_CLIENT_TIME = 1
 
 # PLC command nodes (читаются OPC клиентом, пересылаются в cmd_queue)
 PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.qxPowerOn"
+PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.qxFreeDrive"
+PLC_CMD_FIND_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.qxFindNearest"
+PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.qxGripperCmd"
+PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.qxShiftGripper"
+PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.qxAction"
+PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.qxTrajectory"
 
 ENABLE_MOVE_TO_MODULE_H = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToModuleH"
 ENABLE_MOVE_TO_MODULE_V = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToModuleV"
@@ -68,7 +79,13 @@ Y_POSITION_ALARM = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixAlarm"
 H_TABLE_HATCH_OPENED = "|var|HCFA-PLC.Application.OPC.H_Table.Hatch.ixOpened"
 H_TABLE_HATCH_CLOSED = "|var|HCFA-PLC.Application.OPC.H_Table.Hatch.ixClosed"
 H_TABLE_HATCH_ALARM = "|var|HCFA-PLC.Application.OPC.H_Table.Hatch.ixAlarm"
+H_TABLE_LIFT_POS_TOP = "|var|HCFA-PLC.Application.OPC.H_Table.Lift.ixPositionTop"
+H_TABLE_LIFT_POS_BOTTOM = "|var|HCFA-PLC.Application.OPC.H_Table.Lift.ixPositionBottom"
+H_TABLE_LIFT_ALARM = "|var|HCFA-PLC.Application.OPC.H_Table.Lift.ixAlarm"
 
 V_TABLE_HATCH_OPENED = "|var|HCFA-PLC.Application.OPC.V_Table.Hatch.ixOpened"
 V_TABLE_HATCH_CLOSED = "|var|HCFA-PLC.Application.OPC.V_Table.Hatch.ixClosed"
 V_TABLE_HATCH_ALARM = "|var|HCFA-PLC.Application.OPC.V_Table.Hatch.ixAlarm"
+V_TABLE_LIFT_POS_TOP = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixPositionTop"
+V_TABLE_LIFT_POS_BOTTOM = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixPositionBottom"
+V_TABLE_LIFT_ALARM = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixAlarm"
