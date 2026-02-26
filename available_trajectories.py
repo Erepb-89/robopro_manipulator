@@ -19,14 +19,14 @@ available_trajectories = {
          "tHelicopter2_To_Helicopter2Load"},  # pHelicopter2
     "pHelicopter2Load":
         {"tHelicopter2Load_To_Helicopter2"},  # pHelicopter2Load
-    "pLoad":
-        {"tLoad_To_HomePosition",
-         "tLoad_To_Load1",
-         "tLoad_To_Load2"},  # pLoad
-    "pLoad1":
-        {"tLoad1_To_Load"},  # pLoad1
-    "pLoad2":
-        {"tLoad2_To_Load"},  # pLoad2
+    "pPayload":
+        {"tPayload_To_HomePosition",
+         "tPayload_To_Payload1",
+         "tPayload_To_Payload2"},  # pPayload
+    "pPayload1":
+        {"tPayload1_To_Payload"},  # pPayload1
+    "pPayload2":
+        {"tPayload2_To_Payload"},  # pPayload2
     "pGrippers":
         {"tGrippers_To_HomePosition",
          "tGrippers_To_Grippers1",
