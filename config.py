@@ -11,6 +11,8 @@ ROBOT_IP = "127.0.0.1"
 # OPC_ENDPOINT = "opc.tcp://0.0.0.0:4840"  # для отладки по месту
 OPC_ENDPOINT = "opc.tcp://127.0.0.1:4840"  # для теста
 PLC_MANIPULATOR_ADDRESS = "opc.tcp://192.168.88.100:4840/freeopcua/server/"  # для теста
+PLC_VT_ADDRESS = "opc.tcp://192.168.88.101:4840/freeopcua/server/"  # для теста
+PLC_VTOL_ADDRESS = "opc.tcp://192.168.88.102:4840/freeopcua/server/"  # для теста
 
 # Команды
 EXEC_TRAJ = "EXECUTE_TRAJECTORY"
@@ -50,11 +52,11 @@ ENABLE_MOVE_TO_HOME = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToHo
 
 HELICOPTER_MODULE = ["pHelicopter1", "pHelicopter2", "pHomePosition"]
 VTOL_MODULE = ["pVTOL1", "pVTOL2", "pHomePosition"]
-LOAD_STORAGE = ["pLoad1", "pLoad2", "pHomePosition"]
+LOAD_STORAGE = ["pPayload1", "pPayload2", "pHomePosition"]
 GRIPPERS_STORAGE = ["pHomePosition"]
 CHARGER_H = ["pHomePosition"]
 CHARGER_V = ["pHomePosition"]
-HOME_POSITION = ["pHelicopterModule", "pVTOLModule", "pLoad", "pGrippers", "pCharger"]
+HOME_POSITION = ["pHelicopterModule", "pVTOLModule", "pPayload", "pGrippers", "pCharger"]
 
 X_POSITION_MODULE_H = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionModuleH"
 X_POSITION_MODULE_V = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionModuleV"
@@ -75,6 +77,10 @@ Y_POSITION_GRIPPER_STORAGE = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPosition
 Y_POSITION_HAS_ZEROED = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixHasZeroed"
 Y_POSITION_POWERED = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPowered"
 Y_POSITION_ALARM = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixAlarm"
+
+# Watchdog узлы (ping/pong между клиентом и PLC)
+OPC_WATCHDOG_WRITE_NODE = "|var|HCFA-PLC.Application.OPC.Watchdog.qxPing"
+OPC_WATCHDOG_READ_NODE = "|var|HCFA-PLC.Application.OPC.Watchdog.ixPong"
 
 H_TABLE_HATCH_OPENED = "|var|HCFA-PLC.Application.OPC.H_Table.Hatch.ixOpened"
 H_TABLE_HATCH_CLOSED = "|var|HCFA-PLC.Application.OPC.H_Table.Hatch.ixClosed"
