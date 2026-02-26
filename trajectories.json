@@ -138,7 +138,7 @@
                     "motion": "joint"
                 },
                 {
-                    "name": "pLoad",
+                    "name": "pPayload",
                     "motion": "joint"
                 }
             ]
@@ -147,7 +147,7 @@
             "name": "tLoad_To_HomePosition",
             "positions": [
                 {
-                    "name": "pLoad",
+                    "name": "pPayload",
                     "motion": "joint"
                 },
                 {
@@ -160,11 +160,11 @@
             "name": "tLoad_To_Load1",
             "positions": [
                 {
-                    "name": "pLoad",
+                    "name": "pPayload",
                     "motion": "joint"
                 },
                 {
-                    "name": "pLoad1",
+                    "name": "pPayload1",
                     "motion": "joint"
                 }
             ]
@@ -173,11 +173,11 @@
             "name": "tLoad1_To_Load",
             "positions": [
                 {
-                    "name": "pLoad1",
+                    "name": "pPayload1",
                     "motion": "joint"
                 },
                 {
-                    "name": "pLoad",
+                    "name": "pPayload",
                     "motion": "joint"
                 }
             ]
@@ -186,11 +186,11 @@
             "name": "tLoad_To_Load2",
             "positions": [
                 {
-                    "name": "pLoad",
+                    "name": "pPayload",
                     "motion": "joint"
                 },
                 {
-                    "name": "pLoad2",
+                    "name": "pPayload2",
                     "motion": "joint"
                 }
             ]
@@ -199,11 +199,11 @@
             "name": "tLoad2_To_Load",
             "positions": [
                 {
-                    "name": "pLoad2",
+                    "name": "pPayload2",
                     "motion": "joint"
                 },
                 {
-                    "name": "pLoad",
+                    "name": "pPayload",
                     "motion": "joint"
                 }
             ]

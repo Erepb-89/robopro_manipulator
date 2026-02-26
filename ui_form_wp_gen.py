@@ -321,7 +321,7 @@ class MainWindow(QMainWindow):
 
             # команда напрямую в манипулятор
             # self.manipulator_command(
-            #     Command(CmdType.EXECUTE_TRAJECTORY, {'traj': cmd_enum}, source="GUI"))
+            #     Command(CmdType.EXECUTE_TRAJECTORY, {'num': cmd_enum}, source="GUI"))
 
             QtWidgets.QMessageBox.information(None, "Success",
                                               f"Moving by trajectory '{trajectory_name}'")
