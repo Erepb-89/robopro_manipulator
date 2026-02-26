@@ -42,6 +42,7 @@ class OPCUAWatchdog:
         self._running = False
         self._loop: asyncio.AbstractEventLoop | None = None
         self._thread: threading.Thread | None = None
+        self._stop_event: asyncio.Event | None = None  # для прерывания sleep
 
     def start(self) -> None:
         """Запустить watchdog в фоновом потоке."""
@@ -59,14 +60,22 @@ class OPCUAWatchdog:
     def stop(self) -> None:
         """Остановить watchdog из внешнего потока."""
         self._running = False
-        if self._loop and self._loop.is_running():
-            self._loop.call_soon_threadsafe(self._loop.stop)
+        if self._loop and self._stop_event:
+            self._loop.call_soon_threadsafe(self._stop_event.set)
         if self._thread:
             self._thread.join(timeout=10)
         self.logger.info("OPC UA Watchdog остановлен")
 
+    async def _interruptible_sleep(self, delay: float) -> None:
+        """asyncio.sleep, который прерывается при вызове stop()."""
+        try:
+            await asyncio.wait_for(self._stop_event.wait(), timeout=delay)
+        except asyncio.TimeoutError:
+            pass  # нормальное истечение интервала
+
     async def _run(self) -> None:
         """Основной цикл с автоматическим переподключением."""
+        self._stop_event = asyncio.Event()
         counter = 0
 
         while self._running:
@@ -94,7 +103,7 @@ class OPCUAWatchdog:
                 self.logger.info(
                     f"Watchdog: повторное подключение через {self.reconnect_delay} с"
                 )
-                await asyncio.sleep(self.reconnect_delay)
+                await self._interruptible_sleep(self.reconnect_delay)
 
     async def _watchdog_loop(self, client: Client, counter: int) -> int:
         """Цикл пинга. Возвращает текущий счётчик при выходе."""
@@ -118,7 +127,7 @@ class OPCUAWatchdog:
                     f"(значение={value})"
                 )
                 counter += 1
-                await asyncio.sleep(self.interval)
+                await self._interruptible_sleep(self.interval)
                 continue
             except Exception as e:
                 self.logger.error(f"Watchdog: ошибка записи — {e}")
@@ -135,7 +144,7 @@ class OPCUAWatchdog:
                     f"Watchdog: таймаут чтения из {self.read_node}"
                 )
                 counter += 1
-                await asyncio.sleep(self.interval)
+                await self._interruptible_sleep(self.interval)
                 continue
             except Exception as e:
                 self.logger.error(f"Watchdog: ошибка чтения — {e}")
@@ -149,7 +158,7 @@ class OPCUAWatchdog:
                     f"Watchdog: неожиданный тип ответа — {response!r}"
                 )
                 counter += 1
-                await asyncio.sleep(self.interval)
+                await self._interruptible_sleep(self.interval)
                 continue
 
             if received != value:
@@ -162,7 +171,7 @@ class OPCUAWatchdog:
                 self.logger.debug(f"Watchdog OK: {value} == {received}")
 
             counter += 1
-            await asyncio.sleep(self.interval)
+            await self._interruptible_sleep(self.interval)
 
         return counter
 
