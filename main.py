@@ -4,8 +4,10 @@ import threading
 from queue import Queue
 from PyQt5 import QtWidgets
 
-from config import ROBOT_IP, OPC_ENDPOINT, LOG_PATH, PLC_MANIPULATOR_ADDRESS
-from opc_client import OPCUAClientManipulator
+from config import ROBOT_IP, OPC_ENDPOINT, LOG_PATH, PLC_MANIPULATOR_ADDRESS, \
+    PLC_VT_ADDRESS, PLC_VTOL_ADDRESS
+from opc_client import OPCUAClientManipulator, OPCUAClientVT, OPCUAClientVTOL
+from opc_watchdog import create_watchdog
 from utils import setup_logging
 from robot_controller import RobotController
 from opc_server import OPCUAServer
@@ -52,6 +54,27 @@ class MainAppClass:
                                                            self.logger)
         self.OpcClientManipulator.start_in_thread()
 
+        self.manipulator_wd = create_watchdog(self.logger)
+        self.manipulator_wd.start()
+
+        # self.OpcClientVT = OPCUAClientVT(PLC_VT_ADDRESS,
+        #                                  self.cmd_queue,
+        #                                  self.RobotController,
+        #                                  self.logger)
+        # self.OpcClientVT.start_in_thread()
+        #
+        # self.vt_wd = create_watchdog(self.logger)
+        # self.vt_wd.start()
+        #
+        # self.OpcClientVTOL = OPCUAClientVTOL(PLC_VTOL_ADDRESS,
+        #                                      self.cmd_queue,
+        #                                      self.RobotController,
+        #                                      self.logger)
+        # self.OpcClientVTOL.start_in_thread()
+        #
+        # self.vtol_wd = create_watchdog(self.logger)
+        # self.vtol_wd.start()
+
         self.watchdog = WatchdogManager(self.heartbit, interval_sec=5.0,
                                         logger=self.logger)
         self.watchdog.start()
@@ -75,11 +98,12 @@ class MainAppClass:
         try:
             self.cmd_queue.put_nowait(
                 Command(CmdType.SHUTDOWN, {}, source="APP"))
-        except Exception:
-            pass
+        except Exception as e:
+            print(e)
         self.OpcServer.stop()
         self.RobotController.stop()
         self.OpcClientManipulator.stop_from_thread()
+        self.manipulator_wd.stop()
 
         event.accept()
 
