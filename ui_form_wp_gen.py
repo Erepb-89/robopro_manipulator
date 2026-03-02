@@ -2,12 +2,14 @@ from PyQt5 import QtCore, QtWidgets
 from typing import Dict
 
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout
 
 from commands import Command, CmdType, RobotTrajectories, RobotRoutes, RobotActions
-from config import POINTS_PATH, TRAJ_PATH
+from config import POINTS_PATH, TRAJ_PATH, RED_COLOR
 from ui_form import Ui_Form
 from utils import atomic_write_json
+from trajectory_map_widget import TrajectoryMapWidget
+from available_trajectories import available_trajectories as AVAIL_TRAJS
 
 
 class MainWindow(QMainWindow):
@@ -52,7 +54,8 @@ class MainWindow(QMainWindow):
         self.ui.ExecuteAction.clicked.connect(self.execute_selected_action)
         self.ui.OutputControl.setCheckable(True)
         self.ui.OutputControl.toggled.connect(self.manipulator_gripper_control)
-        # self.ui.ShiftGripper.toggled.connect(self.manipulator_shift_gripper)
+        self.ui.ShiftGripper.setCheckable(True)
+        self.ui.ShiftGripper.toggled.connect(self.manipulator_shift_gripper)
         self.ui.SavePoint.clicked.connect(self.save_current_position)
         self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)
 
@@ -63,6 +66,7 @@ class MainWindow(QMainWindow):
         self.update_combo_box()
         self.update_trajectories()
         self.update_actions()
+        self._init_trajectory_map()
         self.ui.PowerOn.clicked.connect(lambda: self.cmd_queue.put(
             Command(CmdType.POWER, {'state': 1}, source="GUI")
         ))
@@ -74,6 +78,87 @@ class MainWindow(QMainWindow):
         # self.ui.webView.load(QtCore.QUrl("http://192.168.88.100:8080/"))
 
         self.show()
+
+    def _init_trajectory_map(self) -> None:
+        """Встраивает TrajectoryMapWidget в плейсхолдер 3 вкладки."""
+        placeholder = self.ui.trajectoryMapPlaceholder
+        layout = QVBoxLayout(placeholder)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.trajectory_map = TrajectoryMapWidget(placeholder)
+        layout.addWidget(self.trajectory_map)
+
+        # Клик по узлу → выбрать точку в комбобоксе Tab 1
+        self.trajectory_map.node_clicked.connect(self._on_map_node_clicked)
+
+        # Обновляем карту при смене вкладки
+        self.ui.tabWidget.currentChanged.connect(self._on_tab_changed)
+
+    def _on_map_node_clicked(self, point_name: str) -> None:
+        """
+        Клик по узлу карты:
+        - выбирает точку в комбобоксе Tab 1
+        - если текущая позиция известна, ищет прямую траекторию и подсвечивает ребро
+        - синхронизирует выбор траектории с TrajectoriesComboBox Tab 1
+        - НЕ переключает вкладку автоматически (оператор видит подсветку на карте)
+        """
+        # Синхронизация точки с Tab 1
+        idx = self.ui.comboBox.findText(point_name)
+        if idx >= 0:
+            self.ui.comboBox.setCurrentIndex(idx)
+
+        src = self.trajectory_map._current_point.get('waypoint')
+        if not src or src == point_name:
+            return
+
+        traj_name = self._find_direct_trajectory(src, point_name)
+        if traj_name:
+            # Подсветка ребра на карте
+            self.trajectory_map.highlight_trajectory(src, point_name, traj_name)
+            # Синхронизация с TrajectoriesComboBox и TrajectoryName на Tab 1
+            tidx = self.ui.TrajectoriesComboBox.findText(traj_name)
+            if tidx >= 0:
+                self.ui.TrajectoriesComboBox.setCurrentIndex(tidx)
+            self.ui.TrajectoryName.setText(traj_name)
+        else:
+            self.trajectory_map._info_label.setText(
+                f"Нет прямой траектории: {src} → {point_name}")
+            self.trajectory_map._info_label.setStyleSheet(
+                RED_COLOR)
+
+    def _find_direct_trajectory(self, src: str, dst: str) -> str | None:
+        """
+        Ищет прямую траекторию между src и dst через available_trajectories.
+        Проверяет оба направления: src→dst и dst→src.
+        """
+        dst_short = dst[1:] if dst.startswith('p') else dst
+        src_short = src[1:] if src.startswith('p') else src
+
+        # Прямое направление: из src в dst
+        for traj in AVAIL_TRAJS.get(src, set()):
+            if f"_To_{dst_short}" in traj and traj in self.Trajectories:
+                return traj
+
+        # Обратное направление: из dst в src
+        for traj in AVAIL_TRAJS.get(dst, set()):
+            if f"_To_{src_short}" in traj and traj in self.Trajectories:
+                return traj
+
+        return None
+
+    def _on_tab_changed(self, index: int) -> None:
+        """При переходе на вкладку карты — обновляем текущую позицию."""
+        if index == 2:
+            try:
+                nearest = self.RobotController.find_nearest_waypoint()
+                if nearest:
+                    self.trajectory_map.set_current_position(nearest)
+            except Exception as err:
+                print(err)
+        else:
+            # Уходим с карты — сбрасываем подсветку рёбер
+            if hasattr(self, 'trajectory_map'):
+                self.trajectory_map.reset_highlight()
 
     def update_power_button_state(self) -> None:
         is_running = (self.RobotController.get_controller_state() == 'run')
