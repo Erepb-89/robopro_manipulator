@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWebEngineWidgets
 
 
 class Ui_Form(object):
@@ -285,8 +286,17 @@ class Ui_Form(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.OutputControl.setFont(font)
+        self.OutputControl.setCheckable(True)
         self.OutputControl.setObjectName("OutputControl")
         self.actionButtonsLayout.addWidget(self.OutputControl)
+        self.ShiftGripper = QtWidgets.QPushButton(self.groupActions)
+        self.ShiftGripper.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.ShiftGripper.setFont(font)
+        self.ShiftGripper.setCheckable(True)
+        self.ShiftGripper.setObjectName("ShiftGripper")
+        self.actionButtonsLayout.addWidget(self.ShiftGripper)
         self.actionsOuterLayout.addLayout(self.actionButtonsLayout)
         self.bottomRow.addWidget(self.groupActions)
         self.groupTrajectoryView = QtWidgets.QGroupBox(self.tab)
@@ -333,6 +343,17 @@ class Ui_Form(object):
         self.webView.setObjectName("webView")
         self.tab2Layout.addWidget(self.webView)
         self.tabWidget.addTab(self.tab_2, "")
+        # ── Tab 3: Trajectory Map ──────────────────────────────────────────
+        self.tab_3 = QtWidgets.QWidget()
+        self.tab_3.setObjectName("tab_3")
+        self.tab3Layout = QtWidgets.QVBoxLayout(self.tab_3)
+        self.tab3Layout.setContentsMargins(0, 0, 0, 0)
+        self.tab3Layout.setObjectName("tab3Layout")
+        self.trajectoryMapPlaceholder = QtWidgets.QWidget(self.tab_3)
+        self.trajectoryMapPlaceholder.setMinimumSize(QtCore.QSize(800, 600))
+        self.trajectoryMapPlaceholder.setObjectName("trajectoryMapPlaceholder")
+        self.tab3Layout.addWidget(self.trajectoryMapPlaceholder)
+        self.tabWidget.addTab(self.tab_3, "")
         self.centralLayout.addWidget(self.tabWidget)
         Form.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(Form)
@@ -357,7 +378,8 @@ class Ui_Form(object):
         self.groupMotionMode.setTitle(_translate("Form", "Motion Mode"))
         self.ActivateZG.setText(_translate("Form", "ActivateZG"))
         self.ActivateSJ.setText(_translate("Form", "SimpleJoystick"))
-        self.chkLineMotion.setToolTip(_translate("Form", "Если включено — движение по TCP (line). Если выключено — суставное (joint)."))
+        self.chkLineMotion.setToolTip(
+            _translate("Form", "Если включено — движение по TCP (line). Если выключено — суставное (joint)."))
         self.chkLineMotion.setText(_translate("Form", "Line motion"))
         self.groupSaveWaypoint.setTitle(_translate("Form", "Save Waypoint"))
         self.WaypointName.setText(_translate("Form", "Name:"))
@@ -377,9 +399,10 @@ class Ui_Form(object):
         self.ActionName.setText(_translate("Form", "ActionName"))
         self.ExecuteAction.setText(_translate("Form", "Execute Action"))
         self.OutputControl.setText(_translate("Form", "DO Gripper"))
+        self.ShiftGripper.setText(_translate("Form", "Shift Gripper"))
         self.groupTrajectoryView.setTitle(_translate("Form", "Trajectory View"))
         self.TrajectoryNameText_2.setText(_translate("Form", "Current:"))
         self.TrajectoryName.setText(_translate("Form", "TrajectoryName"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Form", "Waypoints"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Form", "PLC Visualization"))
-from PyQt5 import QtWebEngineWidgets
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Form", "Trajectory Map"))
