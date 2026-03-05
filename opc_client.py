@@ -20,7 +20,8 @@ from config import HELICOPTER_MODULE, VTOL_MODULE, LOAD_STORAGE, GRIPPERS_STORAG
     Y_POSITION_LOAD, Y_POSITION_GRIPPER_STORAGE, Y_POSITION_HAS_ZEROED, Y_POSITION_POWERED, Y_POSITION_ALARM, \
     PLC_CMD_POWER_ON, PLC_CMD_FREE_DRIVE, PLC_CMD_GRIPPER, PLC_CMD_FIND_NEAREST, GRIPPER_DO_INDEX, \
     PLC_CMD_SHIFT_GRIPPER, SHIFT_GRIPPER_DO_INDEX, PLC_CMD_TRAJECTORY, PLC_CMD_ACTION, H_TABLE_LIFT_POS_TOP, \
-    H_TABLE_LIFT_POS_BOTTOM, H_TABLE_LIFT_ALARM, V_TABLE_LIFT_POS_TOP, V_TABLE_LIFT_POS_BOTTOM, V_TABLE_LIFT_ALARM
+    H_TABLE_LIFT_POS_BOTTOM, H_TABLE_LIFT_ALARM, V_TABLE_LIFT_POS_TOP, V_TABLE_LIFT_POS_BOTTOM, V_TABLE_LIFT_ALARM, \
+    H_BOX_LIFT_POS_TOP, H_BOX_LIFT_POS_BOTTOM, H_BOX_LIFT_ALARM
 
 
 @dataclass
@@ -364,6 +365,10 @@ class OPCUAClientVT(OPCUAClient):
         self.h_table_lift_pos_top = self.convert(H_TABLE_LIFT_POS_TOP)
         self.h_table_lift_pos_bottom = self.convert(H_TABLE_LIFT_POS_BOTTOM)
         self.h_table_lift_alarm = self.convert(H_TABLE_LIFT_ALARM)
+
+        self.h_box_lift_pos_top = self.convert(H_BOX_LIFT_POS_TOP)
+        self.h_box_lift_pos_bottom = self.convert(H_BOX_LIFT_POS_BOTTOM)
+        self.h_box_lift_alarm = self.convert(H_BOX_LIFT_ALARM)
 
     def check_position(self):
         """Проверка позиции манипулятора по осям"""

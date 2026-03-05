@@ -8,7 +8,7 @@ class CmdType(Enum):
     POWER = auto()  # {'state': 1|2}
     FREE_DRIVE = auto()  # {'state': 1|2}
     EXECUTE_TRAJECTORY = auto()  # {'num': int}
-    EXECUTE_ROUTE = auto()  # {'num': int}
+    # EXECUTE_ROUTE = auto()  # {'num': int}
     EXECUTE_ACTION = auto()  # {'num': int}
     MOVE_TO_POINT = auto()  # {'name': str}
     IO_SET = auto()  # {'index': int, 'value': bool}
@@ -37,12 +37,12 @@ class RobotTrajectories(enum.Enum):
     tHelicopter2_To_HelicopterModule = 8
     tHelicopter2_To_Helicopter2Load = 9
     tHelicopter2Load_To_Helicopter2 = 10
-    tHomePosition_To_Load = 11
-    tLoad_To_HomePosition = 12
-    tLoad_To_Load1 = 13
-    tLoad1_To_Load = 14
-    tLoad_To_Load2 = 15
-    tLoad2_To_Load = 16
+    tHomePosition_To_Payload = 11
+    tPayload_To_HomePosition = 12
+    tPayload_To_Payload1 = 13
+    tPayload1_To_Payload = 14
+    tPayload_To_Payload2 = 15
+    tPayload2_To_Payload = 16
     tHomePosition_To_Grippers = 17
     tGrippers_To_HomePosition = 18
     tGrippers_To_Grippers1 = 19
@@ -68,38 +68,38 @@ class RobotTrajectories(enum.Enum):
     tVTOL2_To_VTOL2Battery = 39
     tVTOL2Battery_To_VTOL2 = 40
 
-
-class RobotRoutes(enum.Enum):
-    rHomePosition_To_Helicopter1 = 1
-    rHelicopter1_To_HomePosition = 2
-    rHomePosition_To_Helicopter2 = 3
-    rHelicopter2_To_HomePosition = 4
-    rHomePosition_To_Helicopter1Load = 5
-    rHelicopter1Load_To_HomePosition = 6
-    rHomePosition_To_Helicopter2Load = 7
-    rHelicopter2Load_To_HomePosition = 8
-    rHomePosition_To_Load1 = 9
-    rLoad1_To_HomePosition = 10
-    rHomePosition_To_Load2 = 11
-    rLoad2_To_HomePosition = 12
-    rHomePosition_To_Grippers1 = 13
-    rGrippers1_To_HomePosition = 14
-    rHomePosition_To_Grippers2 = 15
-    rGrippers2_To_HomePosition = 16
-    rHomePosition_To_Charger1 = 17
-    rCharger1_To_HomePosition = 18
-    rHomePosition_To_Charger2 = 19
-    rCharger2_To_HomePosition = 20
-    rHomePosition_To_VTOL1 = 21
-    rVTOL1_To_HomePosition = 22
-    rHomePosition_To_VTOL2 = 23
-    rVTOL2_To_HomePosition = 24
-    rHomePosition_To_VTOL1Load = 25
-    rVTOL1Load_To_HomePosition = 26
-    rHomePosition_To_VTOL1Battery = 27
-    rVTOL1Battery_To_HomePosition = 28
-    rHomePosition_To_VTOL2Battery = 29
-    rVTOL2Battery_To_HomePosition = 30
+#
+# class RobotRoutes(enum.Enum):
+#     rHomePosition_To_Helicopter1 = 1
+#     rHelicopter1_To_HomePosition = 2
+#     rHomePosition_To_Helicopter2 = 3
+#     rHelicopter2_To_HomePosition = 4
+#     rHomePosition_To_Helicopter1Load = 5
+#     rHelicopter1Load_To_HomePosition = 6
+#     rHomePosition_To_Helicopter2Load = 7
+#     rHelicopter2Load_To_HomePosition = 8
+#     rHomePosition_To_Load1 = 9
+#     rLoad1_To_HomePosition = 10
+#     rHomePosition_To_Load2 = 11
+#     rLoad2_To_HomePosition = 12
+#     rHomePosition_To_Grippers1 = 13
+#     rGrippers1_To_HomePosition = 14
+#     rHomePosition_To_Grippers2 = 15
+#     rGrippers2_To_HomePosition = 16
+#     rHomePosition_To_Charger1 = 17
+#     rCharger1_To_HomePosition = 18
+#     rHomePosition_To_Charger2 = 19
+#     rCharger2_To_HomePosition = 20
+#     rHomePosition_To_VTOL1 = 21
+#     rVTOL1_To_HomePosition = 22
+#     rHomePosition_To_VTOL2 = 23
+#     rVTOL2_To_HomePosition = 24
+#     rHomePosition_To_VTOL1Load = 25
+#     rVTOL1Load_To_HomePosition = 26
+#     rHomePosition_To_VTOL1Battery = 27
+#     rVTOL1Battery_To_HomePosition = 28
+#     rHomePosition_To_VTOL2Battery = 29
+#     rVTOL2Battery_To_HomePosition = 30
 
 
 class RobotActions(enum.Enum):

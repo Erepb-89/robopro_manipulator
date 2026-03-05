@@ -36,9 +36,9 @@ class OPCUAServer:
                                                      0)  # EXECUTE_ACTION
         self.qAction.set_writable()
 
-        self.qRoute = self.Manipulator.add_variable(self.ns, "qRoute",
-                                                    0)  # EXECUTE_ROUTE
-        self.qRoute.set_writable()
+        # self.qRoute = self.Manipulator.add_variable(self.ns, "qRoute",
+        #                                             0)  # EXECUTE_ROUTE
+        # self.qRoute.set_writable()
 
         self.qPowerOn = self.Manipulator.add_variable(self.ns, "qPowerOn",
                                                       0)  # 0/1

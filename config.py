@@ -79,8 +79,8 @@ Y_POSITION_POWERED = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPowered"
 Y_POSITION_ALARM = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixAlarm"
 
 # Watchdog узлы (ping/pong между клиентом и PLC)
-OPC_WATCHDOG_WRITE_NODE = "|var|HCFA-PLC.Application.OPC.Watchdog.qxPing"
-OPC_WATCHDOG_READ_NODE = "|var|HCFA-PLC.Application.OPC.Watchdog.ixPong"
+OPC_WATCHDOG_WRITE_NODE = "|var|HCFA-PLC.Application.OPC.Watchdog.CheckOut"
+OPC_WATCHDOG_READ_NODE = "|var|HCFA-PLC.Application.OPC.Watchdog.CheckIn"
 
 H_TABLE_HATCH_OPENED = "|var|HCFA-PLC.Application.OPC.H_Table.Hatch.ixOpened"
 H_TABLE_HATCH_CLOSED = "|var|HCFA-PLC.Application.OPC.H_Table.Hatch.ixClosed"
@@ -89,9 +89,20 @@ H_TABLE_LIFT_POS_TOP = "|var|HCFA-PLC.Application.OPC.H_Table.Lift.ixPositionTop
 H_TABLE_LIFT_POS_BOTTOM = "|var|HCFA-PLC.Application.OPC.H_Table.Lift.ixPositionBottom"
 H_TABLE_LIFT_ALARM = "|var|HCFA-PLC.Application.OPC.H_Table.Lift.ixAlarm"
 
+H_BOX_LIFT_POS_TOP = "|var|HCFA-PLC.Application.OPC.H_Box.PlugChargerLift.ixTop"
+H_BOX_LIFT_POS_BOTTOM = "|var|HCFA-PLC.Application.OPC.H_Box.PlugChargerLift.ixBottom"
+H_BOX_LIFT_ALARM = "|var|HCFA-PLC.Application.OPC.H_Box.PlugChargerLift.ixAlarm"
+
 V_TABLE_HATCH_OPENED = "|var|HCFA-PLC.Application.OPC.V_Table.Hatch.ixOpened"
 V_TABLE_HATCH_CLOSED = "|var|HCFA-PLC.Application.OPC.V_Table.Hatch.ixClosed"
 V_TABLE_HATCH_ALARM = "|var|HCFA-PLC.Application.OPC.V_Table.Hatch.ixAlarm"
 V_TABLE_LIFT_POS_TOP = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixPositionTop"
 V_TABLE_LIFT_POS_BOTTOM = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixPositionBottom"
 V_TABLE_LIFT_ALARM = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixAlarm"
+
+# стили для trajectory_mao
+RED_COLOR = "background:#fce4ec; border-radius:6px; padding:6px; color:#b71c1c;"
+GREEN_COLOR = "background:#e8f5e9; border-radius:6px; padding:6px; color:#2e7d32; font-weight:bold;"
+BEIGE_COLOR = "background:#fff3e0; border-radius:6px; padding:6px; color:#e65100; font-weight:bold;"
+BLUE_COLOR = "background:#e3f2fd; border-radius:6px; padding:6px; color:#1565c0;"
+ALABASTER_COLOR = "border:none; background:#fafafa;"

@@ -165,7 +165,7 @@ class OPCUAWatchdog:
                 self.logger.error(
                     f"Watchdog: несоответствие! отправлено={value}, "
                     f"получено={received} "
-                    f"(узел={self.read_node})"
+                    f"(узел/тег={self.read_node})"
                 )
             else:
                 self.logger.debug(f"Watchdog OK: {value} == {received}")

@@ -54,7 +54,7 @@ class MainAppClass:
                                                            self.logger)
         self.OpcClientManipulator.start_in_thread()
 
-        self.manipulator_wd = create_watchdog(self.logger)
+        self.manipulator_wd = create_watchdog(self.logger, PLC_MANIPULATOR_ADDRESS)
         self.manipulator_wd.start()
 
         # self.OpcClientVT = OPCUAClientVT(PLC_VT_ADDRESS,
@@ -63,7 +63,7 @@ class MainAppClass:
         #                                  self.logger)
         # self.OpcClientVT.start_in_thread()
         #
-        # self.vt_wd = create_watchdog(self.logger)
+        # self.vt_wd = create_watchdog(self.logger, PLC_VT_ADDRESS)
         # self.vt_wd.start()
         #
         # self.OpcClientVTOL = OPCUAClientVTOL(PLC_VTOL_ADDRESS,
@@ -72,7 +72,7 @@ class MainAppClass:
         #                                      self.logger)
         # self.OpcClientVTOL.start_in_thread()
         #
-        # self.vtol_wd = create_watchdog(self.logger)
+        # self.vtol_wd = create_watchdog(self.logger, PLC_VTOL_ADDRESS)
         # self.vtol_wd.start()
 
         self.watchdog = WatchdogManager(self.heartbit, interval_sec=5.0,
