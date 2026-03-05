@@ -1,7 +1,7 @@
 available_trajectories = {
     "pHomePosition":
         {"tHomePosition_To_HelicopterModule",
-         "tHomePosition_To_Load",
+         "tHomePosition_To_Payload",
          "tHomePosition_To_Grippers",
          "tHomePosition_To_Charger",
          "tHomePosition_To_VTOLModule"},  # pHomePosition
