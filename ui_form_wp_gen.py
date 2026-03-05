@@ -4,7 +4,7 @@ from typing import Dict
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout
 
-from commands import Command, CmdType, RobotTrajectories, RobotRoutes, RobotActions
+from commands import Command, CmdType, RobotTrajectories, RobotActions
 from config import POINTS_PATH, TRAJ_PATH, RED_COLOR
 from ui_form import Ui_Form
 from utils import atomic_write_json
@@ -100,12 +100,12 @@ class MainWindow(QMainWindow):
         - выбирает точку в комбобоксе Tab 1
         - если текущая позиция известна, ищет прямую траекторию и подсвечивает ребро
         - синхронизирует выбор траектории с TrajectoriesComboBox Tab 1
-        - НЕ переключает вкладку автоматически (оператор видит подсветку на карте)
+        - Оператор видит подсветку на карте
         """
         # Синхронизация точки с Tab 1
-        idx = self.ui.comboBox.findText(point_name)
-        if idx >= 0:
-            self.ui.comboBox.setCurrentIndex(idx)
+        index = self.ui.comboBox.findText(point_name)
+        if index >= 0:
+            self.ui.comboBox.setCurrentIndex(index)
 
         src = self.trajectory_map._current_point.get('waypoint')
         if not src or src == point_name:
@@ -153,8 +153,8 @@ class MainWindow(QMainWindow):
                 nearest = self.RobotController.find_nearest_waypoint()
                 if nearest:
                     self.trajectory_map.set_current_position(nearest)
-            except Exception as err:
-                print(err)
+            except Exception:
+                pass
         else:
             # Уходим с карты — сбрасываем подсветку рёбер
             if hasattr(self, 'trajectory_map'):
@@ -414,22 +414,22 @@ class MainWindow(QMainWindow):
             QtWidgets.QMessageBox.critical(None, "Error",
                                            f"Failed to move by trajectory: {e}")
 
-    def execute_selected_route(self) -> None:
-        route_name = self.ui.ActionName.text()
-        if not route_name:
-            QtWidgets.QMessageBox.warning(None, "Warning",
-                                          "Please select a route first!")
-            return
-        try:
-            # команда через OPC
-            route_enum = getattr(RobotRoutes, route_name)
-            self.opc_handler.set_route(route_enum.value)
-
-            QtWidgets.QMessageBox.information(None, "Success",
-                                              f"Executing route '{route_name}'")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(None, "Error",
-                                           f"Failed to execute route: {e}")
+    # def execute_selected_route(self) -> None:
+    #     route_name = self.ui.ActionName.text()
+    #     if not route_name:
+    #         QtWidgets.QMessageBox.warning(None, "Warning",
+    #                                       "Please select a route first!")
+    #         return
+    #     try:
+    #         # команда через OPC
+    #         route_enum = getattr(RobotRoutes, route_name)
+    #         self.opc_handler.set_route(route_enum.value)
+    #
+    #         QtWidgets.QMessageBox.information(None, "Success",
+    #                                           f"Executing route '{route_name}'")
+    #     except Exception as e:
+    #         QtWidgets.QMessageBox.critical(None, "Error",
+    #                                        f"Failed to execute route: {e}")
 
     def execute_selected_action(self) -> None:
         action_name = self.ui.ActionName.text()
