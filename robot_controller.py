@@ -15,7 +15,7 @@ from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION, \
     EXEC_TRAJ, IO_SET
-from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotRoutes
+from commands import Command, CmdType, RobotTrajectories, RobotActions
 
 # sys.path.append("/home/user/robot-api")
 from states_modes_errors import ControllerState, SafetyStatus, MotionMode, LastError
@@ -516,14 +516,14 @@ class RobotController:
             # if command.cmd_type == "PLC_COM":
             #     pass
 
-    def execute_route(self, route: RobotRoutes) -> None:
-        """Выполнить маршрут"""
-        for traj in self.Routes.get(route.name).trajectories:
-            self.cmd_queue.put(Command(
-                CmdType.EXECUTE_TRAJECTORY,
-                {'num': int(getattr(RobotTrajectories, traj.name))},
-                source="GUI"
-            ))
+    # def execute_route(self, route: RobotRoutes) -> None:
+    #     """Выполнить маршрут"""
+    #     for traj in self.Routes.get(route.name).trajectories:
+    #         self.cmd_queue.put(Command(
+    #             CmdType.EXECUTE_TRAJECTORY,
+    #             {'num': int(getattr(RobotTrajectories, traj.name))},
+    #             source="GUI"
+    #         ))
 
     # ---------- Утилиты ----------
 
@@ -641,8 +641,8 @@ class RobotController:
                     self.data.load_waypoints()
                     self.execute_trajectory(RobotTrajectories(cmd.payload['num']))
 
-                elif cmd.type == CmdType.EXECUTE_ROUTE:
-                    self.execute_route(RobotRoutes(cmd.payload['num']))
+                # elif cmd.type == CmdType.EXECUTE_ROUTE:
+                #     self.execute_route(RobotRoutes(cmd.payload['num']))
 
                 elif cmd.type == CmdType.EXECUTE_ACTION:
                     self.execute_action(RobotActions(cmd.payload['num']))
