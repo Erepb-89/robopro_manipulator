@@ -40,9 +40,9 @@ NODE_CURRENT_COLOR = QColor(76, 175, 80)
 NODE_HOVER_COLOR = QColor(255, 193, 7)
 
 # ─── Перья рёбер ─────────────────────────────────────────────
-_PEN_NORMAL = QPen(QColor(100, 100, 100, 180), 1.8)
-_PEN_DIM = QPen(QColor(180, 180, 180, 70), 1.0, Qt.DotLine)
-_PEN_HL = QPen(QColor(255, 152, 0, 240), 3.5)  # оранжевый highlight
+PEN_NORMAL = QPen(QColor(100, 100, 100, 180), 1.8)
+PEN_DIM = QPen(QColor(180, 180, 180, 70), 1.0, Qt.DotLine)
+PEN_HL = QPen(QColor(255, 152, 0, 240), 3.5)  # оранжевый highlight
 
 
 class NodeItem(QGraphicsEllipseItem):
@@ -153,29 +153,31 @@ class TrajectoryMapWidget(QWidget):
         "pHelicopter2": (120, 550, "pH2", False),
         "pHelicopter2Load": (120, 650, "pH2L", True),
 
-        "pLoad": (370, 250, "pL", False),
-        "pLoad1": (310, 150, "pL1", True),
-        "pLoad2": (430, 150, "pL2", True),
+        "pPayload": (370, 250, "pL", False),
+        "pPayload1": (310, 150, "pL1", True),
+        "pPayload2": (430, 150, "pL2", True),
 
-        "pGrippers": (500, 250, "pG", False),
-        "pGrippers1": (440, 150, "pG1", True),
-        "pGrippers2": (560, 150, "pG2", True),
+        "pGrippers": (560, 250, "pG", False),
+        "pGrippers1": (500, 150, "pG1", True),
+        "pGrippers2": (620, 150, "pG2", True),
 
-        "pCharger": (420, 600, "pC", False),
-        "pCharger1": (370, 700, "pC1", True),
-        "pCharger2": (470, 700, "pC2", True),
+        "pCharger": (420, 550, "pC", False),
+        "pCharger1": (370, 650, "pC1", True),
+        "pCharger2": (470, 650, "pC2", True),
 
         "pVTOLModule": (800, 400, "pV", False),
         "pVTOL1": (880, 250, "pV1", False),
         "pVTOL1Battery": (830, 150, "pV1B", True),
         "pVTOL1Load": (930, 150, "pV1L", True),
         "pVTOL2": (880, 550, "pV2", False),
-        "pVTOL2Battery": (880, 650, "pV2C", True),
+        "pVTOL2Battery": (830, 650, "pV2C", True),
+        "pVTOL2Battery2": (930, 650, "pV2C2", False),
+        "pVTOL2Battery2Charge": (980, 750, "pV2C2С", True),
     }
 
     EDGES = [
         ("pHomePosition", "pHelicopterModule"),
-        ("pHomePosition", "pLoad"),
+        ("pHomePosition", "pPayload"),
         ("pHomePosition", "pGrippers"),
         ("pHomePosition", "pCharger"),
         ("pHomePosition", "pVTOLModule"),
@@ -185,8 +187,8 @@ class TrajectoryMapWidget(QWidget):
         ("pHelicopter1", "pHelicopter1Load"),
         ("pHelicopter2", "pHelicopter2Load"),
 
-        ("pLoad", "pLoad1"),
-        ("pLoad", "pLoad2"),
+        ("pPayload", "pPayload1"),
+        ("pPayload", "pPayload2"),
 
         ("pGrippers", "pGrippers1"),
         ("pGrippers", "pGrippers2"),
@@ -199,14 +201,16 @@ class TrajectoryMapWidget(QWidget):
         ("pVTOL1", "pVTOL1Battery"),
         ("pVTOL1", "pVTOL1Load"),
         ("pVTOL2", "pVTOL2Battery"),
+        ("pVTOL2", "pVTOL2Battery2"),
+        ("pVTOL2Battery2", "pVTOL2Battery2Charge"),
     ]
 
     ZONES = [
-        (50, 100, 180, 600, "helicopter", "Модуль обслуживания\nвертолёта"),
-        (280, 100, 150, 120, "service_load", "Зона полезной\nнагрузки"),
-        (410, 100, 180, 120, "service_grip", "Зона захватов"),
-        (310, 550, 230, 200, "charger", "Зарядная станция"),
-        (780, 100, 200, 600, "vtol", "Модуль обслуживания\nВТОЛ"),
+        (20, 100, 210, 600, "helicopter", "Модуль обслуживания\nвертолёта"),
+        (280, 100, 180, 200, "service_load", "Зона полезной нагрузки"),
+        (470, 100, 180, 200, "service_grip", "Зона захватов"),
+        (310, 500, 230, 200, "charger", "Зарядная станция"),
+        (760, 100, 200, 610, "vtol", "Модуль обслуживания\nВТОЛ"),
     ]
 
     DRONE_LABELS = [
@@ -322,7 +326,7 @@ class TrajectoryMapWidget(QWidget):
             tp2 = QPointF(dx - (dx - sx) * r, dy - (dy - sy) * r)
 
             fwd = QGraphicsPathItem(_make_arrow_path(tp1, tp2, 7))
-            fwd.setPen(_PEN_NORMAL)
+            fwd.setPen(PEN_NORMAL)
             fwd.setZValue(5)
             self._scene.addItem(fwd)
 
@@ -370,11 +374,11 @@ class TrajectoryMapWidget(QWidget):
             is_hl = (esrc == src and edst == dst) or (esrc == dst and edst == src)
             if is_hl:
                 for item in items:
-                    item.setPen(_PEN_HL)
+                    item.setPen(PEN_HL)
                     item.setZValue(7)
             else:
                 for item in items:
-                    item.setPen(_PEN_DIM)
+                    item.setPen(PEN_DIM)
                     item.setZValue(4)
 
         label = traj_name if traj_name else f"{src} → {dst}"
@@ -384,7 +388,7 @@ class TrajectoryMapWidget(QWidget):
     def reset_highlight(self):
         """Сбрасывает подсветку всех рёбер в нормальное состояние."""
         for (src, dst), items in self._edge_items.items():
-            items[0].setPen(_PEN_NORMAL)
+            items[0].setPen(PEN_NORMAL)
             items[0].setZValue(5)
             items[1].setPen(QPen(QColor(100, 100, 100, 120), 1.5))
             items[1].setZValue(5)
