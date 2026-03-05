@@ -131,7 +131,7 @@
             ]
         },
         {
-            "name": "tHomePosition_To_Load",
+            "name": "tHomePosition_To_Payload",
             "positions": [
                 {
                     "name": "pHomePosition",
@@ -144,7 +144,7 @@
             ]
         },
         {
-            "name": "tLoad_To_HomePosition",
+            "name": "tPayload_To_HomePosition",
             "positions": [
                 {
                     "name": "pPayload",
@@ -157,7 +157,7 @@
             ]
         },
         {
-            "name": "tLoad_To_Load1",
+            "name": "tPayload_To_Payload1",
             "positions": [
                 {
                     "name": "pPayload",
@@ -170,7 +170,7 @@
             ]
         },
         {
-            "name": "tLoad1_To_Load",
+            "name": "tPayload1_To_Payload",
             "positions": [
                 {
                     "name": "pPayload1",
@@ -183,7 +183,7 @@
             ]
         },
         {
-            "name": "tLoad_To_Load2",
+            "name": "tPayload_To_Payload2",
             "positions": [
                 {
                     "name": "pPayload",
@@ -196,7 +196,7 @@
             ]
         },
         {
-            "name": "tLoad2_To_Load",
+            "name": "tPayload2_To_Payload",
             "positions": [
                 {
                     "name": "pPayload2",
