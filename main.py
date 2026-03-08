@@ -57,23 +57,23 @@ class MainAppClass:
         self.manipulator_wd = create_watchdog(self.logger, PLC_MANIPULATOR_ADDRESS)
         self.manipulator_wd.start()
 
-        # self.OpcClientVT = OPCUAClientVT(PLC_VT_ADDRESS,
-        #                                  self.cmd_queue,
-        #                                  self.RobotController,
-        #                                  self.logger)
-        # self.OpcClientVT.start_in_thread()
-        #
-        # self.vt_wd = create_watchdog(self.logger, PLC_VT_ADDRESS)
-        # self.vt_wd.start()
-        #
-        # self.OpcClientVTOL = OPCUAClientVTOL(PLC_VTOL_ADDRESS,
-        #                                      self.cmd_queue,
-        #                                      self.RobotController,
-        #                                      self.logger)
-        # self.OpcClientVTOL.start_in_thread()
-        #
-        # self.vtol_wd = create_watchdog(self.logger, PLC_VTOL_ADDRESS)
-        # self.vtol_wd.start()
+        self.OpcClientVT = OPCUAClientVT(PLC_VT_ADDRESS,
+                                         self.cmd_queue,
+                                         self.RobotController,
+                                         self.logger)
+        self.OpcClientVT.start_in_thread()
+        
+        self.vt_wd = create_watchdog(self.logger, PLC_VT_ADDRESS)
+        self.vt_wd.start()
+        
+        self.OpcClientVTOL = OPCUAClientVTOL(PLC_VTOL_ADDRESS,
+                                             self.cmd_queue,
+                                             self.RobotController,
+                                             self.logger)
+        self.OpcClientVTOL.start_in_thread()
+        
+        self.vtol_wd = create_watchdog(self.logger, PLC_VTOL_ADDRESS)
+        self.vtol_wd.start()
 
         self.watchdog = WatchdogManager(self.heartbit, interval_sec=5.0,
                                         logger=self.logger)
@@ -81,7 +81,15 @@ class MainAppClass:
 
         self.App = QtWidgets.QApplication([])
 
-        self.Form = MainWindow(self.RobotController, self.cmd_queue, self.OpcServer)
+        self.Form = MainWindow(
+            self.RobotController, self.cmd_queue, self.OpcServer,
+            heartbeat=self.heartbit,
+            watchdogs={
+                'manipulator': self.OpcClientManipulator,
+                'vt': self.OpcClientVT,
+                'vtol': self.OpcClientVTOL,
+            },
+        )
         self.Form.closeEvent = self.on_close
         self.Form.show()
 
