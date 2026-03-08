@@ -33,6 +33,10 @@ BLOCK = 400
 # OPC
 OPC_CLIENT_TIME = 1
 
+# стили онлайн подключений
+CONN_ONLINE_STYLE = "padding:2px 6px; color: #1b5e20; background: #c8e6c9;"
+CONN_OFFLINE_STYLE = "padding:2px 6px; color: #b71c1c; background: #ffcdd2;"
+
 # PLC command nodes (читаются OPC клиентом, пересылаются в cmd_queue)
 PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.qxPowerOn"
 PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.qxFreeDrive"
@@ -100,7 +104,7 @@ V_TABLE_LIFT_POS_TOP = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixPositionTop
 V_TABLE_LIFT_POS_BOTTOM = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixPositionBottom"
 V_TABLE_LIFT_ALARM = "|var|HCFA-PLC.Application.OPC.V_Table.Lift.ixAlarm"
 
-# стили для trajectory_mao
+# стили для trajectory_map
 RED_COLOR = "background:#fce4ec; border-radius:6px; padding:6px; color:#b71c1c;"
 GREEN_COLOR = "background:#e8f5e9; border-radius:6px; padding:6px; color:#2e7d32; font-weight:bold;"
 BEIGE_COLOR = "background:#fff3e0; border-radius:6px; padding:6px; color:#e65100; font-weight:bold;"
