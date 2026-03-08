@@ -1,8 +1,9 @@
 from PyQt5 import QtCore, QtWidgets
 from typing import Dict
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QFrame
 
 from commands import Command, CmdType, RobotTrajectories, RobotActions
 from config import POINTS_PATH, TRAJ_PATH, RED_COLOR
@@ -10,6 +11,9 @@ from ui_form import Ui_Form
 from utils import atomic_write_json
 from trajectory_map_widget import TrajectoryMapWidget
 from available_trajectories import available_trajectories as AVAIL_TRAJS
+from states_modes_errors import ControllerState, SafetyStatus, MotionMode, LastError, CONTROLLER_STATE_RU, \
+    SAFETY_STATUS_RU, MOTION_MODE_RU, LAST_ERROR_RU
+from display_names import POINT_NAMES, ACTION_NAMES, traj_display_name
 
 
 class MainWindow(QMainWindow):
@@ -17,13 +21,16 @@ class MainWindow(QMainWindow):
     Класс - основное окно пользователя.
     """
 
-    def __init__(self, robot_controller, cmd_queue, opc_handler):
+    def __init__(self, robot_controller, cmd_queue, opc_handler, heartbeat=None, watchdogs=None):
         super().__init__()
         self.RobotController = robot_controller
         self.cmd_queue = cmd_queue
         self.Waypoints: Dict[str, dict] = {}
         self.Trajectories: Dict[str, dict] = {}
         self.io0_state: bool = False  # 2025_09_29
+        self._heartbeat = heartbeat
+        self._plc_clients = watchdogs or {}  # {'manipulator': client, 'vt': client, 'vtol': client}
+        self._last_nearest_wp: str = ""
 
         self.manipulator_command(
             Command(CmdType.REFRESH_WAYPOINTS, {}, source="GUI"))
@@ -77,7 +84,156 @@ class MainWindow(QMainWindow):
         self.ui.StopMove.clicked.connect(self.stop_drive)
         # self.ui.webView.load(QtCore.QUrl("http://192.168.88.100:8080/"))
 
+        self._init_status_bar()
+        self._init_stop_toolbar()
         self.show()
+
+    def _init_stop_toolbar(self) -> None:
+        """Постоянная панель с кнопкой СТОП, видимой на всех вкладках."""
+        toolbar = self.addToolBar("Аварийная остановка")
+        toolbar.setMovable(False)
+        toolbar.setFloatable(False)
+
+        stop_btn = QtWidgets.QPushButton("■  СТОП")
+        font = stop_btn.font()
+        font.setPointSize(14)
+        font.setBold(True)
+        stop_btn.setFont(font)
+        stop_btn.setMinimumHeight(48)
+        stop_btn.setMinimumWidth(160)
+        stop_btn.setStyleSheet(
+            "QPushButton {"
+            "  background-color: #d32f2f;"
+            "  color: white;"
+            "  border-radius: 5px;"
+            "  padding: 4px 16px;"
+            "}"
+            "QPushButton:hover { background-color: #e53935; }"
+            "QPushButton:pressed { background-color: #b71c1c; }"
+        )
+        stop_btn.clicked.connect(self.stop_drive)
+        toolbar.addWidget(stop_btn)
+
+    def _init_status_bar(self) -> None:
+        """Создаёт постоянную панель статуса робота в нижней строке окна."""
+        sb = self.statusBar()
+        sb.setSizeGripEnabled(False)
+
+        # --- Индикаторы подключения (левая сторона) ---
+        self._conn_labels: Dict[str, QLabel] = {}
+        conn_items = [
+            ('rc',          'RC'),
+            ('opc_server',  'OPC Srv'),
+            ('manipulator', 'ПЛК M'),
+            ('vt',          'ПЛК VT'),
+            ('vtol',        'ПЛК VTOL'),
+        ]
+        for key, display in conn_items:
+            lbl = QLabel(f"● {display}")
+            lbl.setAlignment(Qt.AlignCenter)
+            lbl.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+            lbl.setStyleSheet("padding:2px 6px; color: #9e9e9e;")
+            sb.addWidget(lbl)
+            self._conn_labels[key] = lbl
+
+        # --- Статус робота (правая сторона) ---
+        self._lbl_state = QLabel("Состояние: —")
+        self._lbl_safety = QLabel("Безопасность: —")
+        self._lbl_mode = QLabel("Режим: —")
+        self._lbl_error = QLabel("Ошибка: —")
+
+        for lbl in (self._lbl_state, self._lbl_safety, self._lbl_mode, self._lbl_error):
+            lbl.setMinimumWidth(180)
+            lbl.setAlignment(Qt.AlignCenter)
+            lbl.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+            lbl.setStyleSheet("padding:2px 8px;")
+            sb.addPermanentWidget(lbl)
+
+        self.StatusTimer = QtCore.QTimer()
+        self.StatusTimer.timeout.connect(self._update_status)
+        self.StatusTimer.start(500)
+
+    _CONN_ONLINE_STYLE = "padding:2px 6px; color: #1b5e20; background: #c8e6c9;"
+    _CONN_OFFLINE_STYLE = "padding:2px 6px; color: #b71c1c; background: #ffcdd2;"
+
+    def _update_conn_indicators(self) -> None:
+        """Обновляет индикаторы подключения RC, OPC Server и трёх ПЛК."""
+        # RC и OPC Server — через heartbeat
+        if self._heartbeat is not None:
+            hb = self._heartbeat.state()
+            for key in ('rc', 'opc_server'):
+                lbl = self._conn_labels.get(key)
+                if lbl is None:
+                    continue
+                alive = hb.get(key, False)
+                lbl.setStyleSheet(
+                    self._CONN_ONLINE_STYLE if alive else self._CONN_OFFLINE_STYLE
+                )
+
+        # Три ПЛК-клиента — через client.is_connected
+        for key in ('manipulator', 'vt', 'vtol'):
+            lbl = self._conn_labels.get(key)
+            client = self._plc_clients.get(key)
+            if lbl is None or client is None:
+                continue
+            alive = getattr(client, 'is_connected', False)
+            lbl.setStyleSheet(
+                self._CONN_ONLINE_STYLE if alive else self._CONN_OFFLINE_STYLE
+            )
+
+    def _update_status(self) -> None:
+        """Обновляет метки статуса на основе текущего состояния робота."""
+        self._update_conn_indicators()
+        try:
+            state = self.RobotController.get_state_snapshot()
+
+            cs = state.controller_state
+            if not isinstance(cs, ControllerState):
+                cs = ControllerState(cs)
+            text, style = CONTROLLER_STATE_RU.get(cs, (cs.name, ""))
+            self._lbl_state.setText(f"Состояние: {text}")
+            self._lbl_state.setStyleSheet(f"padding:2px 8px;{style}")
+
+            ss = state.safety_status
+            if not isinstance(ss, SafetyStatus):
+                ss = SafetyStatus(ss)
+            text, style = SAFETY_STATUS_RU.get(ss, (ss.name, ""))
+            self._lbl_safety.setText(f"Безопасность: {text}")
+            self._lbl_safety.setStyleSheet(f"padding:2px 8px;{style}")
+
+            mode = state.mode
+            if not isinstance(mode, MotionMode):
+                try:
+                    mode = MotionMode(mode)
+                except (ValueError, TypeError):
+                    mode = None
+            if mode is not None:
+                text, style = MOTION_MODE_RU.get(mode, (str(mode), ""))
+            else:
+                text, style = "—", ""
+            self._lbl_mode.setText(f"Режим: {text}")
+            self._lbl_mode.setStyleSheet(f"padding:2px 8px;{style}")
+
+            err = state.last_error
+            if not isinstance(err, LastError):
+                try:
+                    err = LastError(err)
+                except (ValueError, TypeError):
+                    err = None
+            if err is not None:
+                text, style = LAST_ERROR_RU.get(err, (str(err), "background:#ffcdd2"))
+            else:
+                text, style = "—", ""
+            self._lbl_error.setText(f"Ошибка: {text}")
+            self._lbl_error.setStyleSheet(f"padding:2px 8px;{style}")
+
+            nearest_info = self.RobotController.get_nearest_info()
+            nearest_wp = (nearest_info or {}).get('waypoint') or ""
+            if nearest_wp and nearest_wp != self._last_nearest_wp:
+                self._last_nearest_wp = nearest_wp
+                self.trajectory_map.set_current_position(nearest_wp)
+        except Exception:
+            pass
 
     def _init_trajectory_map(self) -> None:
         """Встраивает TrajectoryMapWidget в плейсхолдер 3 вкладки."""
@@ -102,8 +258,13 @@ class MainWindow(QMainWindow):
         - синхронизирует выбор траектории с TrajectoriesComboBox Tab 1
         - Оператор видит подсветку на карте
         """
-        # Синхронизация точки с Tab 1
-        index = self.ui.comboBox.findText(point_name)
+        # Синхронизация точки с Tab 1 (поиск по внутреннему имени в UserRole)
+        model = self.ui.comboBox.model()
+        index = next(
+            (i for i in range(model.rowCount())
+             if model.item(i).data(Qt.UserRole) == point_name),
+            -1
+        )
         if index >= 0:
             self.ui.comboBox.setCurrentIndex(index)
 
@@ -116,7 +277,12 @@ class MainWindow(QMainWindow):
             # Подсветка ребра на карте
             self.trajectory_map.highlight_trajectory(src, point_name, traj_name)
             # Синхронизация с TrajectoriesComboBox и TrajectoryName на Tab 1
-            tidx = self.ui.TrajectoriesComboBox.findText(traj_name)
+            tmodel = self.ui.TrajectoriesComboBox.model()
+            tidx = next(
+                (i for i in range(tmodel.rowCount())
+                 if tmodel.item(i).data(Qt.UserRole) == traj_name),
+                -1
+            )
             if tidx >= 0:
                 self.ui.TrajectoriesComboBox.setCurrentIndex(tidx)
             self.ui.TrajectoryName.setText(traj_name)
@@ -192,7 +358,9 @@ class MainWindow(QMainWindow):
     def update_combo_box(self) -> None:
         items_model = QStandardItemModel()
         for point in self.Waypoints.keys():
-            item = QStandardItem(point)
+            display = POINT_NAMES.get(point, point)
+            item = QStandardItem(display)
+            item.setData(point, Qt.UserRole)
             item.setEditable(False)
             items_model.appendRow(item)
         self.ui.comboBox.setModel(items_model)
@@ -200,7 +368,9 @@ class MainWindow(QMainWindow):
     def update_trajectories(self) -> None:
         items_model = QStandardItemModel()
         for traj in self.Trajectories.keys():
-            item = QStandardItem(traj)
+            display = traj_display_name(traj)
+            item = QStandardItem(display)
+            item.setData(traj, Qt.UserRole)
             item.setEditable(False)
             items_model.appendRow(item)
         self.ui.TrajectoriesComboBox.setModel(items_model)
@@ -209,23 +379,29 @@ class MainWindow(QMainWindow):
     def update_actions(self) -> None:
         items_model = QStandardItemModel()
         for action in self.Actions.keys():
-            item = QStandardItem(action)
+            display = ACTION_NAMES.get(action, action)
+            item = QStandardItem(display)
+            item.setData(action, Qt.UserRole)
             item.setEditable(False)
             items_model.appendRow(item)
         self.ui.actionsListView.setModel(items_model)
 
     def on_traj_list_clicked(self) -> None:
-        selected = self.ui.trajListView.currentIndex().data()
-        self.ui.TrajectoryName.setText(selected)
+        index = self.ui.trajListView.currentIndex()
+        internal = index.data(Qt.UserRole) or index.data()
+        self.ui.TrajectoryName.setText(internal)
 
     def on_actions_list_clicked(self) -> None:
-        selected = self.ui.actionsListView.currentIndex().data()
-        self.ui.ActionName.setText(selected)
+        index = self.ui.actionsListView.currentIndex()
+        internal = index.data(Qt.UserRole) or index.data()
+        self.ui.ActionName.setText(internal)
 
-    def trajectory_selected(self, traj_name) -> None:
-        self.ui.TrajectoryName.setText(traj_name)
+    def trajectory_selected(self, _display_name) -> None:
+        internal = self.ui.TrajectoriesComboBox.currentData(Qt.UserRole) or _display_name
+        self.ui.TrajectoryName.setText(internal)
 
-    def waypoint_selected(self, point_name) -> None:
+    def waypoint_selected(self, _display_name) -> None:
+        point_name = self.ui.comboBox.currentData(Qt.UserRole) or _display_name
         self.ui.PointName.setText(point_name)
         if point_name in self.Waypoints:
             wp = self.Waypoints[point_name]
@@ -357,7 +533,6 @@ class MainWindow(QMainWindow):
 
             if self.save_waypoints():
                 self.update_combo_box()
-                self.update_list_view()
                 QtWidgets.QMessageBox.information(None, "Success",
                                                   f"Point '{point_name}' saved successfully!")
         except ValueError:
@@ -372,7 +547,7 @@ class MainWindow(QMainWindow):
             Command(CmdType.STOP_MOVE, {}, source="GUI"))
 
     def move_to_selected_point(self) -> None:
-        point_name = self.ui.comboBox.currentText()
+        point_name = self.ui.comboBox.currentData(Qt.UserRole) or self.ui.comboBox.currentText()
         if not point_name:
             QtWidgets.QMessageBox.warning(None, "Warning",
                                           "Please select a point first!")
