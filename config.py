@@ -33,10 +33,6 @@ BLOCK = 400
 # OPC
 OPC_CLIENT_TIME = 1
 
-# стили онлайн подключений
-CONN_ONLINE_STYLE = "padding:2px 6px; color: #1b5e20; background: #c8e6c9;"
-CONN_OFFLINE_STYLE = "padding:2px 6px; color: #b71c1c; background: #ffcdd2;"
-
 # PLC command nodes (читаются OPC клиентом, пересылаются в cmd_queue)
 PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.qxPowerOn"
 PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.qxFreeDrive"
@@ -110,3 +106,72 @@ GREEN_COLOR = "background:#e8f5e9; border-radius:6px; padding:6px; color:#2e7d32
 BEIGE_COLOR = "background:#fff3e0; border-radius:6px; padding:6px; color:#e65100; font-weight:bold;"
 BLUE_COLOR = "background:#e3f2fd; border-radius:6px; padding:6px; color:#1565c0;"
 ALABASTER_COLOR = "border:none; background:#fafafa;"
+
+# ── UI стили ────────────────────────────────────────────────────────────────
+
+# Журнал операций
+LOG_MAX = 100
+
+LOG_STYLESHEET = (
+    f"QListWidget {{ font-family: 'Consolas', monospace; font-size: 16px; }}"
+)
+LOG_COLOR_NEUTRAL = "#555555"  # обычные GUI-команды
+LOG_COLOR_STOP = "#e65100"  # стоп / предупреждение
+LOG_COLOR_OPC = "#1565c0"  # команды от OPC
+LOG_COLOR_ERROR = "#b71c1c"  # ошибка / заблокировано
+LOG_COLOR_SUCCESS = "#2e7d32"  # успешное завершение
+
+# Индикаторы подключения в статус-баре
+CONN_ONLINE_STYLE = "padding:2px 6px; color: #1b5e20; background: #c8e6c9;"
+CONN_OFFLINE_STYLE = "padding:2px 6px; color: #b71c1c; background: #ffcdd2;"
+
+COMMON_BTN_STYLE = (
+    "QPushButton {"
+    "  background-color: #E1E1E1;"
+    "  border-radius: 5px;"
+    "  border-style: solid;"
+    "  border-color: #212121;"
+    "  border-width: 1px;"
+    "}"
+    "QPushButton:hover { background-color: #d2d2d2; }"
+    "QPushButton:pressed { background-color: #BEBEBE; }"
+)
+
+ACTIVATED_BTN_STYLE = (
+    "QPushButton {"
+    "  background-color: #BEBEBE;"
+    "  border-radius: 5px;"
+    "  border-style: solid;"
+    "  border-color: #212121;"
+    "  border-width: 1px;"
+    "}"
+    "QPushButton:hover { background-color: #d2d2d2; }"
+    "QPushButton:pressed { background-color: #E1E1E1; }"
+)
+
+# Кнопки верхнего тулбара
+STOP_BTN_STYLE = (
+    "QPushButton {"
+    "  background-color: #424242;"
+    "  color: white;"
+    "  border-radius: 5px;"
+    "  padding: 4px 16px;"
+    "}"
+    "QPushButton:hover { background-color: #e53935; }"
+    "QPushButton:pressed { background-color: #b71c1c; }"
+)
+POWER_OFF_BTN_STYLE = (
+    "QPushButton {"
+    "  background-color: #d32f2f;"
+    "  color: white;"
+    "  border-radius: 5px;"
+    "  padding: 4px 16px;"
+    "}"
+    "QPushButton:hover { background-color: #616161; }"
+    "QPushButton:pressed { background-color: #212121; }"
+)
+
+# Подсветка кнопок питания
+POWER_ON_ACTIVE_STYLE = "background: rgb(124,252,0);"
+POWER_OFF_ACTIVE_STYLE = "background: rgb(255,0,0);"
+POWER_BTN_INACTIVE_STYLE = "background: rgb(240,240,240);"
