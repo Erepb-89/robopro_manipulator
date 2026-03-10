@@ -126,8 +126,8 @@ class OPCUAServer:
     def set_trajectory(self, value):
         self.qTrajectory.set_value(value)
 
-    def set_route(self, value):
-        self.qRoute.set_value(value)
+    # def set_route(self, value):
+    #     self.qRoute.set_value(value)
 
     def set_action(self, value):
         self.qAction.set_value(value)
