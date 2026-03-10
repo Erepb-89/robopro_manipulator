@@ -442,6 +442,14 @@ class RobotController:
 
     def execute_trajectory(self, trajectory: RobotTrajectories) -> None:
         """Выполнить траекторию"""
+        if not self.state.get_field('powered'):
+            self.state.update(
+                cmd_state=trajectory.value + BLOCK,
+                last_error=LastError.err_not_ready
+            )
+            self.log.error("Trajectory rejected: manipulator not powered / not in run state")
+            return
+
         try:
             self.run_controller()
 
@@ -576,6 +584,9 @@ class RobotController:
                 self.Robot.motion.simple_joystick()
             else:
                 self.Robot.motion.simple_joystick(coordinate_system=coord_sys)
+        except Exception as e:
+            self.state.update(last_error=LastError.err_sj_activation)
+            self.log.error(f"Error Simple Joystick activation: {e}")
         finally:
             self._joystick_running = False
             self.log.info("simple joystick finished")
