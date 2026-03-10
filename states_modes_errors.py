@@ -103,6 +103,8 @@ class LastError(Enum):
     err_timeout_action: int = 10        # Timeout while executing action
     err_check_state: int = 11           # CheckControllerState error
     err_rc_loop: int = 12               # Unhandled error in Robot Controller loop
+    err_not_ready: int = 13             # Manipulator not powered / not in run state
+    err_sj_activation: int = 14         # Error Simple Joystick activation
 
 
 # ── Словари русских переводов для панели статуса ──────────────────────────────
@@ -152,4 +154,6 @@ LAST_ERROR_RU = {
     LastError.err_timeout_action:        ("Тайм-аут действия",                  "background:#ffcdd2"),
     LastError.err_check_state:           ("Ошибка проверки состояния",          "background:#ffcdd2"),
     LastError.err_rc_loop:               ("Необработанная ошибка цикла RC",     "background:#ffcdd2"),
+    LastError.err_not_ready:             ("Манипулятор не готов к движению",    "background:#ffcdd2"),
+    LastError.err_sj_activation:         ("Ошибка включения джойстика",         "background:#ffcdd2"),
 }
