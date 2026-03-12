@@ -1,4 +1,6 @@
 from pathlib import Path
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor, QPen
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -110,7 +112,7 @@ ALABASTER_COLOR = "border:none; background:#fafafa;"
 # ── UI стили ────────────────────────────────────────────────────────────────
 
 # Журнал операций
-LOG_MAX = 100
+JOURNAL_COUNT = 100
 
 LOG_STYLESHEET = (
     f"QListWidget {{ font-family: 'Consolas', monospace; font-size: 16px; }}"
@@ -175,3 +177,86 @@ POWER_OFF_BTN_STYLE = (
 POWER_ON_ACTIVE_STYLE = "background: rgb(124,252,0);"
 POWER_OFF_ACTIVE_STYLE = "background: rgb(255,0,0);"
 POWER_BTN_INACTIVE_STYLE = "background: rgb(240,240,240);"
+
+# ── Карта траекторий: цвета зон ───────────────────────────────
+ZONE_COLORS = {
+    "helicopter": QColor(41, 98, 255, 30),
+    "service_load": QColor(255, 152, 0, 30),
+    "service_grip": QColor(255, 152, 0, 30),
+    "vtol": QColor(76, 175, 80, 30),
+    "charger": QColor(156, 39, 176, 30),
+}
+ZONE_BORDER_COLORS = {
+    "helicopter": QColor(41, 98, 255, 180),
+    "service_load": QColor(255, 152, 0, 180),
+    "service_grip": QColor(255, 152, 0, 180),
+    "vtol": QColor(76, 175, 80, 180),
+    "charger": QColor(156, 39, 176, 180),
+}
+
+# ── Карта траекторий: цвета узлов ─────────────────────────────
+NODE_BASE_COLOR = QColor(41, 98, 255)
+NODE_ENDPOINT_COLOR = QColor(255, 87, 34)
+NODE_HOME_COLOR = QColor(244, 67, 54)
+NODE_CURRENT_COLOR = QColor(76, 175, 80)
+NODE_HOVER_COLOR = QColor(255, 193, 7)
+NODE_BLOCKED_COLOR = QColor(190, 190, 190)
+
+# ── Карта траекторий: перья рёбер ─────────────────────────────
+PEN_NORMAL = QPen(QColor(100, 100, 100, 180), 1.8)
+PEN_DIM = QPen(QColor(180, 180, 180, 70), 1.0, Qt.DotLine)
+PEN_HL = QPen(QColor(255, 152, 0, 240), 3.5)
+PEN_BACK_ARROW = QPen(QColor(100, 100, 100, 120), 1.5)
+
+# ── Карта траекторий: стили статус-меток ──────────────────────
+MAP_STATUS_OK = "padding:1px 4px; color:#1b5e20; background:#c8e6c9;"
+MAP_STATUS_WARN = "padding:1px 4px; color:#e65100; background:#fff3e0;"
+MAP_STATUS_ALM = "padding:1px 4px; color:#b71c1c; background:#ffcdd2;"
+MAP_STATUS_OFF = "padding:1px 4px; color:#9e9e9e; background:#f5f5f5;"
+
+# Узел → (x_attr, y_attr, название зоны)
+# Текст причины строится динамически: "X-ось не у <зоны>" / "Y-ось не у <зоны>" / "XY не у <зоны>"
+ZONE_BLOCK_MAP = {
+    "pHelicopterModule": ("x_module_h", "y_module_h", "вертолётного модуля"),
+    "pHelicopter1": ("x_module_h", "y_module_h", "вертолётного модуля"),
+    "pHelicopter1Load": ("x_module_h", "y_module_h", "вертолётного модуля"),
+    "pHelicopter2": ("x_module_h", "y_module_h", "вертолётного модуля"),
+    "pHelicopter2Load": ("x_module_h", "y_module_h", "вертолётного модуля"),
+    "pVTOLModule": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL1": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL1Battery": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL1Load": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL2": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL2Battery": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL2Battery2": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL2Battery2Charge": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pPayload": ("x_pos_payload", "y_pos_payload", "зоны нагрузки"),
+    "pPayload1": ("x_pos_payload", "y_pos_payload", "зоны нагрузки"),
+    "pPayload2": ("x_pos_payload", "y_pos_payload", "зоны нагрузки"),
+    "pGrippers": ("x_pos_grippers", "y_pos_grippers", "хранилища захватов"),
+    "pGrippers1": ("x_pos_grippers", "y_pos_grippers", "хранилища захватов"),
+    "pGrippers2": ("x_pos_grippers", "y_pos_grippers", "хранилища захватов"),
+    "pCharger": ("x_charge_h", "y_charge_h", "зарядной станции"),
+    "pCharger1": ("x_charge_h", "y_charge_h", "зарядной станции"),
+    "pCharger2": ("x_charge_h", "y_charge_h", "зарядной станции"),
+}
+
+# ── Статус-панель ──────────────────────
+GROUPS = [
+    ("Платформа XY", [
+        ("x_axis", "X: —"),
+        ("y_axis", "Y: —"),
+        ("platform", "Поз: —"),
+    ]),
+    ("ВТ-стол", [
+        ("h_hatch", "Люк: —"),
+        ("h_lift", "Лифт: —"),
+        ("h_box", "Бокс: —"),
+    ]),
+    ("VTOL-стол", [
+        ("v_hatch", "Люк: —"),
+        ("v_lift", "Лифт: —"),
+    ]),
+]
+
+SEP_COLOR = "color:#ddd;"
