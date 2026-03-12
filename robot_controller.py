@@ -56,7 +56,7 @@ class StateManager:
     def update(self, **kwargs):
         """Обновить поля состояния"""
         with self._lock:
-            valid_fields = {f.name for f in dataclasses.fields(self._state)}
+            valid_fields = {field_obj.name for field_obj in dataclasses.fields(self._state)}
             for key, value in kwargs.items():
                 if key not in valid_fields:
                     raise KeyError(f"Unknown state field: {key}")
@@ -100,7 +100,7 @@ class DataManager:
         try:
             with open(self.traj_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                self.trajectories = {t['name']: t for t in data['trajectories']}
+                self.trajectories = {traj['name']: traj for traj in data['trajectories']}
                 return self.trajectories
         except Exception as e:
             self.log.warning(f"Error loading trajectories: {e}")
@@ -154,13 +154,13 @@ class MotionController:
     def normalize_ratio(value) -> float:
         """Нормализует значение в диапазон [0.0, 1.0]"""
         try:
-            x = float(value)
+            float_val = float(value)
         except Exception:
             return 0.0
 
-        if math.isnan(x) or math.isinf(x):
+        if math.isnan(float_val) or math.isinf(float_val):
             return 0.0
-        return max(0.0, min(1.0, x))
+        return max(0.0, min(1.0, float_val))
 
     def add_waypoint_line(self, tcp_pose: List[float],
                           speed: float, accel: float, blend: float):
@@ -278,12 +278,12 @@ class RobotController:
         self._heartbeat_cb = heartbeat_cb
 
         self.manipulator_points = {
-            'pHelicopterModule': ManipulatorPoints.module_h_available,
-            'pVTOLModule': ManipulatorPoints.module_v_available,
-            'pChargerH': ManipulatorPoints.charge_h_available,
-            'pChargerV': ManipulatorPoints.charge_v_available,
-            'pPayload': ManipulatorPoints.pos_load_available,
-            'pGrippers': ManipulatorPoints.pos_grippers_available
+            'pHelicopterModule': 'module_h_available',
+            'pVTOLModule':       'module_v_available',
+            'pChargerH':         'charge_h_available',
+            'pChargerV':         'charge_v_available',
+            'pPayload':          'pos_load_available',
+            'pGrippers':         'pos_grippers_available',
         }
 
         # self.helicopter_points = {
@@ -479,7 +479,9 @@ class RobotController:
 
     def exec_available_trajectory(self, nearest_wp, trajectory) -> None:
         """Выполнить доступную траекторию"""
-        if trajectory.name in available_trajectories.get(nearest_wp) and self.manipulator_points[nearest_wp]:
+        attr = self.manipulator_points.get(nearest_wp)
+        wp_available = getattr(ManipulatorPoints, attr, False) if attr else True
+        if trajectory.name in available_trajectories.get(nearest_wp) and wp_available:
             for position in self.data.trajectories[trajectory.name]['positions']:
                 self.cmd_queue.put(
                     Command(

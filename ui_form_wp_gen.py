@@ -14,7 +14,8 @@ from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     LOG_COLOR_OPC, LOG_COLOR_ERROR, LOG_COLOR_SUCCESS,
                     CONN_ONLINE_STYLE, CONN_OFFLINE_STYLE,
                     STOP_BTN_STYLE, POWER_OFF_BTN_STYLE,
-                    POWER_ON_ACTIVE_STYLE, POWER_OFF_ACTIVE_STYLE, POWER_BTN_INACTIVE_STYLE, LOG_MAX, COMMON_BTN_STYLE,
+                    POWER_ON_ACTIVE_STYLE, POWER_OFF_ACTIVE_STYLE,
+                    POWER_BTN_INACTIVE_STYLE, JOURNAL_COUNT, COMMON_BTN_STYLE,
                     ACTIVATED_BTN_STYLE)
 from ui_form import Ui_Form
 from utils import atomic_write_json
@@ -23,6 +24,7 @@ from available_trajectories import available_trajectories as AVAIL_TRAJS
 from states_modes_errors import ControllerState, SafetyStatus, MotionMode, LastError, CONTROLLER_STATE_RU, \
     SAFETY_STATUS_RU, MOTION_MODE_RU, LAST_ERROR_RU
 from display_names import POINT_NAMES, ACTION_NAMES, traj_display_name
+from opc_client import ManipulatorPoints, VtPoints, VtolPoints
 
 
 class MainWindow(QMainWindow):
@@ -86,7 +88,7 @@ class MainWindow(QMainWindow):
         self.ui.trajListView.clicked.connect(self.on_traj_list_clicked)
         self.ui.actionsListView.clicked.connect(self.on_actions_list_clicked)
         self.ui.StopMove.setStyleSheet(STOP_BTN_STYLE)
-        self.ui.StopMove.setStyleSheet(POWER_OFF_BTN_STYLE)
+        self.ui.PowerOff.setStyleSheet(POWER_OFF_BTN_STYLE)
         self.ui.PowerOn.setStyleSheet(COMMON_BTN_STYLE)
         self.ui.ActivateZG.setStyleSheet(COMMON_BTN_STYLE)
         self.ui.ActivateSJ.setStyleSheet(COMMON_BTN_STYLE)
@@ -131,9 +133,6 @@ class MainWindow(QMainWindow):
         self.ui.ActivateZG.toggled.connect(
             lambda on: self._add_log_entry(
                 f"Свободное движение: {'ВКЛ' if on else 'ВЫКЛ'}", "→", LOG_COLOR_NEUTRAL))
-        self.ui.ActivateSJ.toggled.connect(
-            lambda on: self._add_log_entry(
-                f"Джойстик: {'ВКЛ' if on else 'ВЫКЛ'}", "→", LOG_COLOR_NEUTRAL))
         self.ui.OutputControl.toggled.connect(
             lambda on: self._add_log_entry(
                 f"Захват: {'ВКЛ' if on else 'ВЫКЛ'}", "→", LOG_COLOR_NEUTRAL))
@@ -293,6 +292,21 @@ class MainWindow(QMainWindow):
         except Exception:
             pass
 
+        # ── PLC состояния → карта ─────────────────────────────
+        try:
+            mc = self._plc_clients.get('manipulator')
+            vt = self._plc_clients.get('vt')
+            vl = self._plc_clients.get('vtol')
+
+            plat = ManipulatorPoints if (mc and getattr(mc, 'is_connected', False)) else None
+            vt_s = VtPoints if (vt and getattr(vt, 'is_connected', False)) else None
+            vl_s = VtolPoints if (vl and getattr(vl, 'is_connected', False)) else None
+
+            self.trajectory_map.update_plc_state(plat, vt_s, vl_s)
+
+        except Exception:
+            pass
+
         try:
             state = self.RobotController.get_state_snapshot()
             self._update_op_log(
@@ -333,7 +347,7 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(6, 6, 6, 6)
         layout.setSpacing(4)
 
-        hdr = QLabel("Журнал операций (последние 100)")
+        hdr = QLabel(f"Журнал операций (последние {JOURNAL_COUNT})")
         hdr.setFont(QFont("Segoe UI", 10, QFont.Bold))
         layout.addWidget(hdr)
 
@@ -354,7 +368,7 @@ class MainWindow(QMainWindow):
         item = QListWidgetItem(text)
         item.setForeground(QColor(fg))
         self._op_log.insertItem(0, item)
-        while self._op_log.count() > LOG_MAX:
+        while self._op_log.count() > JOURNAL_COUNT:
             self._op_log.takeItem(self._op_log.count() - 1)
 
     def _update_op_log(self, last_cmd: str, cmd_state: int) -> None:
@@ -423,7 +437,7 @@ class MainWindow(QMainWindow):
         if index >= 0:
             self.ui.comboBox.setCurrentIndex(index)
 
-        src = self.trajectory_map._current_point.get('waypoint')
+        src = self.trajectory_map._current_point
         if not src or src == point_name:
             return
 
@@ -471,9 +485,10 @@ class MainWindow(QMainWindow):
         """При переходе на вкладку карты — обновляем текущую позицию."""
         if index == 2:
             try:
-                nearest = self.RobotController.find_nearest_waypoint()
-                if nearest:
-                    self.trajectory_map.set_current_position(nearest)
+                nearest_data = self.RobotController.find_nearest_waypoint()
+                nearest_wp = (nearest_data or {}).get('waypoint') or ''
+                if nearest_wp:
+                    self.trajectory_map.set_current_position(nearest_wp)
             except Exception:
                 pass
         else:
@@ -734,15 +749,7 @@ class MainWindow(QMainWindow):
 
         try:
             cmd_enum = getattr(RobotTrajectories, trajectory_name)
-            # команда через OPC
             self.opc_handler.set_trajectory(cmd_enum.value)
-
-            # команда напрямую в манипулятор
-            # self.manipulator_command(
-            #     Command(CmdType.EXECUTE_TRAJECTORY, {'num': cmd_enum}, source="GUI"))
-
-            # QtWidgets.QMessageBox.information(None, "Success",
-            #                                   f"Moving by trajectory '{trajectory_name}'")
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Error",
                                            f"Failed to move by trajectory: {e}")

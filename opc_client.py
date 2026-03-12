@@ -32,6 +32,49 @@ class ManipulatorPoints:
     charge_v_available: bool = False
     pos_load_available: bool = False
     pos_grippers_available: bool = False
+    x_module_h: bool = False
+    y_module_h: bool = False
+    x_module_v: bool = False
+    y_module_v: bool = False
+    x_charge_h: bool = False
+    y_charge_h: bool = False
+    x_charge_v: bool = False
+    y_charge_v: bool = False
+    x_pos_payload: bool = False
+    y_pos_payload: bool = False
+    x_pos_grippers: bool = False
+    y_pos_grippers: bool = False
+    x_homed: bool = False
+    y_homed: bool = False
+    x_powered: bool = False
+    y_powered: bool = False
+    x_alarm: bool = False
+    y_alarm: bool = False
+
+
+@dataclass
+class VtPoints:
+    """Снимок состояния стола вертолёта."""
+    hatch_opened: bool = False
+    hatch_closed: bool = False
+    hatch_alarm: bool = False
+    lift_top: bool = False
+    lift_bottom: bool = False
+    lift_alarm: bool = False
+    box_lift_top: bool = False
+    box_lift_bottom: bool = False
+    box_lift_alarm: bool = False
+
+
+@dataclass
+class VtolPoints:
+    """Снимок состояния стола VTOL."""
+    hatch_opened: bool = False
+    hatch_closed: bool = False
+    hatch_alarm: bool = False
+    lift_top: bool = False
+    lift_bottom: bool = False
+    lift_alarm: bool = False
 
 
 @dataclass
@@ -71,6 +114,7 @@ class OPCUAClient:
         self.logger = logger
         self.stop_event = threading.Event()
         self._running = True
+        self.is_connected: bool = False
 
     def start_in_thread(self):
         """Запуск клиента в отдельном потоке"""
@@ -90,10 +134,12 @@ class OPCUAClient:
     async def connect(self):
         """Подключение к серверу"""
         await self.client.connect()
+        self.is_connected = True
         print(f"Подключено к {self.endpoint}")
 
     async def disconnect(self):
         """Отключение"""
+        self.is_connected = False
         await self.client.disconnect()
         print("Клиент отключен")
 
@@ -170,8 +216,10 @@ class OPCUAClient:
         except asyncio.CancelledError:
             self.logger.info("Получен сигнал остановки клиента")
         except Exception as e:
+            self.is_connected = False
             self.logger.error(f"Критическая ошибка в основном цикле клиента: {e}")
         finally:
+            self.is_connected = False
             await self.stop()
 
     @abstractmethod
@@ -319,7 +367,7 @@ class OPCUAClientManipulator(OPCUAClient):
         self.x_pos_module_v = await self.convert(X_POSITION_MODULE_V)
         self.x_pos_charge_h = await self.convert(X_POSITION_CHARGER_H)
         self.x_pos_charge_v = await self.convert(X_POSITION_CHARGER_V)
-        self.x_pos_load = await self.convert(X_POSITION_LOAD)
+        self.x_pos_payload = await self.convert(X_POSITION_LOAD)
         self.x_pos_gripper_storage = await self.convert(X_POSITION_GRIPPER_STORAGE)
         self.x_pos_has_zeroed = await self.convert(X_POSITION_HAS_ZEROED)
         self.x_pos_powered = await self.convert(X_POSITION_POWERED)
@@ -328,7 +376,7 @@ class OPCUAClientManipulator(OPCUAClient):
         self.y_pos_module_v = await self.convert(Y_POSITION_MODULE_V)
         self.y_pos_charge_h = await self.convert(Y_POSITION_CHARGER_H)
         self.y_pos_charge_v = await self.convert(Y_POSITION_CHARGER_V)
-        self.y_pos_load = await self.convert(Y_POSITION_LOAD)
+        self.y_pos_payload = await self.convert(Y_POSITION_LOAD)
         self.y_pos_gripper_storage = await self.convert(Y_POSITION_GRIPPER_STORAGE)
         self.y_pos_has_zeroed = await self.convert(Y_POSITION_HAS_ZEROED)
         self.y_pos_powered = await self.convert(Y_POSITION_POWERED)
@@ -339,13 +387,30 @@ class OPCUAClientManipulator(OPCUAClient):
 
     def check_position(self):
         """Проверка позиции манипулятора по осям"""
-        ManipulatorPoints.module_h_available = True if (self.x_pos_module_h and self.y_pos_module_h) else False
-        ManipulatorPoints.module_v_available = True if (self.x_pos_module_v and self.y_pos_module_v) else False
-        ManipulatorPoints.charge_h_available = True if (self.x_pos_charge_h and self.y_pos_charge_h) else False
-        ManipulatorPoints.charge_v_available = True if (self.x_pos_charge_v and self.y_pos_charge_v) else False
-        ManipulatorPoints.pos_load_available = True if (self.x_pos_load and self.y_pos_load) else False
-        ManipulatorPoints.pos_grippers_available = True if (
-                self.x_pos_gripper_storage and self.y_pos_gripper_storage) else False
+        ManipulatorPoints.x_module_h = bool(self.x_pos_module_h)
+        ManipulatorPoints.y_module_h = bool(self.y_pos_module_h)
+        ManipulatorPoints.x_module_v = bool(self.x_pos_module_v)
+        ManipulatorPoints.y_module_v = bool(self.y_pos_module_v)
+        ManipulatorPoints.x_charge_h = bool(self.x_pos_charge_h)
+        ManipulatorPoints.y_charge_h = bool(self.y_pos_charge_h)
+        ManipulatorPoints.x_charge_v = bool(self.x_pos_charge_v)
+        ManipulatorPoints.y_charge_v = bool(self.y_pos_charge_v)
+        ManipulatorPoints.x_pos_payload = bool(self.x_pos_payload)
+        ManipulatorPoints.y_pos_payload = bool(self.y_pos_payload)
+        ManipulatorPoints.x_pos_grippers = bool(self.x_pos_gripper_storage)
+        ManipulatorPoints.y_pos_grippers = bool(self.y_pos_gripper_storage)
+        ManipulatorPoints.module_h_available = bool(self.x_pos_module_h and self.y_pos_module_h)
+        ManipulatorPoints.module_v_available = bool(self.x_pos_module_v and self.y_pos_module_v)
+        ManipulatorPoints.charge_h_available = bool(self.x_pos_charge_h and self.y_pos_charge_h)
+        ManipulatorPoints.charge_v_available = bool(self.x_pos_charge_v and self.y_pos_charge_v)
+        ManipulatorPoints.pos_load_available = bool(self.x_pos_payload and self.y_pos_payload)
+        ManipulatorPoints.pos_grippers_available = bool(self.x_pos_gripper_storage and self.y_pos_gripper_storage)
+        ManipulatorPoints.x_homed = bool(self.x_pos_has_zeroed)
+        ManipulatorPoints.y_homed = bool(self.y_pos_has_zeroed)
+        ManipulatorPoints.x_powered = bool(self.x_pos_powered)
+        ManipulatorPoints.y_powered = bool(self.y_pos_powered)
+        ManipulatorPoints.x_alarm = bool(self.x_pos_alarm)
+        ManipulatorPoints.y_alarm = bool(self.y_pos_alarm)
 
     async def get_wp_info_and_update_opc_data(self):
         """Узнать текущую позицию и обновить данные в OPC"""
@@ -359,50 +424,59 @@ class OPCUAClientManipulator(OPCUAClient):
 class OPCUAClientVT(OPCUAClient):
     async def read_nodes(self):
         """Чтение всех узлов сервера"""
-        self.h_table_hatch_opened = self.convert(H_TABLE_HATCH_OPENED)
-        self.h_table_hatch_closed = self.convert(H_TABLE_HATCH_CLOSED)
-        self.h_table_hatch_alarm = self.convert(H_TABLE_HATCH_ALARM)
-        self.h_table_lift_pos_top = self.convert(H_TABLE_LIFT_POS_TOP)
-        self.h_table_lift_pos_bottom = self.convert(H_TABLE_LIFT_POS_BOTTOM)
-        self.h_table_lift_alarm = self.convert(H_TABLE_LIFT_ALARM)
+        self.h_table_hatch_opened = await self.convert(H_TABLE_HATCH_OPENED)
+        self.h_table_hatch_closed = await self.convert(H_TABLE_HATCH_CLOSED)
+        self.h_table_hatch_alarm = await self.convert(H_TABLE_HATCH_ALARM)
+        self.h_table_lift_pos_top = await self.convert(H_TABLE_LIFT_POS_TOP)
+        self.h_table_lift_pos_bottom = await self.convert(H_TABLE_LIFT_POS_BOTTOM)
+        self.h_table_lift_alarm = await self.convert(H_TABLE_LIFT_ALARM)
 
-        self.h_box_lift_pos_top = self.convert(H_BOX_LIFT_POS_TOP)
-        self.h_box_lift_pos_bottom = self.convert(H_BOX_LIFT_POS_BOTTOM)
-        self.h_box_lift_alarm = self.convert(H_BOX_LIFT_ALARM)
+        self.h_box_lift_pos_top = await self.convert(H_BOX_LIFT_POS_TOP)
+        self.h_box_lift_pos_bottom = await self.convert(H_BOX_LIFT_POS_BOTTOM)
+        self.h_box_lift_alarm = await self.convert(H_BOX_LIFT_ALARM)
 
     def check_position(self):
-        """Проверка позиции манипулятора по осям"""
-        pass
+        """Проверка позиции ВТ по осям"""
+        VtPoints.hatch_opened = bool(self.h_table_hatch_opened)
+        VtPoints.hatch_closed = bool(self.h_table_hatch_closed)
+        VtPoints.hatch_alarm = bool(self.h_table_hatch_alarm)
+        VtPoints.lift_top = bool(self.h_table_lift_pos_top)
+        VtPoints.lift_bottom = bool(self.h_table_lift_pos_bottom)
+        VtPoints.lift_alarm = bool(self.h_table_lift_alarm)
+        VtPoints.box_lift_top = bool(self.h_box_lift_pos_top)
+        VtPoints.box_lift_bottom = bool(self.h_box_lift_pos_bottom)
+        VtPoints.box_lift_alarm = bool(self.h_box_lift_alarm)
 
     def handle_plc_commands(self):
-        """Чтение командных узлов с PLC и пересылка в cmd_queue"""
         pass
 
     async def get_wp_info_and_update_opc_data(self):
-        """Узнать текущую позицию и обновить данные в OPC"""
         pass
 
 
 class OPCUAClientVTOL(OPCUAClient):
     async def read_nodes(self):
         """Чтение всех узлов сервера"""
-        self.v_table_hatch_opened = self.convert(V_TABLE_HATCH_OPENED)
-        self.v_table_hatch_closed = self.convert(V_TABLE_HATCH_CLOSED)
-        self.v_table_hatch_alarm = self.convert(V_TABLE_HATCH_ALARM)
-        self.v_table_lift_pos_top = self.convert(V_TABLE_LIFT_POS_TOP)
-        self.v_table_lift_pos_bottom = self.convert(V_TABLE_LIFT_POS_BOTTOM)
-        self.v_table_lift_alarm = self.convert(V_TABLE_LIFT_ALARM)
+        self.v_table_hatch_opened = await self.convert(V_TABLE_HATCH_OPENED)
+        self.v_table_hatch_closed = await self.convert(V_TABLE_HATCH_CLOSED)
+        self.v_table_hatch_alarm = await self.convert(V_TABLE_HATCH_ALARM)
+        self.v_table_lift_pos_top = await self.convert(V_TABLE_LIFT_POS_TOP)
+        self.v_table_lift_pos_bottom = await self.convert(V_TABLE_LIFT_POS_BOTTOM)
+        self.v_table_lift_alarm = await self.convert(V_TABLE_LIFT_ALARM)
 
     def check_position(self):
-        """Проверка позиции манипулятора по осям"""
-        pass
+        """Проверка позиции ВТОЛ по осям"""
+        VtolPoints.hatch_opened = bool(self.v_table_hatch_opened)
+        VtolPoints.hatch_closed = bool(self.v_table_hatch_closed)
+        VtolPoints.hatch_alarm = bool(self.v_table_hatch_alarm)
+        VtolPoints.lift_top = bool(self.v_table_lift_pos_top)
+        VtolPoints.lift_bottom = bool(self.v_table_lift_pos_bottom)
+        VtolPoints.lift_alarm = bool(self.v_table_lift_alarm)
 
     def handle_plc_commands(self):
-        """Чтение командных узлов с PLC и пересылка в cmd_queue"""
         pass
 
     async def get_wp_info_and_update_opc_data(self):
-        """Узнать текущую позицию и обновить данные в OPC"""
         pass
 
 
