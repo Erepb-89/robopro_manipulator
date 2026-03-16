@@ -13,7 +13,7 @@ from actions import actions
 from opc_client import ManipulatorPoints
 from routes import routes
 from available_trajectories import available_trajectories
-from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION, \
+from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION, \
     EXEC_TRAJ, IO_SET, ACTIONS_PATH
 from commands import Command, CmdType, RobotTrajectories, RobotActions
 
@@ -44,6 +44,8 @@ class RobotState:
     last_command: Optional[str] = None
     trajectory_state: int = 0
     action_state: int = 0
+    gripper_cmd: bool = False
+    shift_gripper: bool = False
 
 
 # state_manager.py
@@ -698,10 +700,13 @@ class RobotController:
                     self.move_to_point(cmd.payload['name'], motion)
 
                 elif cmd.type == CmdType.IO_SET:
-                    self.io.control_digital_outputs(
-                        cmd.payload['index'],
-                        cmd.payload['value']
-                    )
+                    index = cmd.payload['index']
+                    value = bool(cmd.payload['value'])
+                    self.io.control_digital_outputs(index, value)
+                    if index == GRIPPER_DO_INDEX:
+                        self.state.update(gripper_cmd=value)
+                    elif index == SHIFT_GRIPPER_DO_INDEX:
+                        self.state.update(shift_gripper=value)
 
                 elif cmd.type == CmdType.REFRESH_WAYPOINTS:
                     self.data.load_waypoints()

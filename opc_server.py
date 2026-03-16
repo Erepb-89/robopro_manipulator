@@ -154,8 +154,8 @@ class OPCUAServer:
                     self.iTrajectoryState.set_value(st.trajectory_state or "")
                     self.iActionState.set_value(st.action_state or "")
                     self.ixPowered.set_value(st.powered or "")
-                    self.ixGripperCmd.set_value(st.action_state or "")
-                    self.ixShiftGripper.set_value(st.action_state or "")
+                    self.ixGripperCmd.set_value(st.gripper_cmd)
+                    self.ixShiftGripper.set_value(st.shift_gripper)
 
                     self.handle_power_cmd()
                     self.handle_traj_cmd()
