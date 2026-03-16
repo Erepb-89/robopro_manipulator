@@ -60,23 +60,27 @@ class OPCUAServer:
                                                           "qFindNearest", 0)
         self.qFindNearest.set_writable()
 
-        self.NearestWaypoint = self.Manipulator.add_variable(self.ns,
-                                                             "NearestWaypoint", "")
+        # self.NearestWaypoint = self.Manipulator.add_variable(self.ns,
+        #                                                      "NearestWaypoint", "")
+        #
+        # self.NearestTrajList = self.Manipulator.add_variable(self.ns,
+        #                                                      "NearestTrajList", "")
+        #
+        # self.NearestDist = self.Manipulator.add_variable(self.ns,
+        #                                                  "NearestDist", "")
 
-        self.NearestTrajList = self.Manipulator.add_variable(self.ns,
-                                                             "NearestTrajList", "")
+        self.iControllerState = self.Manipulator.add_variable(self.ns,
+                                                              "iControllerState", 0)
+        self.iSafetyStatus = self.Manipulator.add_variable(self.ns,
+                                                           "iSafetyStatus", 0)
+        self.iMode = self.Manipulator.add_variable(self.ns, "iMode", 0)
+        self.iLastError = self.Manipulator.add_variable(self.ns, "iLastError", 0)
 
-        self.NearestDist = self.Manipulator.add_variable(self.ns,
-                                                         "NearestDist", "")
-
-        self.ControllerState = self.Manipulator.add_variable(self.ns,
-                                                             "ControllerState", 0)
-        self.SafetyStatus = self.Manipulator.add_variable(self.ns,
-                                                          "SafetyStatus", 0)
-        self.Mode = self.Manipulator.add_variable(self.ns, "Mode", 0)
-        self.LastError = self.Manipulator.add_variable(self.ns, "LastError", 0)
-
-        self.CmdState = self.Manipulator.add_variable(self.ns, "CmdState", 0)
+        self.iTrajectoryState = self.Manipulator.add_variable(self.ns, "iTrajectoryState", 0)
+        self.iActionState = self.Manipulator.add_variable(self.ns, "iActionState", 0)
+        self.ixPowered = self.Manipulator.add_variable(self.ns, "ixPowered", False)
+        self.ixGripperCmd = self.Manipulator.add_variable(self.ns, "ixGripperCmd", False)
+        self.ixShiftGripper = self.Manipulator.add_variable(self.ns, "ixShiftGripper", False)
 
         self.running = False
         self.stop_event = threading.Event()
@@ -91,7 +95,8 @@ class OPCUAServer:
         self._last_nearest_wp: Optional[str] = None
         self._last_nearest_traj: Optional[str] = None
         self._last_nearest_dist: Optional[float] = None
-        self._last_cmd_state: Optional[int] = 0
+        self._last_traj_state: Optional[int] = 0
+        self._last_action_state: Optional[int] = 0
 
     def update_nearest_info(self) -> None:
         try:
@@ -142,21 +147,30 @@ class OPCUAServer:
                 try:
                     st = self.RobotController.get_state_snapshot()
                     self.TcpPosition.set_value(st.tcp_position)
-                    self.ControllerState.set_value(st.controller_state or "")
-                    self.SafetyStatus.set_value(st.safety_status or "")
-                    self.Mode.set_value(st.mode or "")
-                    self.LastError.set_value(st.last_error or "")
+                    self.iControllerState.set_value(st.controller_state or "")
+                    self.iSafetyStatus.set_value(st.safety_status or "")
+                    self.iMode.set_value(st.mode or "")
+                    self.iLastError.set_value(st.last_error or "")
+                    self.iTrajectoryState.set_value(st.trajectory_state or "")
+                    self.iActionState.set_value(st.action_state or "")
+                    self.ixPowered.set_value(st.powered or "")
+                    self.ixGripperCmd.set_value(st.action_state or "")
+                    self.ixShiftGripper.set_value(st.action_state or "")
 
                     self.handle_power_cmd()
                     self.handle_traj_cmd()
                     self.handle_free_drive_cmd()
                     self.handle_gripper_cmd()
                     self.handle_shift_gripper_cmd()
-                    self.update_nearest_info()
+                    # self.update_nearest_info()
 
-                    if self._last_cmd_state != st.cmd_state:
-                        self.CmdState.set_value(st.cmd_state)
-                        self._last_cmd_state = st.cmd_state
+                    if self._last_traj_state != st.trajectory_state:
+                        self.iTrajectoryState.set_value(st.trajectory_state)
+                        self._last_traj_state = st.trajectory_state
+
+                    if self._last_action_state != st.action_state:
+                        self.iActionState.set_value(st.action_state)
+                        self._last_action_state = st.action_state
 
                 except Exception as e:
                     self.log.error(f"Error in OPC loop: {e}")
