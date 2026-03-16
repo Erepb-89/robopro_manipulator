@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent
 # Пути к данным
 POINTS_PATH = BASE_DIR / "points.json"
 TRAJ_PATH = BASE_DIR / "trajectories.json"
+ACTIONS_PATH = BASE_DIR / "actions2.json"
 
 # Параметры подключения
 ROBOT_IP = "127.0.0.1"
@@ -36,21 +37,21 @@ BLOCK = 400
 OPC_CLIENT_TIME = 1
 
 # PLC command nodes (читаются OPC клиентом, пересылаются в cmd_queue)
-PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.qxPowerOn"
-PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.qxFreeDrive"
-PLC_CMD_FIND_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.qxFindNearest"
-PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.qxGripperCmd"
-PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.qxShiftGripper"
-PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.qxAction"
-PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.qxTrajectory"
+PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxPowerOn"
+PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxFreeDrive"
+PLC_CMD_FIND_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxFindNearest"
+PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxGripperCmd"
+PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxShiftGripper"
+PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxAction"
+PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxTrajectory"
 
-ENABLE_MOVE_TO_MODULE_H = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToModuleH"
-ENABLE_MOVE_TO_MODULE_V = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToModuleV"
-ENABLE_MOVE_TO_CHARGER_H = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToChargerH"
-ENABLE_MOVE_TO_CHARGER_V = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToChargerV"
-ENABLE_MOVE_TO_PAYLOAD_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToPayloadStorage"
-ENABLE_MOVE_TO_GRIPPERS_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToGrippersStorage"
-ENABLE_MOVE_TO_HOME = "|var|HCFA-PLC.Application.OPC.Robot.qxRobotEnableMoveToHome"
+ENABLE_MOVE_TO_MODULE_H = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToModuleH"
+ENABLE_MOVE_TO_MODULE_V = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToModuleV"
+ENABLE_MOVE_TO_CHARGER_H = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToChargerH"
+ENABLE_MOVE_TO_CHARGER_V = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToChargerV"
+ENABLE_MOVE_TO_PAYLOAD_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToPayloadStorage"
+ENABLE_MOVE_TO_GRIPPERS_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToGrippersStorage"
+ENABLE_MOVE_TO_HOME = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToHome"
 
 HELICOPTER_MODULE = ["pHelicopter1", "pHelicopter2", "pHomePosition"]
 VTOL_MODULE = ["pVTOL1", "pVTOL2", "pHomePosition"]
@@ -123,9 +124,12 @@ LOG_COLOR_OPC = "#1565c0"  # команды от OPC
 LOG_COLOR_ERROR = "#b71c1c"  # ошибка / заблокировано
 LOG_COLOR_SUCCESS = "#2e7d32"  # успешное завершение
 
+LABEL_PADDING = "padding:2px 8px;"
+
 # Индикаторы подключения в статус-баре
 CONN_ONLINE_STYLE = "padding:2px 6px; color: #1b5e20; background: #c8e6c9;"
 CONN_OFFLINE_STYLE = "padding:2px 6px; color: #b71c1c; background: #ffcdd2;"
+CONN_INIT_STYLE = "padding:2px 6px; color: #9e9e9e;"
 
 COMMON_BTN_STYLE = (
     "QPushButton {"
