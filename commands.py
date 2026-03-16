@@ -5,8 +5,8 @@ from typing import Dict, Any, Optional
 
 
 class CmdType(Enum):
-    POWER = auto()  # {'state': 1|2}
-    FREE_DRIVE = auto()  # {'state': 1|2}
+    POWER = auto()  # {'state': False/True}
+    FREE_DRIVE = auto()  # {'state': 0|1}
     EXECUTE_TRAJECTORY = auto()  # {'num': int}
     # EXECUTE_ROUTE = auto()  # {'num': int}
     EXECUTE_ACTION = auto()  # {'num': int}

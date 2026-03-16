@@ -14,7 +14,7 @@ from opc_client import ManipulatorPoints
 from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION, \
-    EXEC_TRAJ, IO_SET
+    EXEC_TRAJ, IO_SET, ACTIONS_PATH
 from commands import Command, CmdType, RobotTrajectories, RobotActions
 
 # sys.path.append("/home/user/robot-api")
@@ -42,7 +42,8 @@ class RobotState:
     free_drive: bool = False
     last_error: Optional[LastError] = 0  # Optional[str] = None
     last_command: Optional[str] = None
-    cmd_state: int = 0
+    trajectory_state: int = 0
+    action_state: int = 0
 
 
 # state_manager.py
@@ -77,12 +78,13 @@ class StateManager:
 class DataManager:
     """Управление waypoints и trajectories"""
 
-    def __init__(self, points_path: Path, traj_path: Path, logger):
+    def __init__(self, points_path: Path, traj_path: Path, actions_dict: dict, logger):
         self.points_path = points_path
         self.traj_path = traj_path
         self.log = logger
         self.waypoints: Dict[str, Dict] = {}
         self.trajectories: Dict[str, Dict] = {}
+        self.actions = actions_dict
 
     def load_waypoints(self) -> Dict[str, Dict]:
         """Загрузить waypoints из файла"""
@@ -279,11 +281,11 @@ class RobotController:
 
         self.manipulator_points = {
             'pHelicopterModule': 'module_h_available',
-            'pVTOLModule':       'module_v_available',
-            'pChargerH':         'charge_h_available',
-            'pChargerV':         'charge_v_available',
-            'pPayload':          'pos_load_available',
-            'pGrippers':         'pos_grippers_available',
+            'pVTOLModule': 'module_v_available',
+            'pChargerH': 'charge_h_available',
+            'pChargerV': 'charge_v_available',
+            'pPayload': 'pos_load_available',
+            'pGrippers': 'pos_grippers_available',
         }
 
         # self.helicopter_points = {
@@ -304,15 +306,11 @@ class RobotController:
 
         # Компоненты
         self.state = StateManager()
-        self.data = DataManager(POINTS_PATH, TRAJ_PATH, logger)
+        self.data = DataManager(POINTS_PATH, TRAJ_PATH, actions, logger)
         # Раскомментить для отладки с манипулятором по месту
         # self.mc = MotionController(self.Robot, self.data, logger)
         # self.io = IOController(self.Robot, logger, NUM_DIGITAL_IO)
         # self.telemetry = TelemetryMonitor(self.Robot, self.state, logger)
-
-        # Данные
-        self.Actions = actions
-        self.Routes = routes
 
         # Загрузка
         self.data.load_waypoints()
@@ -336,7 +334,7 @@ class RobotController:
         return dict(self.data.trajectories)
 
     def get_actions_snapshot(self) -> dict:
-        return dict(self.Actions)
+        return dict(self.data.actions)
 
     def get_current_tcp_position(self) -> List[float]:
         return self.state.get_field('tcp_position')
@@ -352,19 +350,19 @@ class RobotController:
 
     # ---------- Управление режимами ----------
 
-    def manipulator_power_control(self, qPowerOn: int) -> None:
+    def manipulator_power_control(self, power_on: int) -> None:
         """Управление питанием манипулятора"""
         try:
-            if qPowerOn == 0:
+            if power_on == 0:
                 self.Robot.controller_state.set(ControllerState.off, await_sec=10)
                 self.state.update(powered=False, last_command="PowerOff")
                 self.log.info("Manipulator deactivated")
-            elif qPowerOn == 1:
+            elif power_on == 1:
                 self.run_controller()
                 self.state.update(powered=True, last_command="PowerOn")
                 self.log.info("Manipulator powered")
             else:
-                self.log.warning(f"Unknown power command: {qPowerOn}")
+                self.log.warning(f"Unknown power command: {power_on}")
         except FunctionTimeOutError as e:
             self.state.update(last_error=LastError.err_switching_power_state)
             self.log.error(f"Timeout switching power state: {e}")
@@ -381,19 +379,19 @@ class RobotController:
             self.state.update(last_error=LastError.err_switching_stop_mode)
             self.log.error(f"Stop Mode Switching Error: {e}")
 
-    def manipulator_free_drive(self, qFreeDrive: int) -> None:
+    def manipulator_free_drive(self, free_drive: int) -> None:
         """Режим свободного движения"""
         try:
-            if qFreeDrive == 1:
+            if free_drive == 1:
                 self.log.info("Activating Zero Gravity Mode")
                 self.Robot.motion.free_drive()
                 self.state.update(free_drive=True, mode='hold')
-            elif qFreeDrive == 0:
+            elif free_drive == 0:
                 self.log.info("Deactivating Zero Gravity Mode")
                 self.Robot.motion.mode.set(MotionMode.hold)
                 self.state.update(free_drive=False, mode='hold')
             else:
-                self.log.warning(f"Unknown free drive command: {qFreeDrive}")
+                self.log.warning(f"Unknown free drive command: {free_drive}")
         except Exception as e:
             self.state.update(last_error=LastError.err_switching_zero_gravity)
             self.log.error(f"Zero Gravity Mode Switching Error: {e}")
@@ -442,9 +440,10 @@ class RobotController:
 
     def execute_trajectory(self, trajectory: RobotTrajectories) -> None:
         """Выполнить траекторию"""
+        self.state.update(last_error=0)
         if not self.state.get_field('powered'):
             self.state.update(
-                cmd_state=trajectory.value + BLOCK,
+                trajectory_state=trajectory.value + BLOCK,
                 last_error=LastError.err_not_ready
             )
             self.log.error("Trajectory rejected: manipulator not powered / not in run state")
@@ -467,7 +466,7 @@ class RobotController:
 
         except AddWaypointError as e:
             if trajectory:
-                self.state.update(cmd_state=trajectory.value + EXCEPTION)
+                self.state.update(trajectory_state=trajectory.value + EXCEPTION)
             self.state.update(last_error=LastError.err_waypoint)
             self.log.error(f"Error adding waypoint: {e}")
         except FunctionTimeOutError as e:
@@ -475,7 +474,7 @@ class RobotController:
             self.log.error(f"Timeout executing trajectory: {e}")
         except Exception as e:
             self.state.update(last_error=LastError.err_common_trajectory)
-            self.log.error(f"ExecuteTrajectory failed: {e}")
+            self.log.error(f"EXECUTE_TRAJECTORY failed: {e}")
 
     def exec_available_trajectory(self, nearest_wp, trajectory) -> None:
         """Выполнить доступную траекторию"""
@@ -496,35 +495,68 @@ class RobotController:
             self.log.info(f"Executing trajectory: {trajectory.name}")
 
             if trajectory:
-                self.state.update(cmd_state=trajectory.value + EXECUTION)
+                self.state.update(trajectory_state=trajectory.value + EXECUTION)
 
             finish_motion = self.mc.wait_motion_complete(await_sec=-1)
             if trajectory and finish_motion:
-                self.state.update(cmd_state=trajectory.value + FINISHED)
+                self.state.update(trajectory_state=trajectory.value + FINISHED)
         else:
             self.state.update(
-                cmd_state=trajectory.value + BLOCK,
+                trajectory_state=trajectory.value + BLOCK,
                 last_error=LastError.err_choose_trajectory
             )
             self.log.error("Can't move by selected trajectory from current point!")
 
     def execute_action(self, action: RobotActions) -> None:
         """Выполнить действие"""
-        for command in self.Actions.get(action.name).commands:
-            if command.cmd_type == EXEC_TRAJ:
-                self.cmd_queue.put(Command(
-                    CmdType.EXECUTE_TRAJECTORY,
-                    {'num': int(getattr(RobotTrajectories, command.name))},
-                    source="GUI"
-                ))
-            if command.cmd_type == IO_SET:
-                self.cmd_queue.put(Command(
-                    CmdType.IO_SET,
-                    {'index': GRIPPER_DO_INDEX, 'value': bool(command.name)},
-                    source="GUI"
-                ))
-            # if command.cmd_type == "PLC_COM":
-            #     pass
+        self.state.update(last_error=0)
+        if not self.state.get_field('powered'):
+            self.state.update(
+                action_state=action.value + BLOCK,
+                last_error=LastError.err_not_ready
+            )
+            self.log.error("Action rejected: manipulator not powered / not in run state")
+            return
+
+        try:
+            self.run_controller()
+
+            if action.name not in self.data.actions:
+                raise ValueError(f"No Action mapped for {action}")
+            else:
+                self.log.info(f"Executing action: {action.name}")
+
+                if action:
+                    self.state.update(action_state=action.value + EXECUTION)
+
+                for command in self.data.actions.get(action.name).commands:
+                    if command.cmd_type == EXEC_TRAJ:
+                        self.cmd_queue.put(Command(
+                            CmdType.EXECUTE_TRAJECTORY,
+                            {'num': int(getattr(RobotTrajectories, command.name))},
+                            source="GUI"
+                        ))
+                    if command.cmd_type == IO_SET:
+                        self.cmd_queue.put(Command(
+                            CmdType.IO_SET,
+                            {'index': GRIPPER_DO_INDEX, 'value': bool(command.name)},
+                            source="GUI"
+                        ))
+                    # if command.cmd_type == "PLC_COM":
+                    #     pass
+
+                finish_motion = self.mc.wait_motion_complete(await_sec=-1)
+                if action and finish_motion:
+                    self.state.update(action_state=action.value + FINISHED)
+
+        except FunctionTimeOutError as e:
+            self.state.update(action_state=action.value + EXCEPTION,
+                              last_error=LastError.err_timeout_action)
+            self.log.error(f"Timeout executing action: {e}")
+        except Exception as e:
+            self.state.update(action_state=action.value + EXCEPTION,
+                              last_error=LastError.err_common_action)
+            self.log.error(f"EXECUTE_ACTION failed: {e}")
 
     # def execute_route(self, route: RobotRoutes) -> None:
     #     """Выполнить маршрут"""
