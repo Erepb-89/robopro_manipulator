@@ -98,13 +98,14 @@ class LastError(Enum):
     err_choose_trajectory: int = 6      # Manipulator can't be moved by the selected trajectory from current point!
     err_waypoint: int = 7               # Add waypoint error
     err_timeout_trajectory: int = 8     # Timeout while executing trajectory
-    err_common_trajectory: int = 9      # ExecuteEnumTrajectory failed
+    err_common_trajectory: int = 9      # EXECUTE_TRAJECTORY failed
     # сделать обработку
     err_timeout_action: int = 10        # Timeout while executing action
-    err_check_state: int = 11           # CheckControllerState error
-    err_rc_loop: int = 12               # Unhandled error in Robot Controller loop
-    err_not_ready: int = 13             # Manipulator not powered / not in run state
-    err_sj_activation: int = 14         # Error Simple Joystick activation
+    err_common_action: int = 11         # EXECUTE_ACTION failed
+    err_check_state: int = 12           # CheckControllerState error
+    err_rc_loop: int = 13               # Unhandled error in Robot Controller loop
+    err_not_ready: int = 14             # Manipulator not powered / not in run state
+    err_sj_activation: int = 15         # Error Simple Joystick activation
 
 
 # ── Словари русских переводов для панели статуса ──────────────────────────────
