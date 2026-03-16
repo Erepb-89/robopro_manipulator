@@ -4,7 +4,8 @@ from typing import Dict
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QFrame, QListWidget, QListWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QFrame, \
+    QListWidget, QListWidgetItem
 from PyQt5.QtGui import QColor
 from datetime import datetime
 
@@ -12,16 +13,17 @@ from commands import Command, CmdType, RobotTrajectories, RobotActions
 from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     LOG_STYLESHEET, LOG_COLOR_NEUTRAL, LOG_COLOR_STOP,
                     LOG_COLOR_OPC, LOG_COLOR_ERROR, LOG_COLOR_SUCCESS,
-                    CONN_ONLINE_STYLE, CONN_OFFLINE_STYLE,
+                    CONN_ONLINE_STYLE, CONN_OFFLINE_STYLE, CONN_INIT_STYLE,
                     STOP_BTN_STYLE, POWER_OFF_BTN_STYLE,
                     POWER_ON_ACTIVE_STYLE, POWER_OFF_ACTIVE_STYLE,
                     POWER_BTN_INACTIVE_STYLE, JOURNAL_COUNT, COMMON_BTN_STYLE,
-                    ACTIVATED_BTN_STYLE)
+                    ACTIVATED_BTN_STYLE, LABEL_PADDING)
 from ui_form import Ui_Form
 from utils import atomic_write_json
 from trajectory_map_widget import TrajectoryMapWidget
 from available_trajectories import available_trajectories as AVAIL_TRAJS
-from states_modes_errors import ControllerState, SafetyStatus, MotionMode, LastError, CONTROLLER_STATE_RU, \
+from states_modes_errors import ControllerState, SafetyStatus, MotionMode, \
+    LastError, CONTROLLER_STATE_RU, \
     SAFETY_STATUS_RU, MOTION_MODE_RU, LAST_ERROR_RU
 from display_names import POINT_NAMES, ACTION_NAMES, traj_display_name
 from opc_client import ManipulatorPoints, VtPoints, VtolPoints
@@ -45,9 +47,10 @@ class MainWindow(QMainWindow):
         self._cmd_log_queue = cmd_log_queue  # очередь OPC-событий
         self._last_nearest_wp: str = ""
         self._log_last_cmd: str = ""
-        self._log_last_cs: int = -1
-        self._log_last_err: int = 0   # для детекции новых ошибок
-        self._pending_cmd: str = ""   # последняя GUI-команда (для атрибуции ошибки)
+        self._log_last_traj_state: int = -1
+        self._log_last_action_state: int = -1
+        self._log_last_err: int = 0  # для детекции новых ошибок
+        self._pending_cmd: str = ""  # последняя GUI-команда (для атрибуции ошибки)
 
         self.manipulator_command(
             Command(CmdType.REFRESH_WAYPOINTS, {}, source="GUI"))
@@ -106,30 +109,26 @@ class MainWindow(QMainWindow):
         self.ui.PowerOn.clicked.connect(lambda: self.cmd_queue.put(
             Command(CmdType.POWER, {'state': 1}, source="GUI")
         ))
-        self.ui.PowerOff.clicked.connect(lambda: self.cmd_queue.put(
-            Command(CmdType.POWER, {'state': 0}, source="GUI")
-        ))
+        self.ui.PowerOff.clicked.connect(self.power_off)
         self.ui.MoveToPoint.clicked.connect(self.move_to_selected_point)
         self.ui.StopMove.clicked.connect(self.stop_drive)
         # self.ui.webView.load(QtCore.QUrl("http://192.168.88.100:8080/"))
 
-        # ── Прямое логирование нажатий кнопок ────────────────
+        self.buttons_logging()
+
+        self._init_op_log_tab()
+        self._init_status_bar()
+        self._init_stop_toolbar()
+        self.show()
+
+    def buttons_logging(self):
+        """Прямое логирование нажатий кнопок"""
         self.ui.PowerOn.clicked.connect(
             lambda: self._add_log_entry("Питание ВКЛ", "→", LOG_COLOR_NEUTRAL))
-        self.ui.PowerOff.clicked.connect(
-            lambda: self._add_log_entry("Питание ВЫКЛ", "→", LOG_COLOR_NEUTRAL))
-        self.ui.StopMove.clicked.connect(
-            lambda: self._add_log_entry("Стоп", "→", LOG_COLOR_STOP))
         self.ui.MoveToPoint.clicked.connect(
             lambda: self._add_log_entry(
                 f"Перемещение: {self.ui.comboBox.currentData(Qt.UserRole) or self.ui.comboBox.currentText()}",
                 "→", LOG_COLOR_NEUTRAL))
-        self.ui.MoveTrajectory.clicked.connect(
-            lambda: self._add_log_entry(
-                f"Траектория: {self.ui.TrajectoriesComboBox.currentData(Qt.UserRole) or self.ui.TrajectoriesComboBox.currentText()}",
-                "→", LOG_COLOR_NEUTRAL))
-        self.ui.ExecuteAction.clicked.connect(
-            lambda: self._add_log_entry("Действие: запрос", "→", LOG_COLOR_NEUTRAL))
         self.ui.ActivateZG.toggled.connect(
             lambda on: self._add_log_entry(
                 f"Свободное движение: {'ВКЛ' if on else 'ВЫКЛ'}", "→", LOG_COLOR_NEUTRAL))
@@ -139,11 +138,6 @@ class MainWindow(QMainWindow):
         self.ui.ShiftGripper.toggled.connect(
             lambda on: self._add_log_entry(
                 f"Смещение захвата: {'ВКЛ' if on else 'ВЫКЛ'}", "→", LOG_COLOR_NEUTRAL))
-
-        self._init_op_log_tab()
-        self._init_status_bar()
-        self._init_stop_toolbar()
-        self.show()
 
     def _init_stop_toolbar(self) -> None:
         """Постоянная панель с кнопкой СТОП, видимой на всех вкладках."""
@@ -167,10 +161,7 @@ class MainWindow(QMainWindow):
         power_off_btn.setMinimumHeight(48)
         power_off_btn.setMinimumWidth(180)
         power_off_btn.setStyleSheet(POWER_OFF_BTN_STYLE)
-        power_off_btn.clicked.connect(lambda: self.cmd_queue.put(
-            Command(CmdType.POWER, {'state': 0}, source="GUI")))
-        power_off_btn.clicked.connect(
-            lambda: self._add_log_entry("Питание ВЫКЛ", "→", LOG_COLOR_NEUTRAL))
+        power_off_btn.clicked.connect(self.power_off)
         toolbar.addWidget(power_off_btn)
 
     def _init_status_bar(self) -> None:
@@ -181,17 +172,17 @@ class MainWindow(QMainWindow):
         # --- Индикаторы подключения (левая сторона) ---
         self._conn_labels: Dict[str, QLabel] = {}
         conn_items = [
-            ('rc',          'RC'),
-            ('opc_server',  'OPC Srv'),
+            ('rc', 'RC'),
+            ('opc_server', 'OPC Srv'),
             ('manipulator', 'ПЛК M'),
-            ('vt',          'ПЛК VT'),
-            ('vtol',        'ПЛК VTOL'),
+            ('vt', 'ПЛК VT'),
+            ('vtol', 'ПЛК VTOL'),
         ]
         for key, display in conn_items:
             lbl = QLabel(f"● {display}")
             lbl.setAlignment(Qt.AlignCenter)
             lbl.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-            lbl.setStyleSheet("padding:2px 6px; color: #9e9e9e;")
+            lbl.setStyleSheet(CONN_INIT_STYLE)
             sb.addWidget(lbl)
             self._conn_labels[key] = lbl
 
@@ -205,7 +196,7 @@ class MainWindow(QMainWindow):
             lbl.setMinimumWidth(180)
             lbl.setAlignment(Qt.AlignCenter)
             lbl.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-            lbl.setStyleSheet("padding:2px 8px;")
+            lbl.setStyleSheet(LABEL_PADDING)
             sb.addPermanentWidget(lbl)
 
         self.StatusTimer = QtCore.QTimer()
@@ -248,14 +239,14 @@ class MainWindow(QMainWindow):
                 cs = ControllerState(cs)
             text, style = CONTROLLER_STATE_RU.get(cs, (cs.name, ""))
             self._lbl_state.setText(f"Состояние: {text}")
-            self._lbl_state.setStyleSheet(f"padding:2px 8px;{style}")
+            self._lbl_state.setStyleSheet(LABEL_PADDING + style)
 
             ss = state.safety_status
             if not isinstance(ss, SafetyStatus):
                 ss = SafetyStatus(ss)
             text, style = SAFETY_STATUS_RU.get(ss, (ss.name, ""))
             self._lbl_safety.setText(f"Безопасность: {text}")
-            self._lbl_safety.setStyleSheet(f"padding:2px 8px;{style}")
+            self._lbl_safety.setStyleSheet(LABEL_PADDING + style)
 
             mode = state.mode
             if not isinstance(mode, MotionMode):
@@ -268,7 +259,7 @@ class MainWindow(QMainWindow):
             else:
                 text, style = "—", ""
             self._lbl_mode.setText(f"Режим: {text}")
-            self._lbl_mode.setStyleSheet(f"padding:2px 8px;{style}")
+            self._lbl_mode.setStyleSheet(LABEL_PADDING + style)
 
             err = state.last_error
             if not isinstance(err, LastError):
@@ -281,7 +272,7 @@ class MainWindow(QMainWindow):
             else:
                 text, style = "—", ""
             self._lbl_error.setText(f"Ошибка: {text}")
-            self._lbl_error.setStyleSheet(f"padding:2px 8px;{style}")
+            self._lbl_error.setStyleSheet(LABEL_PADDING + style)
 
             nearest_info = self.RobotController.get_nearest_info()
             nearest_wp = (nearest_info or {}).get('waypoint') or ""
@@ -311,7 +302,8 @@ class MainWindow(QMainWindow):
             state = self.RobotController.get_state_snapshot()
             self._update_op_log(
                 last_cmd=getattr(state, 'last_command', None) or "",
-                cmd_state=getattr(state, 'cmd_state', 0) or 0,
+                trajectory_state=getattr(state, 'trajectory_state', 0) or 0,
+                action_state=getattr(state, 'action_state', 0) or 0,
             )
         except Exception:
             pass
@@ -322,11 +314,12 @@ class MainWindow(QMainWindow):
             if raw_err is not None:
                 err = raw_err if isinstance(raw_err, LastError) else LastError(raw_err)
                 err_val = err.value
-                if err_val != 0 and err_val != self._log_last_err:
-                    err_text, _ = LAST_ERROR_RU.get(err, (str(err), ""))
-                    context = f"{self._pending_cmd} — {err_text}" if self._pending_cmd else err_text
-                    self._add_log_entry(context, "✗", LOG_COLOR_ERROR)
-                self._log_last_err = err_val
+                if err_val != 0:
+                    if err_val != self._log_last_err:
+                        err_text, _ = LAST_ERROR_RU.get(err, (str(err), ""))
+                        context = f"{self._pending_cmd} — {err_text}" if self._pending_cmd else err_text
+                        self._add_log_entry(context, "✗", LOG_COLOR_ERROR)
+                    self._log_last_err = err_val
         except Exception:
             pass
 
@@ -362,7 +355,8 @@ class MainWindow(QMainWindow):
         """Добавляет строку в журнал, удаляет лишние при переполнении."""
         if icon == "→" and not command.startswith("[OPC]"):
             self._pending_cmd = command  # запоминаем для атрибуции возможной ошибки
-            self._log_last_err = 0       # сбрасываем ошибку, чтобы та же ошибка снова отобразилась
+            self._log_last_cmd = ""      # сбрасываем, чтобы повторная та же команда детектировалась
+            self._log_last_err = 0       # сбрасываем ошибку в 0, чтобы та же ошибка снова отобразилась
         ts = datetime.now().strftime("%H:%M:%S")
         text = f"{ts}  {icon}  {command}"
         item = QListWidgetItem(text)
@@ -371,34 +365,49 @@ class MainWindow(QMainWindow):
         while self._op_log.count() > JOURNAL_COUNT:
             self._op_log.takeItem(self._op_log.count() - 1)
 
-    def _update_op_log(self, last_cmd: str, cmd_state: int) -> None:
-        """Добавляет запись о результате команды при изменении last_command или cmd_state."""
+    def _update_op_log(self, last_cmd: str, trajectory_state: int, action_state: int) -> None:
+        """Добавляет запись о результате команды при изменении last_command, trajectory_state или action_state."""
         cmd_changed = last_cmd != self._log_last_cmd
-        cs_changed = cmd_state != self._log_last_cs
-        if not cmd_changed and not cs_changed:
+        traj_changed = trajectory_state != self._log_last_traj_state
+        action_changed = action_state != self._log_last_action_state
+        if not cmd_changed and not traj_changed and not action_changed:
             return
 
-        prev_cs = self._log_last_cs
+        prev_traj = self._log_last_traj_state
+        prev_action = self._log_last_action_state
         prev_cmd = self._log_last_cmd
-        self._log_last_cs = cmd_state
+        self._log_last_traj_state = trajectory_state
+        self._log_last_action_state = action_state
         self._log_last_cmd = last_cmd
 
         # Для читаемости метки в журнале: предпочитаем текст кнопки (_pending_cmd),
         # fallback на внутреннее имя last_command
         label = self._pending_cmd or last_cmd or prev_cmd
 
-        # Траекторные команды: смотрим на переход cmd_state в терминальную зону
-        if prev_cs < 200 and 200 <= cmd_state < 300:
-            self._add_log_entry(label, "✓", LOG_COLOR_SUCCESS)
-            QtWidgets.QMessageBox.information(self, "Выполнено", f"✓  {label}")
-            self._pending_cmd = ""
-        elif prev_cs < 300 and 300 <= cmd_state < 400:
-            self._add_log_entry(label, f"✗  ошибка (код {cmd_state})", LOG_COLOR_ERROR)
-            self._pending_cmd = ""
-        elif prev_cs < 400 and cmd_state >= 400:
-            self._add_log_entry(label, "✗  заблокировано", LOG_COLOR_ERROR)
-            self._pending_cmd = ""
-        elif cmd_changed and last_cmd and cmd_state < 100:
+        def _handle_state(prev: int, current: int, code_label: str) -> bool:
+            """Обрабатывает переход состояния в терминальную зону. Возвращает True если переход был."""
+            if prev < 200 and 200 <= current < 300:
+                self._add_log_entry(label, "✓", LOG_COLOR_SUCCESS)
+                QtWidgets.QMessageBox.information(self, "Выполнено", f"✓  {label}")
+                self._pending_cmd = ""
+                return True
+            elif prev < 300 and 300 <= current < 400:
+                self._add_log_entry(label, f"✗  ошибка ({code_label} {current})", LOG_COLOR_ERROR)
+                self._pending_cmd = ""
+                return True
+            elif prev < 400 and current >= 400:
+                self._add_log_entry(label, "✗  заблокировано", LOG_COLOR_ERROR)
+                self._pending_cmd = ""
+                return True
+            return False
+
+        handled = False
+        if traj_changed and not handled:
+            handled = _handle_state(prev_traj, trajectory_state, "traj")
+        if action_changed and not handled:
+            handled = _handle_state(prev_action, action_state, "action")
+
+        if not handled and cmd_changed and last_cmd and trajectory_state < 100 and action_state < 100:
             # Не-траекторная команда (PowerOn/Off, MoveToPoint…):
             # last_command обновляется ПОСЛЕ успешного выполнения → это подтверждение "✓"
             self._add_log_entry(self._pending_cmd or last_cmd, "✓", LOG_COLOR_SUCCESS)
@@ -716,8 +725,13 @@ class MainWindow(QMainWindow):
                                            f"Failed to save point: {e}")
 
     def stop_drive(self) -> None:
+        self._add_log_entry("Стоп", "→", LOG_COLOR_STOP)
         self.manipulator_command(
             Command(CmdType.STOP_MOVE, {}, source="GUI"))
+
+    def power_off(self) -> None:
+        self._add_log_entry("Питание ВЫКЛ", "→", LOG_COLOR_NEUTRAL)
+        self.cmd_queue.put(Command(CmdType.POWER, {'state': 0}, source="GUI"))
 
     def move_to_selected_point(self) -> None:
         point_name = self.ui.comboBox.currentData(Qt.UserRole) or self.ui.comboBox.currentText()
@@ -747,12 +761,17 @@ class MainWindow(QMainWindow):
                                           "Please select a trajectory first!")
             return
 
+        state = self.RobotController.get_state_snapshot()
+        if not state.powered:
+            self._add_log_entry(f"Траектория: {trajectory_name}", "✗  не готов", LOG_COLOR_ERROR)
+            return
+
         try:
-            cmd_enum = getattr(RobotTrajectories, trajectory_name)
-            self.opc_handler.set_trajectory(cmd_enum.value)
+            traj_enum = getattr(RobotTrajectories, trajectory_name)
+            self.opc_handler.set_trajectory(traj_enum.value)
+            self._add_log_entry(f"Траектория: {trajectory_name}", "→", LOG_COLOR_NEUTRAL)
         except Exception as e:
-            QtWidgets.QMessageBox.critical(None, "Error",
-                                           f"Failed to move by trajectory: {e}")
+            self._add_log_entry(f"Траектория: {trajectory_name}", f"✗  OPC: {e}", LOG_COLOR_ERROR)
 
     # def execute_selected_route(self) -> None:
     #     route_name = self.ui.ActionName.text()
@@ -777,16 +796,19 @@ class MainWindow(QMainWindow):
             QtWidgets.QMessageBox.warning(None, "Warning",
                                           "Please select an action first!")
             return
+
+        state = self.RobotController.get_state_snapshot()
+        if not state.powered:
+            self._add_log_entry(f"Действие: {action_name}", "✗  не готов", LOG_COLOR_ERROR)
+            return
+
         try:
             # команда через OPC
             action_enum = getattr(RobotActions, action_name)
             self.opc_handler.set_action(action_enum.value)
-
-            # QtWidgets.QMessageBox.information(None, "Success",
-            #                                   f"Executing action '{action_name}'")
+            self._add_log_entry(f"Действие: {action_name}", "→", LOG_COLOR_NEUTRAL)
         except Exception as e:
-            QtWidgets.QMessageBox.critical(None, "Error",
-                                           f"Failed to execute action: {e}")
+            self._add_log_entry(f"Действие: {action_name}", f"✗  OPC: {e}", LOG_COLOR_ERROR)
 
     def _zg_tick(self) -> None:  # 2025_09_29
         try:
