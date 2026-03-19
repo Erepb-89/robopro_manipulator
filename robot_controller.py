@@ -13,9 +13,10 @@ from actions import actions
 from opc_client import ManipulatorPoints
 from routes import routes
 from available_trajectories import available_trajectories
-from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, FINISHED, BLOCK, EXCEPTION, \
+from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, \
+    FINISHED, BLOCK, EXCEPTION, \
     EXEC_TRAJ, IO_SET, ACTIONS_PATH
-from commands import Command, CmdType, RobotTrajectories, RobotActions
+from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotPoints
 
 # sys.path.append("/home/user/robot-api")
 from states_modes_errors import ControllerState, SafetyStatus, MotionMode, LastError
@@ -46,6 +47,7 @@ class RobotState:
     action_state: int = 0
     gripper_cmd: bool = False
     shift_gripper: bool = False
+    current_point: int = 0
 
 
 # state_manager.py
@@ -591,6 +593,8 @@ class RobotController:
             if dist < best_dist:
                 best_dist, best_name = dist, name
 
+        print('best_name', best_name)
+        self.state.update(current_point=getattr(RobotPoints, best_name).value)
         if best_name is None:
             info = {"waypoint": "", "distance": 0.0, "trajectories": []}
             self._nearest_info = info
