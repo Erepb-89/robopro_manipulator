@@ -9,19 +9,21 @@ from enum import Enum
 from asyncua import Client, ua
 
 from commands import Command, CmdType
-from config import HELICOPTER_MODULE, VTOL_MODULE, LOAD_STORAGE, GRIPPERS_STORAGE, \
+from config import HELICOPTER_MODULE, VTOL_MODULE, PAYLOAD_STORAGE, GRIPPERS_STORAGE, \
     CHARGER_H, CHARGER_V, HOME_POSITION, ENABLE_MOVE_TO_MODULE_H, ENABLE_MOVE_TO_MODULE_V, \
     ENABLE_MOVE_TO_PAYLOAD_STORAGE, ENABLE_MOVE_TO_GRIPPERS_STORAGE, ENABLE_MOVE_TO_CHARGER_H, \
     ENABLE_MOVE_TO_CHARGER_V, ENABLE_MOVE_TO_HOME, PLC_MANIPULATOR_ADDRESS, X_POSITION_MODULE_H, \
-    X_POSITION_MODULE_V, X_POSITION_CHARGER_H, X_POSITION_CHARGER_V, X_POSITION_LOAD, \
+    X_POSITION_MODULE_V, X_POSITION_CHARGER_H, X_POSITION_CHARGER_V, X_POSITION_PAYLOAD, \
     X_POSITION_GRIPPER_STORAGE, X_POSITION_HAS_ZEROED, X_POSITION_POWERED, X_POSITION_ALARM, OPC_CLIENT_TIME, \
     H_TABLE_HATCH_OPENED, H_TABLE_HATCH_CLOSED, H_TABLE_HATCH_ALARM, V_TABLE_HATCH_OPENED, V_TABLE_HATCH_CLOSED, \
     V_TABLE_HATCH_ALARM, Y_POSITION_MODULE_H, Y_POSITION_MODULE_V, Y_POSITION_CHARGER_H, Y_POSITION_CHARGER_V, \
-    Y_POSITION_LOAD, Y_POSITION_GRIPPER_STORAGE, Y_POSITION_HAS_ZEROED, Y_POSITION_POWERED, Y_POSITION_ALARM, \
+    Y_POSITION_PAYLOAD, Y_POSITION_GRIPPER_STORAGE, Y_POSITION_HAS_ZEROED, Y_POSITION_POWERED, Y_POSITION_ALARM, \
     PLC_CMD_POWER_ON, PLC_CMD_FREE_DRIVE, PLC_CMD_GRIPPER, PLC_CMD_FIND_NEAREST, GRIPPER_DO_INDEX, \
     PLC_CMD_SHIFT_GRIPPER, SHIFT_GRIPPER_DO_INDEX, PLC_CMD_TRAJECTORY, PLC_CMD_ACTION, H_TABLE_LIFT_POS_TOP, \
     H_TABLE_LIFT_POS_BOTTOM, H_TABLE_LIFT_ALARM, V_TABLE_LIFT_POS_TOP, V_TABLE_LIFT_POS_BOTTOM, V_TABLE_LIFT_ALARM, \
-    H_BOX_LIFT_POS_TOP, H_BOX_LIFT_POS_BOTTOM, H_BOX_LIFT_ALARM
+    H_BOX_LIFT_POS_TOP, H_BOX_LIFT_POS_BOTTOM, H_BOX_LIFT_ALARM, STATE_POSITION, STATE_CONTROLLER, STATE_SAFETY, \
+    STATE_MODE, STATE_LAST_ERROR, STATE_TRAJECTORY, STATE_ACTION, STATE_POWER, STATE_GRIPPER_CMD, STATE_NEAREST, \
+    STATE_SHIFT_GRIPPER
 
 
 @dataclass
@@ -88,7 +90,7 @@ class WaypointType(Enum):
     """Типы точек маршрута для маппинга с OPC узлами"""
     HELICOPTER = (HELICOPTER_MODULE, ENABLE_MOVE_TO_MODULE_H)
     VTOL = (VTOL_MODULE, ENABLE_MOVE_TO_MODULE_V)
-    LOAD_STORAGE = (LOAD_STORAGE, ENABLE_MOVE_TO_PAYLOAD_STORAGE)
+    LOAD_STORAGE = (PAYLOAD_STORAGE, ENABLE_MOVE_TO_PAYLOAD_STORAGE)
     GRIPPERS_STORAGE = (GRIPPERS_STORAGE, ENABLE_MOVE_TO_GRIPPERS_STORAGE)
     CHARGER_H = (CHARGER_H, ENABLE_MOVE_TO_CHARGER_H)
     CHARGER_V = (CHARGER_V, ENABLE_MOVE_TO_CHARGER_V)
@@ -171,9 +173,9 @@ class OPCUAClient:
             self.logger.error(f"Ошибка при остановке клиента: {e}")
         self.logger.info("OPC UA клиент остановлен")
 
-    async def _update_opc_nodes(self, current_waypoint: str) -> None:
+    async def _update_bool_opc_nodes(self, current_waypoint: str) -> None:
         """
-        Обновить OPC узлы на основе текущей точки маршрута
+        Обновить OPC узлы на основе текущей точки маршрута (bool)
         """
         for wp_type in WaypointType:
             if current_waypoint in wp_type.waypoint_set:
@@ -181,6 +183,24 @@ class OPCUAClient:
                 self.logger.debug(f"Активирован узел {wp_type.opc_node}")
             else:
                 await self.write_node(wp_type.opc_node, 0)
+
+    async def _update_opc_robot_states(self) -> None:
+        """
+        Обновить OPC узлы на основе текущих состояний робота (int)
+        """
+        st = self.rc.get_state_snapshot()
+
+        await self.write_node(STATE_POSITION, st.current_point)
+        await self.write_node(STATE_CONTROLLER, st.controller_state)
+        await self.write_node(STATE_SAFETY, st.safety_status)
+        await self.write_node(STATE_MODE, st.mode)
+        await self.write_node(STATE_LAST_ERROR, st.last_error)
+        await self.write_node(STATE_TRAJECTORY, st.trajectory_state)
+        await self.write_node(STATE_ACTION, st.action_state)
+        await self.write_node(STATE_POWER, st.powered)
+        await self.write_node(STATE_GRIPPER_CMD, st.gripper_cmd)
+        # await self.write_node(STATE_NEAREST, st.)
+        await self.write_node(STATE_SHIFT_GRIPPER, st.shift_gripper)
 
     async def _get_current_waypoint(self) -> WaypointInfo:
         """
@@ -207,6 +227,8 @@ class OPCUAClient:
                 await self.read_nodes()
 
                 self.check_position()
+
+                await self._update_opc_robot_states()
 
                 await self.get_wp_info_and_update_opc_data()
 
@@ -367,7 +389,7 @@ class OPCUAClientManipulator(OPCUAClient):
         self.x_pos_module_v = await self.convert(X_POSITION_MODULE_V)
         self.x_pos_charge_h = await self.convert(X_POSITION_CHARGER_H)
         self.x_pos_charge_v = await self.convert(X_POSITION_CHARGER_V)
-        self.x_pos_payload = await self.convert(X_POSITION_LOAD)
+        self.x_pos_payload = await self.convert(X_POSITION_PAYLOAD)
         self.x_pos_gripper_storage = await self.convert(X_POSITION_GRIPPER_STORAGE)
         self.x_pos_has_zeroed = await self.convert(X_POSITION_HAS_ZEROED)
         self.x_pos_powered = await self.convert(X_POSITION_POWERED)
@@ -376,7 +398,7 @@ class OPCUAClientManipulator(OPCUAClient):
         self.y_pos_module_v = await self.convert(Y_POSITION_MODULE_V)
         self.y_pos_charge_h = await self.convert(Y_POSITION_CHARGER_H)
         self.y_pos_charge_v = await self.convert(Y_POSITION_CHARGER_V)
-        self.y_pos_payload = await self.convert(Y_POSITION_LOAD)
+        self.y_pos_payload = await self.convert(Y_POSITION_PAYLOAD)
         self.y_pos_gripper_storage = await self.convert(Y_POSITION_GRIPPER_STORAGE)
         self.y_pos_has_zeroed = await self.convert(Y_POSITION_HAS_ZEROED)
         self.y_pos_powered = await self.convert(Y_POSITION_POWERED)
@@ -416,7 +438,7 @@ class OPCUAClientManipulator(OPCUAClient):
         """Узнать текущую позицию и обновить данные в OPC"""
         waypoint_info = await self._get_current_waypoint()
         if waypoint_info.is_valid:
-            await self._update_opc_nodes(waypoint_info.name)
+            await self._update_bool_opc_nodes(waypoint_info.name)
         else:
             self.logger.warning("Пропуск обновления OPC узлов из-за ошибки получения точки")
 
