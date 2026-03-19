@@ -193,9 +193,9 @@ class TrajectoryMapWidget(QWidget):
 
         "pHelicopterModule": (200, 400, "pH", False),
         "pHelicopter1": (120, 250, "pH1", False),
-        "pHelicopter1Load": (120, 150, "pH1L", True),
+        "pHelicopter1Payload": (120, 150, "pH1L", True),
         "pHelicopter2": (120, 550, "pH2", False),
-        "pHelicopter2Load": (120, 650, "pH2L", True),
+        "pHelicopter2Payload": (120, 650, "pH2L", True),
 
         "pPayload": (370, 250, "pL", False),
         "pPayload1": (310, 150, "pL1", True),
@@ -212,7 +212,7 @@ class TrajectoryMapWidget(QWidget):
         "pVTOLModule": (800, 400, "pV", False),
         "pVTOL1": (880, 250, "pV1", False),
         "pVTOL1Battery": (830, 150, "pV1B", True),
-        "pVTOL1Load": (930, 150, "pV1L", True),
+        "pVTOL1Payload": (930, 150, "pV1L", True),
         "pVTOL2": (880, 550, "pV2", False),
         "pVTOL2Battery": (830, 650, "pV2C", True),
         "pVTOL2Battery2": (930, 650, "pV2C2", False),
@@ -228,8 +228,8 @@ class TrajectoryMapWidget(QWidget):
 
         ("pHelicopterModule", "pHelicopter1"),
         ("pHelicopterModule", "pHelicopter2"),
-        ("pHelicopter1", "pHelicopter1Load"),
-        ("pHelicopter2", "pHelicopter2Load"),
+        ("pHelicopter1", "pHelicopter1Payload"),
+        ("pHelicopter2", "pHelicopter2Payload"),
 
         ("pPayload", "pPayload1"),
         ("pPayload", "pPayload2"),
@@ -243,7 +243,7 @@ class TrajectoryMapWidget(QWidget):
         ("pVTOLModule", "pVTOL1"),
         ("pVTOLModule", "pVTOL2"),
         ("pVTOL1", "pVTOL1Battery"),
-        ("pVTOL1", "pVTOL1Load"),
+        ("pVTOL1", "pVTOL1Payload"),
         ("pVTOL2", "pVTOL2Battery"),
         ("pVTOL2", "pVTOL2Battery2"),
         ("pVTOL2Battery2", "pVTOL2Battery2Charge"),
@@ -251,8 +251,8 @@ class TrajectoryMapWidget(QWidget):
 
     ZONES = [
         (20, 100, 210, 600, "helicopter", "Модуль обслуживания\nвертолёта"),
-        (280, 100, 180, 200, "service_load", "Зона полезной нагрузки"),
-        (470, 100, 180, 200, "service_grip", "Зона захватов"),
+        (280, 100, 180, 200, "payload", "Зона полезной нагрузки"),
+        (470, 100, 180, 200, "grippers", "Зона захватов"),
         (310, 500, 230, 200, "charger", "Зарядная станция"),
         (760, 100, 200, 610, "vtol", "Модуль обслуживания\nВТОЛ"),
     ]
@@ -388,8 +388,8 @@ class TrajectoryMapWidget(QWidget):
         status_chips = [
             ("helicopter",    240, 305),
             ("vtol",          710, 305),
-            ("service_load",  350, 305),
-            ("service_grip",  595, 305),
+            ("payload",       350, 305),
+            ("grippers",      595, 305),
             ("charger",       485, 465),
         ]
 
@@ -533,15 +533,15 @@ class TrajectoryMapWidget(QWidget):
             "x": {
                 "helicopter":   platform.x_module_h,
                 "vtol":         platform.x_module_v,
-                "service_load": platform.x_pos_payload,
-                "service_grip": platform.x_pos_grippers,
+                "payload":      platform.x_pos_payload,
+                "grippers":     platform.x_pos_grippers,
                 "charger":      platform.x_charge_h or platform.x_charge_v,
             },
             "y": {
                 "helicopter":   platform.y_module_h,
                 "vtol":         platform.y_module_v,
-                "service_load": platform.y_pos_payload,
-                "service_grip": platform.y_pos_grippers,
+                "payload":      platform.y_pos_payload,
+                "grippers":     platform.y_pos_grippers,
                 "charger":      platform.y_charge_h or platform.y_charge_v,
             },
         }

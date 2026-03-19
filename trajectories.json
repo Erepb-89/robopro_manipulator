@@ -53,23 +53,23 @@
             ]
         },
         {
-            "name": "tHelicopter1_To_Helicopter1Load",
+            "name": "tHelicopter1_To_Helicopter1Payload",
             "positions": [
                 {
                     "name": "pHelicopter1",
                     "motion": "joint"
                 },
                 {
-                    "name": "pHelicopter1Load",
+                    "name": "pHelicopter1Payload",
                     "motion": "joint"
                 }
             ]
         },
         {
-            "name": "tHelicopter1Load_To_Helicopter1",
+            "name": "tHelicopter1Payload_To_Helicopter1",
             "positions": [
                 {
-                    "name": "pHelicopter1Load",
+                    "name": "pHelicopter1Payload",
                     "motion": "joint"
                 },
                 {
@@ -105,23 +105,23 @@
             ]
         },
         {
-            "name": "tHelicopter2_To_Helicopter2Load",
+            "name": "tHelicopter2_To_Helicopter2Payload",
             "positions": [
                 {
                     "name": "pHelicopter2",
                     "motion": "joint"
                 },
                 {
-                    "name": "pHelicopter2Load",
+                    "name": "pHelicopter2Payload",
                     "motion": "joint"
                 }
             ]
         },
         {
-            "name": "tHelicopter2Load_To_Helicopter2",
+            "name": "tHelicopter2Payload_To_Helicopter2",
             "positions": [
                 {
-                    "name": "pHelicopter2Load",
+                    "name": "pHelicopter2Payload",
                     "motion": "joint"
                 },
                 {
@@ -417,23 +417,23 @@
             ]
         },
         {
-            "name": "tVTOL1_To_VTOL1Load",
+            "name": "tVTOL1_To_VTOL1Payload",
             "positions": [
                 {
                     "name": "pVTOL1",
                     "motion": "joint"
                 },
                 {
-                    "name": "pVTOL1Load",
+                    "name": "pVTOL1Payload",
                     "motion": "joint"
                 }
             ]
         },
         {
-            "name": "tVTOL1Load_To_VTOL1",
+            "name": "tVTOL1Payload_To_VTOL1",
             "positions": [
                 {
-                    "name": "pVTOL1Load",
+                    "name": "pVTOL1Payload",
                     "motion": "joint"
                 },
                 {

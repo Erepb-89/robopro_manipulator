@@ -11,14 +11,14 @@ available_trajectories = {
          "tHelicopterModule_To_Helicopter2"},  # pHelicopterModule
     "pHelicopter1":
         {"tHelicopter1_To_HelicopterModule",
-         "tHelicopter1_To_Helicopter1Load"},  # pHelicopter1
-    "pHelicopter1Load":
-        {"tHelicopter1Load_To_Helicopter1"},  # pHelicopter1Load
+         "tHelicopter1_To_Helicopter1Payload"},  # pHelicopter1
+    "pHelicopter1Payload":
+        {"tHelicopter1Payload_To_Helicopter1"},  # pHelicopter1Payload
     "pHelicopter2":
         {"tHelicopter2_To_HelicopterModule",
-         "tHelicopter2_To_Helicopter2Load"},  # pHelicopter2
-    "pHelicopter2Load":
-        {"tHelicopter2Load_To_Helicopter2"},  # pHelicopter2Load
+         "tHelicopter2_To_Helicopter2Payload"},  # pHelicopter2
+    "pHelicopter2Payload":
+        {"tHelicopter2Payload_To_Helicopter2"},  # pHelicopter2Payload
     "pPayload":
         {"tPayload_To_HomePosition",
          "tPayload_To_Payload1",
@@ -49,10 +49,10 @@ available_trajectories = {
          "tVTOLModule_To_VTOL2"},  # pVTOLModule
     "pVTOL1":
         {"tVTOL1_To_VTOLModule",
-         "tVTOL1_To_VTOL1Load",
+         "tVTOL1_To_VTOL1Payload",
          "tVTOL1_To_VTOL1Battery"},  # pVTOL1
-    "pVTOL1Load":
-        {"tVTOL1Load_To_VTOL1"},  # pVTOL1Load
+    "pVTOL1Payload":
+        {"tVTOL1Payload_To_VTOL1"},  # pVTOL1Payload
     "pVTOL1Battery":
         {"tVTOL1Battery_To_VTOL1"},  # pVTOL1Battery
     "pVTOL2":
