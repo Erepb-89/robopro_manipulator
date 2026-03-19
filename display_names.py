@@ -8,13 +8,13 @@ POINT_NAMES: dict[str, str] = {
     # Вертолёты
     "pHelicopterModule":         "Модуль вертолётов",
     "pHelicopter1":              "Вертолёт 1",
-    "pHelicopter1Load":          "Вертолёт 1: Полезная нагрузка",
+    "pHelicopter1Payload":       "Вертолёт 1: Полезная нагрузка",
     "pHelicopter2":              "Вертолёт 2",
-    "pHelicopter2Load":          "Вертолёт 2: Полезная нагрузка",
+    "pHelicopter2Payload":       "Вертолёт 2: Полезная нагрузка",
     # ВТОЛ1
     "pVTOLModule":               "Модуль ВТОЛ",
     "pVTOL1":                    "ВТОЛ 1",
-    "pVTOL1Load":                "ВТОЛ 1: Полезная нагрузка",
+    "pVTOL1Payload":             "ВТОЛ 1: Полезная нагрузка",
     "pVTOL1Battery":             "ВТОЛ 1: батарея",
     "pVTOL2":                    "ВТОЛ 2",
     # Полезная нагрузка

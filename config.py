@@ -42,20 +42,33 @@ PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxFreeDrive"
 PLC_CMD_FIND_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxFindNearest"
 PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxGripperCmd"
 PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxShiftGripper"
-PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxAction"
-PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxTrajectory"
+PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.Control.qAction"
+PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.Control.qTrajectory"
 
-ENABLE_MOVE_TO_MODULE_H = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToModuleH"
-ENABLE_MOVE_TO_MODULE_V = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToModuleV"
-ENABLE_MOVE_TO_CHARGER_H = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToChargerH"
-ENABLE_MOVE_TO_CHARGER_V = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToChargerV"
-ENABLE_MOVE_TO_PAYLOAD_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToPayloadStorage"
-ENABLE_MOVE_TO_GRIPPERS_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToGrippersStorage"
-ENABLE_MOVE_TO_HOME = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.qxRobotEnableMoveToHome"
+ENABLE_MOVE_TO_MODULE_H = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionModuleH"
+ENABLE_MOVE_TO_MODULE_V = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionModuleV"
+ENABLE_MOVE_TO_CHARGER_H = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionChargerH"
+ENABLE_MOVE_TO_CHARGER_V = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionChargerV"
+ENABLE_MOVE_TO_PAYLOAD_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionPayloadStorage"
+ENABLE_MOVE_TO_GRIPPERS_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionGrippersStorage"
+ENABLE_MOVE_TO_HOME = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionHome"
+
+STATE_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.Control.iTrajectoryState"
+STATE_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.Control.iActionState"
+STATE_POWER = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixPowered"
+STATE_GRIPPER_CMD = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixGripperCmd"
+STATE_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixNearestState"
+STATE_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixShiftGripper"
+
+STATE_POSITION = "|var|HCFA-PLC.Application.OPC.Robot.State.iPosition"
+STATE_CONTROLLER = "|var|HCFA-PLC.Application.OPC.Robot.State.iControllerState"
+STATE_SAFETY = "|var|HCFA-PLC.Application.OPC.Robot.State.iSafetyStatus"
+STATE_MODE = "|var|HCFA-PLC.Application.OPC.Robot.State.iMode"
+STATE_LAST_ERROR = "|var|HCFA-PLC.Application.OPC.Robot.State.iLastError"
 
 HELICOPTER_MODULE = ["pHelicopter1", "pHelicopter2", "pHomePosition"]
 VTOL_MODULE = ["pVTOL1", "pVTOL2", "pHomePosition"]
-LOAD_STORAGE = ["pPayload1", "pPayload2", "pHomePosition"]
+PAYLOAD_STORAGE = ["pPayload1", "pPayload2", "pHomePosition"]
 GRIPPERS_STORAGE = ["pHomePosition"]
 CHARGER_H = ["pHomePosition"]
 CHARGER_V = ["pHomePosition"]
@@ -65,7 +78,7 @@ X_POSITION_MODULE_H = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionModuleH
 X_POSITION_MODULE_V = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionModuleV"
 X_POSITION_CHARGER_H = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionChargerH"
 X_POSITION_CHARGER_V = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionChargerV"
-X_POSITION_LOAD = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionPayload"
+X_POSITION_PAYLOAD = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionPayload"
 X_POSITION_GRIPPER_STORAGE = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPositionGripperStorage"
 X_POSITION_HAS_ZEROED = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixHasZeroed"
 X_POSITION_POWERED = "|var|HCFA-PLC.Application.OPC.M_Table.X.ixPowered"
@@ -75,7 +88,7 @@ Y_POSITION_MODULE_H = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPositionModuleH
 Y_POSITION_MODULE_V = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPositionModuleV"
 Y_POSITION_CHARGER_H = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPositionChargerH"
 Y_POSITION_CHARGER_V = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPositionChargerV"
-Y_POSITION_LOAD = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPositionPayload"
+Y_POSITION_PAYLOAD = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPositionPayload"
 Y_POSITION_GRIPPER_STORAGE = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPositionGripperStorage"
 Y_POSITION_HAS_ZEROED = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixHasZeroed"
 Y_POSITION_POWERED = "|var|HCFA-PLC.Application.OPC.M_Table.Y.ixPowered"
@@ -185,15 +198,15 @@ POWER_BTN_INACTIVE_STYLE = "background: rgb(240,240,240);"
 # ── Карта траекторий: цвета зон ───────────────────────────────
 ZONE_COLORS = {
     "helicopter": QColor(41, 98, 255, 30),
-    "service_load": QColor(255, 152, 0, 30),
-    "service_grip": QColor(255, 152, 0, 30),
+    "payload": QColor(255, 152, 0, 30),
+    "grippers": QColor(255, 152, 0, 30),
     "vtol": QColor(76, 175, 80, 30),
     "charger": QColor(156, 39, 176, 30),
 }
 ZONE_BORDER_COLORS = {
     "helicopter": QColor(41, 98, 255, 180),
-    "service_load": QColor(255, 152, 0, 180),
-    "service_grip": QColor(255, 152, 0, 180),
+    "payload": QColor(255, 152, 0, 180),
+    "grippers": QColor(255, 152, 0, 180),
     "vtol": QColor(76, 175, 80, 180),
     "charger": QColor(156, 39, 176, 180),
 }
@@ -223,13 +236,13 @@ MAP_STATUS_OFF = "padding:1px 4px; color:#9e9e9e; background:#f5f5f5;"
 ZONE_BLOCK_MAP = {
     "pHelicopterModule": ("x_module_h", "y_module_h", "вертолётного модуля"),
     "pHelicopter1": ("x_module_h", "y_module_h", "вертолётного модуля"),
-    "pHelicopter1Load": ("x_module_h", "y_module_h", "вертолётного модуля"),
+    "pHelicopter1Payload": ("x_module_h", "y_module_h", "вертолётного модуля"),
     "pHelicopter2": ("x_module_h", "y_module_h", "вертолётного модуля"),
-    "pHelicopter2Load": ("x_module_h", "y_module_h", "вертолётного модуля"),
+    "pHelicopter2Payload": ("x_module_h", "y_module_h", "вертолётного модуля"),
     "pVTOLModule": ("x_module_v", "y_module_v", "VTOL модуля"),
     "pVTOL1": ("x_module_v", "y_module_v", "VTOL модуля"),
     "pVTOL1Battery": ("x_module_v", "y_module_v", "VTOL модуля"),
-    "pVTOL1Load": ("x_module_v", "y_module_v", "VTOL модуля"),
+    "pVTOL1Payload": ("x_module_v", "y_module_v", "VTOL модуля"),
     "pVTOL2": ("x_module_v", "y_module_v", "VTOL модуля"),
     "pVTOL2Battery": ("x_module_v", "y_module_v", "VTOL модуля"),
     "pVTOL2Battery2": ("x_module_v", "y_module_v", "VTOL модуля"),

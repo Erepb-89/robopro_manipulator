@@ -26,17 +26,42 @@ class Command:
     source: Optional[str] = None
 
 
+class RobotPoints(enum.Enum):
+    pHomePosition = 1
+    pHelicopterModule = 2
+    pHelicopter1 = 3
+    pHelicopter1Payload = 4
+    pHelicopter2 = 5
+    pHelicopter2Payload = 6
+    pPayload = 7
+    pPayload1 = 8
+    pPayload2 = 9
+    pGrippers = 10
+    pGrippers1 = 11
+    pGrippers2 = 12
+    pCharger = 13
+    pCharger1 = 14
+    pCharger2 = 15
+    pVTOLModule = 16
+    pVTOL1 = 17
+    pVTOL1Payload = 18
+    pVTOL1Battery = 19
+    pVTOL2 = 20
+    pVTOL2Battery = 21
+    pVTOL2Battery2Charge = 22
+
+
 class RobotTrajectories(enum.Enum):
     tHomePosition_To_HelicopterModule = 1
     tHelicopterModule_To_HomePosition = 2
     tHelicopterModule_To_Helicopter1 = 3
     tHelicopter1_To_HelicopterModule = 4
-    tHelicopter1_To_Helicopter1Load = 5
-    tHelicopter1Load_To_Helicopter1 = 6
+    tHelicopter1_To_Helicopter1Payload = 5
+    tHelicopter1Payload_To_Helicopter1 = 6
     tHelicopterModule_To_Helicopter2 = 7
     tHelicopter2_To_HelicopterModule = 8
-    tHelicopter2_To_Helicopter2Load = 9
-    tHelicopter2Load_To_Helicopter2 = 10
+    tHelicopter2_To_Helicopter2Payload = 9
+    tHelicopter2Payload_To_Helicopter2 = 10
     tHomePosition_To_Payload = 11
     tPayload_To_HomePosition = 12
     tPayload_To_Payload1 = 13
@@ -59,47 +84,14 @@ class RobotTrajectories(enum.Enum):
     tVTOLModule_To_HomePosition = 30
     tVTOLModule_To_VTOL1 = 31
     tVTOL1_To_VTOLModule = 32
-    tVTOL1_To_VTOL1Load = 33
-    tVTOL1Load_To_VTOL1 = 34
+    tVTOL1_To_VTOL1Payload = 33
+    tVTOL1Payload_To_VTOL1 = 34
     tVTOL1_To_VTOL1Battery = 35
     tVTOL1Battery_To_VTOL1 = 36
     tVTOLModule_To_VTOL2 = 37
     tVTOL2_To_VTOLModule = 38
     tVTOL2_To_VTOL2Battery = 39
     tVTOL2Battery_To_VTOL2 = 40
-
-#
-# class RobotRoutes(enum.Enum):
-#     rHomePosition_To_Helicopter1 = 1
-#     rHelicopter1_To_HomePosition = 2
-#     rHomePosition_To_Helicopter2 = 3
-#     rHelicopter2_To_HomePosition = 4
-#     rHomePosition_To_Helicopter1Load = 5
-#     rHelicopter1Load_To_HomePosition = 6
-#     rHomePosition_To_Helicopter2Load = 7
-#     rHelicopter2Load_To_HomePosition = 8
-#     rHomePosition_To_Load1 = 9
-#     rLoad1_To_HomePosition = 10
-#     rHomePosition_To_Load2 = 11
-#     rLoad2_To_HomePosition = 12
-#     rHomePosition_To_Grippers1 = 13
-#     rGrippers1_To_HomePosition = 14
-#     rHomePosition_To_Grippers2 = 15
-#     rGrippers2_To_HomePosition = 16
-#     rHomePosition_To_Charger1 = 17
-#     rCharger1_To_HomePosition = 18
-#     rHomePosition_To_Charger2 = 19
-#     rCharger2_To_HomePosition = 20
-#     rHomePosition_To_VTOL1 = 21
-#     rVTOL1_To_HomePosition = 22
-#     rHomePosition_To_VTOL2 = 23
-#     rVTOL2_To_HomePosition = 24
-#     rHomePosition_To_VTOL1Load = 25
-#     rVTOL1Load_To_HomePosition = 26
-#     rHomePosition_To_VTOL1Battery = 27
-#     rVTOL1Battery_To_HomePosition = 28
-#     rHomePosition_To_VTOL2Battery = 29
-#     rVTOL2Battery_To_HomePosition = 30
 
 
 class RobotActions(enum.Enum):

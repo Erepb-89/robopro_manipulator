@@ -29,33 +29,33 @@
       ]
     },
     {
-      "name": "rHomePosition_To_Helicopter1Load",
+      "name": "rHomePosition_To_Helicopter1Payload",
       "trajectories": [
         "tHomePosition_To_HelicopterModule",
         "tHelicopterModule_To_Helicopter1",
-        "tHelicopter1_To_Helicopter1Load"
+        "tHelicopter1_To_Helicopter1Payload"
       ]
     },
     {
-      "name": "rHelicopter1Load_To_HomePosition",
+      "name": "rHelicopter1Payload_To_HomePosition",
       "trajectories": [
-        "tHelicopter1Load_To_Helicopter1",
+        "tHelicopter1Payload_To_Helicopter1",
         "tHelicopter1_To_HelicopterModule",
         "tHelicopterModule_To_HomePosition"
       ]
     },
     {
-      "name": "rHomePosition_To_Helicopter2Load",
+      "name": "rHomePosition_To_Helicopter2Payload",
       "trajectories": [
         "tHomePosition_To_HelicopterModule",
         "tHelicopterModule_To_Helicopter2",
-        "tHelicopter2_To_Helicopter2Load"
+        "tHelicopter2_To_Helicopter2Payload"
       ]
     },
     {
-      "name": "rHelicopter2Load_To_HomePosition",
+      "name": "rHelicopter2Payload_To_HomePosition",
       "trajectories": [
-        "tHelicopter2Load_To_Helicopter2",
+        "tHelicopter2Payload_To_Helicopter2",
         "tHelicopter2_To_HelicopterModule",
         "tHelicopterModule_To_HomePosition"
       ]
@@ -173,17 +173,17 @@
       ]
     },
     {
-      "name": "rHomePosition_To_VTOL1Load",
+      "name": "rHomePosition_To_VTOL1Payload",
       "trajectories": [
         "tHomePosition_To_VTOLModule",
         "tVTOLModule_To_VTOL1",
-        "tVTOL1_To_VTOL1Load"
+        "tVTOL1_To_VTOL1Payload"
       ]
     },
     {
-      "name": "rVTOL1Load_To_HomePosition",
+      "name": "rVTOL1Payload_To_HomePosition",
       "trajectories": [
-        "tVTOL1Load_To_VTOL1",
+        "tVTOL1Payload_To_VTOL1",
         "tVTOL1_To_VTOLModule",
         "tVTOLModule_To_HomePosition"
       ]
