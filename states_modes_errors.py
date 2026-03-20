@@ -106,6 +106,7 @@ class LastError(Enum):
     err_rc_loop: int = 13               # Unhandled error in Robot Controller loop
     err_not_ready: int = 14             # Manipulator not powered / not in run state
     err_sj_activation: int = 15         # Error Simple Joystick activation
+    err_hatch_not_open: int = 16        # Hatch must be open before moving to this position
 
 
 # ── Словари русских переводов для панели статуса ──────────────────────────────
@@ -157,4 +158,5 @@ LAST_ERROR_RU = {
     LastError.err_rc_loop:               ("Необработанная ошибка цикла RC",     "background:#ffcdd2"),
     LastError.err_not_ready:             ("Манипулятор не готов к движению",    "background:#ffcdd2"),
     LastError.err_sj_activation:         ("Ошибка включения джойстика",         "background:#ffcdd2"),
+    LastError.err_hatch_not_open:        ("Люк не открыт",                      "background:#ffcdd2"),
 }
