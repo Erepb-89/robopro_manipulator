@@ -10,7 +10,7 @@ from typing import Dict, List, Optional
 from queue import Queue, Empty
 
 from actions import actions
-from opc_client import ManipulatorPoints
+from opc_client import ManipulatorPoints, VtPoints, VtolPoints
 from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, \
@@ -300,6 +300,14 @@ class RobotController:
 
         }
 
+        self.hatch_required_trajectories = {
+            'tHelicopter1_To_Helicopter1Payload': 'vt',
+            'tHelicopter2_To_Helicopter2Payload': 'vt',
+            'tVTOL1_To_VTOL1Payload':             'vtol',
+            'tVTOL1_To_VTOL1Battery':             'vtol',
+            'tVTOL2_To_VTOL2Battery':             'vtol',
+        }
+
         # Раскомментить для отладки с манипулятором по месту
         # Robot API
         # try:
@@ -482,6 +490,22 @@ class RobotController:
 
     def exec_available_trajectory(self, nearest_wp, trajectory) -> None:
         """Выполнить доступную траекторию"""
+        hatch_module = self.hatch_required_trajectories.get(trajectory.name)
+        if hatch_module == 'vt' and not VtPoints.hatch_opened:
+            self.state.update(
+                trajectory_state=trajectory.value + BLOCK,
+                last_error=LastError.err_hatch_not_open
+            )
+            self.log.error(f"Trajectory {trajectory.name} blocked: VT hatch not open")
+            return
+        if hatch_module == 'vtol' and not VtolPoints.hatch_opened:
+            self.state.update(
+                trajectory_state=trajectory.value + BLOCK,
+                last_error=LastError.err_hatch_not_open
+            )
+            self.log.error(f"Trajectory {trajectory.name} blocked: VTOL hatch not open")
+            return
+
         attr = self.manipulator_points.get(nearest_wp)
         wp_available = getattr(ManipulatorPoints, attr, False) if attr else True
         if trajectory.name in available_trajectories.get(nearest_wp) and wp_available:
