@@ -24,6 +24,15 @@ from config import (
     MAP_STATUS_OK, MAP_STATUS_WARN, MAP_STATUS_ALM, MAP_STATUS_OFF, ZONE_BLOCK_MAP, GROUPS, SEP_COLOR,
 )
 
+# Точки, требующие открытого люка соответствующего стола
+HATCH_BLOCK_MAP = {
+    "pHelicopter1Payload": "vt",
+    "pHelicopter2Payload": "vt",
+    "pVTOL1Payload":       "vtol",
+    "pVTOL1Battery":       "vtol",
+    "pVTOL2Battery":       "vtol",
+}
+
 
 # ─── StatusChipItem ───────────────────────────────────────────
 class StatusChipItem(QGraphicsRectItem):
@@ -516,7 +525,7 @@ class TrajectoryMapWidget(QWidget):
           vtol     : VtolPoints | None
         """
         self._update_platform_chips(platform)
-        self._update_node_blocking(platform)
+        self._update_node_blocking(platform, vt, vtol)
         self._update_equip_chips(vt, vtol)
         self._update_status_panel(platform, vt, vtol)
 
@@ -560,8 +569,8 @@ class TrajectoryMapWidget(QWidget):
             else:
                 chip.update_state(axis.upper(), 'gray')
 
-    def _update_node_blocking(self, platform) -> None:
-        """Блокирует (серым) узлы зон, куда платформа ещё не подъехала."""
+    def _update_node_blocking(self, platform, vt=None, vtol=None) -> None:
+        """Блокирует (серым) узлы зон, куда платформа ещё не подъехала или люк не открыт."""
         for point_name, node in self._nodes.items():
             if point_name == "pHomePosition":
                 node.set_blocked(False)
@@ -581,13 +590,26 @@ class TrajectoryMapWidget(QWidget):
             x_attr, y_attr, location = mapping
             x_ok = getattr(platform, x_attr, True)
             y_ok = getattr(platform, y_attr, True)
-            if x_ok and y_ok:
-                node.set_blocked(False)
-            else:
+            if not (x_ok and y_ok):
                 missing = ("XY" if not x_ok and not y_ok
                            else "X-ось" if not x_ok
                            else "Y-ось")
                 node.set_blocked(True, f"Платформа ({missing}) не у {location}")
+                continue
+
+            hatch_module = HATCH_BLOCK_MAP.get(point_name)
+            if hatch_module == 'vt':
+                hatch_open = vt.hatch_opened if vt is not None else True
+                if not hatch_open:
+                    node.set_blocked(True, "Люк ВТ-стола не открыт")
+                    continue
+            elif hatch_module == 'vtol':
+                hatch_open = vtol.hatch_opened if vtol is not None else True
+                if not hatch_open:
+                    node.set_blocked(True, "Люк VTOL-стола не открыт")
+                    continue
+
+            node.set_blocked(False)
 
     def _update_equip_chips(self, vt, vtol) -> None:
         """Обновляет чипы состояния оборудования (люк, лифт, бокс)."""
