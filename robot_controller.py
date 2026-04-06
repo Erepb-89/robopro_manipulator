@@ -15,7 +15,7 @@ from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, \
     FINISHED, BLOCK, EXCEPTION, \
-    EXEC_TRAJ, IO_SET, ACTIONS_PATH
+    EXEC_TRAJ, IO_SET, ACTIONS_PATH, PORT_TYPE
 from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotPoints
 
 # sys.path.append("/home/user/robot-api")
@@ -676,7 +676,7 @@ class RobotController:
 
     def run(self) -> None:
         """Главный цикл контроллера"""
-        self.log.info("RobotController started")
+        self.log.info(f"RobotController started [PORT_TYPE={PORT_TYPE}]")
 
         while not self.stop_event.is_set():
             try:
