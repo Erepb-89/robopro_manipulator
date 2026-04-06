@@ -9,6 +9,12 @@ POINTS_PATH = BASE_DIR / "points.json"
 TRAJ_PATH = BASE_DIR / "trajectories.json"
 ACTIONS_PATH = BASE_DIR / "actions2.json"
 
+# Тип порта: "stationary" — Легионер опущен, подход под хвост снизу;
+#            "mobile"     — Легионер наверху, подход сверху с доворотом.
+# Значение определяет, какой набор ВТОЛ-траекторий и waypoints будет активен.
+# Меняется при смене конфигурации порта (до запуска приложения).
+PORT_TYPE: str = "stationary"  # "stationary" | "mobile"
+
 # Параметры подключения
 ROBOT_IP = "127.0.0.1"
 # OPC_ENDPOINT = "opc.tcp://0.0.0.0:4840"  # для отладки по месту
@@ -122,6 +128,8 @@ GREEN_COLOR = "background:#e8f5e9; border-radius:6px; padding:6px; color:#2e7d32
 BEIGE_COLOR = "background:#fff3e0; border-radius:6px; padding:6px; color:#e65100; font-weight:bold;"
 BLUE_COLOR = "background:#e3f2fd; border-radius:6px; padding:6px; color:#1565c0;"
 ALABASTER_COLOR = "border:none; background:#fafafa;"
+STATIONARY_PORT_COLOR = "padding:2px 10px; border-radius:4px; font-size:11px; background:#e8f5e9; color:#2e7d32;"
+MOBILE_PORT_COLOR = "padding:2px 10px; border-radius:4px; font-size:11px; background:#e3f2fd; color:#1565c0;"
 
 # ── UI стили ────────────────────────────────────────────────────────────────
 
@@ -277,3 +285,35 @@ GROUPS = [
 ]
 
 SEP_COLOR = "color:#ddd;"
+
+# ── Траектории ВТОЛ в зависимости от типа порта ───────────────────────────────
+#
+# Стационарный: Легионер опущен хвостом к модулю манипулятора.
+#   Манипулятор заходит под хвост снизу. Стол ВТОЛ в нижней позиции.
+#   pVTOL2 → tVTOL2_To_VTOL2Battery — основная траектория к батарее
+#
+# Мобильный: Легионер наверху. Манипулятор заходит сверху под хвост,
+#   затем доворот и посадка. Конкретные высоты уточняются при наладке.
+#   pVTOL2 → tVTOL2_To_VTOL2Battery_Mobile — траектория для мобильного порта
+#            (waypoint добавляется в points.json / trajectories.json при наладке)
+#
+VTOL_TRAJECTORIES_BY_PORT: dict[str, dict[str, set]] = {
+    "stationary": {
+        "pVTOL2": {
+            "tVTOL2_To_VTOLModule",
+            "tVTOL2_To_VTOL2Battery",  # подход под хвост снизу
+        },
+        "pVTOL2Battery": {
+            "tVTOL2Battery_To_VTOL2",
+        },
+    },
+    "mobile": {
+        "pVTOL2": {
+            "tVTOL2_To_VTOLModule",
+            "tVTOL2_To_VTOL2Battery_Mobile",  # подход сверху + доворот (наладка)
+        },
+        "pVTOL2Battery": {
+            "tVTOL2Battery_Mobile_To_VTOL2",
+        },
+    },
+}
