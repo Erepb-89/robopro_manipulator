@@ -1,3 +1,10 @@
+from config import PORT_TYPE, VTOL_TRAJECTORIES_BY_PORT
+
+# Выбираем набор ВТОЛ2-траекторий по типу порта.
+# При PORT_TYPE="stationary" — подход под хвост снизу (Легионер опущен).
+# При PORT_TYPE="mobile"     — подход сверху с доворотом (Легионер наверху).
+_vtol_by_port = VTOL_TRAJECTORIES_BY_PORT.get(PORT_TYPE, VTOL_TRAJECTORIES_BY_PORT["stationary"])
+
 available_trajectories = {
     "pHomePosition":
         {"tHomePosition_To_HelicopterModule",
@@ -56,7 +63,7 @@ available_trajectories = {
     "pVTOL1Battery":
         {"tVTOL1Battery_To_VTOL1"},  # pVTOL1Battery
     "pVTOL2":
-        {"tVTOL2_To_VTOLModule", "tVTOL2_To_VTOL2Battery"},  # pVTOL2
+        _vtol_by_port["pVTOL2"],            # зависит от PORT_TYPE
     "pVTOL2Battery":
-        {"tVTOL2Battery_To_VTOL2"},  # pVTOL2Battery
+        _vtol_by_port["pVTOL2Battery"],     # зависит от PORT_TYPE
 }
