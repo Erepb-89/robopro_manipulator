@@ -21,16 +21,18 @@ from config import (
     NODE_BASE_COLOR, NODE_ENDPOINT_COLOR, NODE_HOME_COLOR,
     NODE_CURRENT_COLOR, NODE_HOVER_COLOR, NODE_BLOCKED_COLOR,
     PEN_NORMAL, PEN_DIM, PEN_HL, PEN_BACK_ARROW,
-    MAP_STATUS_OK, MAP_STATUS_WARN, MAP_STATUS_ALM, MAP_STATUS_OFF, ZONE_BLOCK_MAP, GROUPS, SEP_COLOR,
+    MAP_STATUS_OK, MAP_STATUS_WARN, MAP_STATUS_ALM, MAP_STATUS_OFF,
+    ZONE_BLOCK_MAP, GROUPS, SEP_COLOR, PORT_TYPE,
+    STATIONARY_PORT_COLOR, MOBILE_PORT_COLOR,
 )
 
 # Точки, требующие открытого люка соответствующего стола
 HATCH_BLOCK_MAP = {
     "pHelicopter1Payload": "vt",
     "pHelicopter2Payload": "vt",
-    "pVTOL1Payload":       "vtol",
-    "pVTOL1Battery":       "vtol",
-    "pVTOL2Battery":       "vtol",
+    "pVTOL1Payload": "vtol",
+    "pVTOL1Battery": "vtol",
+    "pVTOL2Battery": "vtol",
 }
 
 
@@ -294,6 +296,20 @@ class TrajectoryMapWidget(QWidget):
         title.setAlignment(Qt.AlignCenter)
         layout.addWidget(title)
 
+        # Индикатор типа порта
+        _port_label_text = "ЭРИ-Порт: стационарный" \
+            if PORT_TYPE == "stationary" \
+            else "ЭРИ-Порт: мобильный"
+        _port_label_style = (
+            STATIONARY_PORT_COLOR
+            if PORT_TYPE == "stationary"
+            else MOBILE_PORT_COLOR
+        )
+        port_badge = QLabel(_port_label_text)
+        port_badge.setStyleSheet(_port_label_style)
+        port_badge.setAlignment(Qt.AlignCenter)
+        layout.addWidget(port_badge)
+
         # Легенда
         legend = QHBoxLayout()
         legend.addStretch()
@@ -395,11 +411,11 @@ class TrajectoryMapWidget(QWidget):
 
         # x_chip_x, x_chip_y — позиция чипа X; Y-чип размещается на 16px ниже
         status_chips = [
-            ("helicopter",    240, 305),
-            ("vtol",          710, 305),
-            ("payload",       350, 305),
-            ("grippers",      595, 305),
-            ("charger",       485, 465),
+            ("helicopter", 240, 305),
+            ("vtol", 710, 305),
+            ("payload", 350, 305),
+            ("grippers", 595, 305),
+            ("charger", 485, 465),
         ]
 
         for zone_key, chip_x, chip_y in status_chips:
@@ -540,18 +556,18 @@ class TrajectoryMapWidget(QWidget):
         # ось → зона → бит присутствия
         axis_zone_bits = {
             "x": {
-                "helicopter":   platform.x_module_h,
-                "vtol":         platform.x_module_v,
-                "payload":      platform.x_pos_payload,
-                "grippers":     platform.x_pos_grippers,
-                "charger":      platform.x_charge_h or platform.x_charge_v,
+                "helicopter": platform.x_module_h,
+                "vtol": platform.x_module_v,
+                "payload": platform.x_pos_payload,
+                "grippers": platform.x_pos_grippers,
+                "charger": platform.x_charge_h or platform.x_charge_v,
             },
             "y": {
-                "helicopter":   platform.y_module_h,
-                "vtol":         platform.y_module_v,
-                "payload":      platform.y_pos_payload,
-                "grippers":     platform.y_pos_grippers,
-                "charger":      platform.y_charge_h or platform.y_charge_v,
+                "helicopter": platform.y_module_h,
+                "vtol": platform.y_module_v,
+                "payload": platform.y_pos_payload,
+                "grippers": platform.y_pos_grippers,
+                "charger": platform.y_charge_h or platform.y_charge_v,
             },
         }
         axis_alarm = {"x": platform.x_alarm, "y": platform.y_alarm}
@@ -593,7 +609,7 @@ class TrajectoryMapWidget(QWidget):
             if not (x_ok and y_ok):
                 missing = ("XY" if not x_ok and not y_ok
                            else "X-ось" if not x_ok
-                           else "Y-ось")
+                else "Y-ось")
                 node.set_blocked(True, f"Платформа ({missing}) не у {location}")
                 continue
 
