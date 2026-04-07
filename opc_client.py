@@ -75,6 +75,7 @@ class VtolPoints:
     hatch_closed: bool = False
     hatch_alarm: bool = False
     lift_top: bool = False
+    lift_mid: bool = False
     lift_bottom: bool = False
     lift_alarm: bool = False
 
