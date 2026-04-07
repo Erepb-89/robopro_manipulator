@@ -1,6 +1,7 @@
 import json
 import sys
 import math
+import time
 import threading
 import dataclasses
 from dataclasses import dataclass, field
@@ -15,7 +16,7 @@ from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, \
     FINISHED, BLOCK, EXCEPTION, \
-    EXEC_TRAJ, IO_SET, ACTIONS_PATH
+    EXEC_TRAJ, IO_SET, ACTIONS_PATH, PORT_TYPE, VTOL_LIFT_WAIT_TIMEOUT, WAIT_LIFT, VTOL_LIFT_REQUIRED_POSITION
 from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotPoints
 
 # sys.path.append("/home/user/robot-api")
@@ -303,9 +304,21 @@ class RobotController:
         self.hatch_required_trajectories = {
             'tHelicopter1_To_Helicopter1Payload': 'vt',
             'tHelicopter2_To_Helicopter2Payload': 'vt',
-            'tVTOL1_To_VTOL1Payload':             'vtol',
-            'tVTOL1_To_VTOL1Battery':             'vtol',
-            'tVTOL2_To_VTOL2Battery':             'vtol',
+            'tVTOL1_To_VTOL1Payload': 'vtol',
+            'tVTOL1_To_VTOL1Battery': 'vtol',
+            'tVTOL2_To_VTOL2Battery': 'vtol',
+        }
+
+        # Траектории, для которых стол ВТОЛ обязан быть в нижней позиции.
+        # Стационарный порт: Легионер опущен хвостом к модулю, подход снизу.
+        # Мобильный порт: mid высота уточняется при наладке
+
+        # Траектории требующие определённой позиции лифта ВТОЛ перед выполнением.
+        # Ключ — имя траектории, значение — требуемая позиция лифта.
+        self.vtol_lift_required = {
+            'tVTOL1_To_VTOL1Battery': 'bottom',  # стационарный
+            'tVTOL2_To_VTOL2Battery': 'bottom',  # стационарный
+            'tVTOL2_To_VTOL2Battery_Mobile': 'mid',  # мобильный
         }
 
         # Раскомментить для отладки с манипулятором по месту
@@ -490,6 +503,7 @@ class RobotController:
 
     def exec_available_trajectory(self, nearest_wp, trajectory) -> None:
         """Выполнить доступную траекторию"""
+        # Проверка люка ВТ
         hatch_module = self.hatch_required_trajectories.get(trajectory.name)
         if hatch_module == 'vt' and not VtPoints.hatch_opened:
             self.state.update(
@@ -498,12 +512,30 @@ class RobotController:
             )
             self.log.error(f"Trajectory {trajectory.name} blocked: VT hatch not open")
             return
+
+        # Проверка люка ВТОЛ
         if hatch_module == 'vtol' and not VtolPoints.hatch_opened:
             self.state.update(
                 trajectory_state=trajectory.value + BLOCK,
                 last_error=LastError.err_hatch_not_open
             )
             self.log.error(f"Trajectory {trajectory.name} blocked: VTOL hatch not open")
+            return
+
+        # Проверка позиции лифта ВТОЛ
+        # Для каждого типа порта требуется своя позиция лифта перед подходом к батарее:
+        #   stationary → bottom (Легионер опущен хвостом к манипулятору)
+        #   mobile → mid (промежуточная высота, уточняется при наладке)
+        required_position = self.vtol_lift_required.get(trajectory.name)
+        if required_position and not self._vtol_lift_at_position(required_position):
+            self.state.update(
+                trajectory_state=trajectory.value + BLOCK,
+                last_error=LastError.err_vtol_lift_not_position
+            )
+            self.log.error(
+                f"Trajectory {trajectory.name} blocked: "
+                f"VTOL lift not at '{required_position}' (PORT_TYPE={PORT_TYPE})"
+            )
             return
 
         attr = self.manipulator_points.get(nearest_wp)
@@ -534,6 +566,51 @@ class RobotController:
                 last_error=LastError.err_choose_trajectory
             )
             self.log.error("Can't move by selected trajectory from current point!")
+
+    def _vtol_lift_at_position(self, position: str) -> bool:
+        """Проверяет находится ли лифт ВТОЛ в указанной позиции."""
+        if position == 'bottom':
+            return bool(VtolPoints.lift_bottom)
+        if position == 'top':
+            return bool(VtolPoints.lift_top)
+        if position == 'mid':
+            return bool(VtolPoints.lift_mid)
+        self.log.warning(f"_vtol_lift_at_position: неизвестная позиция '{position}'")
+        return False
+
+    def wait_vtol_lift(self, position: str, timeout_sec: int | None = None) -> bool:
+        """Ждёт пока лифт ВТОЛ не займёт нужную позицию."""
+        if timeout_sec is None:
+            timeout_sec = VTOL_LIFT_WAIT_TIMEOUT
+
+        if self._vtol_lift_at_position(position):
+            self.log.info(f"VTOL lift already at '{position}', no wait needed")
+            return True
+
+        self.log.info(f"Waiting for VTOL lift position='{position}' (timeout={timeout_sec}s)")
+
+        deadline = time.monotonic() + timeout_sec
+
+        while time.monotonic() < deadline:
+            # Прерываем если поступил сигнал остановки контроллера
+            if self.stop_event.is_set():
+                self.log.warning("wait_vtol_lift interrupted: stop event")
+                return False
+
+            if self._vtol_lift_at_position(position):
+                self.log.info(f"VTOL lift reached '{position}'")
+                return True
+
+            time.sleep(0.2)
+
+        self.log.error(
+            f"wait_vtol_lift timeout after {timeout_sec}s: "
+            f"position='{position}', "
+            f"lift_bottom={VtolPoints.lift_bottom}, "
+            f"lift_top={VtolPoints.lift_top}, "
+            f"lift_mid={VtolPoints.lift_mid}"
+        )
+        return False
 
     def execute_action(self, action: RobotActions) -> None:
         """Выполнить действие"""
@@ -570,6 +647,29 @@ class RobotController:
                             {'index': GRIPPER_DO_INDEX, 'value': bool(command.name)},
                             source="GUI"
                         ))
+                    if command.cmd_type == WAIT_LIFT:
+                        # Синхронное ожидание позиции лифта перед следующей командой.
+                        # Для стационарного порта — нижняя позиция (Легионер опущен).
+                        # Для мобильного порта — пока пропускаем, условие при наладке.
+                        if PORT_TYPE == "stationary":
+                            ok = self.wait_vtol_lift(position=command.name)
+                            if not ok:
+                                self.state.update(
+                                    action_state=action.value + BLOCK,
+                                    last_error=LastError.err_vtol_lift_not_position
+                                )
+                                self.log.error(
+                                    f"Action {action.name} blocked: "
+                                    f"{WAIT_LIFT} timeout (position='{command.name}')"
+                                )
+                                return
+                        # elif PORT_TYPE == "mobile":
+                        #     pass
+                        else:
+                            self.log.info(
+                                f"{WAIT_LIFT} skipped for PORT_TYPE='{PORT_TYPE}' "
+                                f"(position='{command.name}' — уточнить при наладке)"
+                            )
                     # if command.cmd_type == "PLC_COM":
                     #     pass
 
@@ -676,7 +776,7 @@ class RobotController:
 
     def run(self) -> None:
         """Главный цикл контроллера"""
-        self.log.info("RobotController started")
+        self.log.info(f"RobotController started [PORT_TYPE={PORT_TYPE}]")
 
         while not self.stop_event.is_set():
             try:
@@ -747,6 +847,11 @@ class RobotController:
 
                 elif cmd.type == CmdType.START_SIMPLE_JOYSTICK:
                     self.start_simple_joystick(cmd.payload.get('coord_sys'))
+
+                elif cmd.type == CmdType.WAIT_VTOL_LIFT:
+                    position = cmd.payload.get('position', 'bottom')
+                    timeout_sec = cmd.payload.get('timeout_sec', None)
+                    self.wait_vtol_lift(position=position, timeout_sec=timeout_sec)
 
                 elif cmd.type == CmdType.SHUTDOWN:
                     self.log.info("Shutdown command received")

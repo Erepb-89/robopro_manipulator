@@ -17,6 +17,7 @@ class CmdType(Enum):
     SHUTDOWN = auto()
     FIND_NEAREST = auto()
     START_SIMPLE_JOYSTICK = auto()
+    WAIT_VTOL_LIFT = auto()  # {'position': 'bottom'|'top', 'timeout_sec': int}
 
 
 @dataclass
@@ -92,6 +93,10 @@ class RobotTrajectories(enum.Enum):
     tVTOL2_To_VTOLModule = 38
     tVTOL2_To_VTOL2Battery = 39
     tVTOL2Battery_To_VTOL2 = 40
+    # Мобильный порт: Легионер наверху, подход сверху с доворотом.
+    # Номера 41-42 зарезервированы; конкретные waypoints добавляются при наладке.
+    tVTOL2_To_VTOL2Battery_Mobile = 41
+    tVTOL2Battery_Mobile_To_VTOL2 = 42
 
 
 class RobotActions(enum.Enum):
