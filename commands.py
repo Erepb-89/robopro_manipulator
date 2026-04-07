@@ -17,6 +17,7 @@ class CmdType(Enum):
     SHUTDOWN = auto()
     FIND_NEAREST = auto()
     START_SIMPLE_JOYSTICK = auto()
+    WAIT_VTOL_LIFT = auto()  # {'position': 'bottom'|'top', 'timeout_sec': int}
 
 
 @dataclass
