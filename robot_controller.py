@@ -530,7 +530,7 @@ class RobotController:
         if required_position and not self._vtol_lift_at_position(required_position):
             self.state.update(
                 trajectory_state=trajectory.value + BLOCK,
-                last_error=LastError.err_vtol_lift_not_bottom
+                last_error=LastError.err_vtol_lift_not_position
             )
             self.log.error(
                 f"Trajectory {trajectory.name} blocked: "
@@ -656,7 +656,7 @@ class RobotController:
                             if not ok:
                                 self.state.update(
                                     action_state=action.value + BLOCK,
-                                    last_error=LastError.err_vtol_lift_not_bottom
+                                    last_error=LastError.err_vtol_lift_not_position
                                 )
                                 self.log.error(
                                     f"Action {action.name} blocked: "
