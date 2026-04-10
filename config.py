@@ -48,13 +48,13 @@ OPC_CLIENT_TIME = 1
 VTOL_LIFT_WAIT_TIMEOUT = 60
 
 # PLC command nodes (читаются OPC клиентом, пересылаются в cmd_queue)
-PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxPowerOn"
-PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxFreeDrive"
-PLC_CMD_FIND_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxFindNearest"
-PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxGripperCmd"
-PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.qxShiftGripper"
-PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.Control.qAction"
-PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.Control.qTrajectory"
+PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxPowerOn"
+PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxFreeDrive"
+PLC_CMD_FIND_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxFindNearest"
+PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxGripperCmd"
+PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.LocalControl.Control.qxShiftGripper"
+PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qAction"
+PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qTrajectory"
 
 ENABLE_MOVE_TO_MODULE_H = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionModuleH"
 ENABLE_MOVE_TO_MODULE_V = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionModuleV"
@@ -64,12 +64,12 @@ ENABLE_MOVE_TO_PAYLOAD_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMoveP
 ENABLE_MOVE_TO_GRIPPERS_STORAGE = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionGrippersStorage"
 ENABLE_MOVE_TO_HOME = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.ixPositionHome"
 
-STATE_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.Control.iTrajectoryState"
-STATE_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.Control.iActionState"
-STATE_POWER = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixPowered"
-STATE_GRIPPER_CMD = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixGripperCmd"
-STATE_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixNearestState"
-STATE_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.Control.ixShiftGripper"
+STATE_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.iTrajectoryState"
+STATE_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.iActionState"
+STATE_POWER = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixPowered"
+STATE_GRIPPER_CMD = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixGripperCmd"
+STATE_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixNearestState"
+STATE_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixShiftGripper"
 
 STATE_POSITION = "|var|HCFA-PLC.Application.OPC.Robot.State.iPosition"
 STATE_CONTROLLER = "|var|HCFA-PLC.Application.OPC.Robot.State.iControllerState"
