@@ -287,13 +287,13 @@ class MainWindow(QMainWindow):
         try:
             mc = self._plc_clients.get('manipulator')
             vt = self._plc_clients.get('vt')
-            vl = self._plc_clients.get('vtol')
+            vtol = self._plc_clients.get('vtol')
 
             plat = ManipulatorPoints if (mc and getattr(mc, 'is_connected', False)) else None
             vt_s = VtPoints if (vt and getattr(vt, 'is_connected', False)) else None
-            vl_s = VtolPoints if (vl and getattr(vl, 'is_connected', False)) else None
+            vtol_s = VtolPoints if (vtol and getattr(vtol, 'is_connected', False)) else None
 
-            self.trajectory_map.update_plc_state(plat, vt_s, vl_s)
+            self.trajectory_map.update_plc_state(plat, vt_s, vtol_s)
 
         except Exception:
             pass
@@ -365,37 +365,50 @@ class MainWindow(QMainWindow):
         while self._op_log.count() > JOURNAL_COUNT:
             self._op_log.takeItem(self._op_log.count() - 1)
 
-    def _update_op_log(self, last_cmd: str, trajectory_state: int, action_state: int) -> None:
-        """Добавляет запись о результате команды при изменении last_command, trajectory_state или action_state."""
+    def _update_op_log(self, last_cmd: str, trajectory_state: int, action_state: int,
+                       gripper_state: int = 0, shift_gripper_state: int = 0) -> None:
+        """
+        Добавляет запись о результате команды при изменении состояния.
+        Поддерживает траектории, действия, основной схват и сдвиг схвата.
+        """
         cmd_changed = last_cmd != self._log_last_cmd
         traj_changed = trajectory_state != self._log_last_traj_state
         action_changed = action_state != self._log_last_action_state
-        if not cmd_changed and not traj_changed and not action_changed:
+        gripper_changed = gripper_state != self._log_last_gripper_state
+        shift_gripper_changed = shift_gripper_state != self._log_last_shift_gripper_state
+
+        if not (cmd_changed or traj_changed or action_changed or
+                gripper_changed or shift_gripper_changed):
             return
 
+        # Сохраняем предыдущие состояния
         prev_traj = self._log_last_traj_state
         prev_action = self._log_last_action_state
+        prev_gripper = self._log_last_gripper_state
+        prev_shift = self._log_last_shift_gripper_state
         prev_cmd = self._log_last_cmd
+
+        # Обновляем текущие состояния
         self._log_last_traj_state = trajectory_state
         self._log_last_action_state = action_state
+        self._log_last_gripper_state = gripper_state
+        self._log_last_shift_gripper_state = shift_gripper_state
         self._log_last_cmd = last_cmd
 
-        # Для читаемости метки в журнале: предпочитаем текст кнопки (_pending_cmd),
-        # fallback на внутреннее имя last_command
         label = self._pending_cmd or last_cmd or prev_cmd
 
         def _handle_state(prev: int, current: int, code_label: str) -> bool:
             """Обрабатывает переход состояния в терминальную зону. Возвращает True если переход был."""
-            if prev < 200 and 200 <= current < 300:
+            if prev < 200 and 200 <= current < 300:  # EXECUTION → FINISHED
                 self._add_log_entry(label, "✓", LOG_COLOR_SUCCESS)
                 QtWidgets.QMessageBox.information(self, "Выполнено", f"✓  {label}")
                 self._pending_cmd = ""
                 return True
-            elif prev < 300 and 300 <= current < 400:
+            elif prev < 300 and 300 <= current < 400:  # EXECUTION → EXCEPTION
                 self._add_log_entry(label, f"✗  ошибка ({code_label} {current})", LOG_COLOR_ERROR)
                 self._pending_cmd = ""
                 return True
-            elif prev < 400 and current >= 400:
+            elif prev < 400 and current >= 400:  # EXECUTION → BLOCK
                 self._add_log_entry(label, "✗  заблокировано", LOG_COLOR_ERROR)
                 self._pending_cmd = ""
                 return True
@@ -404,12 +417,21 @@ class MainWindow(QMainWindow):
         handled = False
         if traj_changed and not handled:
             handled = _handle_state(prev_traj, trajectory_state, "traj")
+
         if action_changed and not handled:
             handled = _handle_state(prev_action, action_state, "action")
 
-        if not handled and cmd_changed and last_cmd and trajectory_state < 100 and action_state < 100:
-            # Не-траекторная команда (PowerOn/Off, MoveToPoint…):
-            # last_command обновляется ПОСЛЕ успешного выполнения → это подтверждение "✓"
+        if gripper_changed and not handled:
+            handled = _handle_state(prev_gripper, gripper_state, "gripper")
+
+        if shift_gripper_changed and not handled:
+            handled = _handle_state(prev_shift, shift_gripper_state, "shift")
+
+        # Не-траекторная команда (PowerOn/Off, MoveToPoint…):
+        # last_command обновляется ПОСЛЕ успешного выполнения → это подтверждение "✓"
+        if not handled and cmd_changed and last_cmd and \
+                trajectory_state < 100 and action_state < 100 and \
+                gripper_state < 100 and shift_gripper_state < 100:
             self._add_log_entry(self._pending_cmd or last_cmd, "✓", LOG_COLOR_SUCCESS)
             self._pending_cmd = ""
 
@@ -597,7 +619,7 @@ class MainWindow(QMainWindow):
     def manipulator_gripper_control(self, clamp: bool) -> None:
         try:
             self.manipulator_command(
-                Command(CmdType.IO_SET, {'index': 0, 'value': clamp}, source="GUI"))
+                Command(CmdType.GRIPPER_CMD, {'index': 0, 'value': clamp}, source="GUI"))
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "I/O error",
                                            f"Не удалось изменить состояние DO0: {e}")
@@ -606,7 +628,7 @@ class MainWindow(QMainWindow):
     def manipulator_shift_gripper(self, shift: bool) -> None:
         try:
             self.manipulator_command(
-                Command(CmdType.IO_SET, {'index': 1, 'value': shift}, source="GUI"))
+                Command(CmdType.GRIPPER_CMD, {'index': 1, 'value': shift}, source="GUI"))
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "I/O error",
                                            f"Не удалось изменить состояние DO1: {e}")
