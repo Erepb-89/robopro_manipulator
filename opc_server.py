@@ -48,13 +48,13 @@ class OPCUAServer:
                                                         0)  # 0/1
         self.qFreeDrive.set_writable()
 
-        self.qGripperCmd = self.Manipulator.add_variable(self.ns,
-                                                         "qGripperCmd", 0)
-        self.qGripperCmd.set_writable()
+        self.qGripperCommand = self.Manipulator.add_variable(self.ns,
+                                                             "qGripperCommand", 0)
+        self.qGripperCommand.set_writable()
 
-        self.qShiftGripper = self.Manipulator.add_variable(self.ns,
-                                                           "qShiftGripper", 0)
-        self.qShiftGripper.set_writable()
+        self.qGripperHolderCommand = self.Manipulator.add_variable(self.ns,
+                                                                   "qGripperHolderCommand", 0)
+        self.qGripperHolderCommand.set_writable()
 
         self.qFindNearest = self.Manipulator.add_variable(self.ns,
                                                           "qFindNearest", 0)
@@ -79,8 +79,8 @@ class OPCUAServer:
         self.iTrajectoryState = self.Manipulator.add_variable(self.ns, "iTrajectoryState", 0)
         self.iActionState = self.Manipulator.add_variable(self.ns, "iActionState", 0)
         self.ixPowered = self.Manipulator.add_variable(self.ns, "ixPowered", False)
-        self.ixGripperCmd = self.Manipulator.add_variable(self.ns, "ixGripperCmd", False)
-        self.ixShiftGripper = self.Manipulator.add_variable(self.ns, "ixShiftGripper", False)
+        self.iGripperState = self.Manipulator.add_variable(self.ns, "iGripperState", False)
+        self.iGripperHolderState = self.Manipulator.add_variable(self.ns, "iGripperHolderState", False)
 
         self.running = False
         self.stop_event = threading.Event()
@@ -154,8 +154,8 @@ class OPCUAServer:
                     self.iTrajectoryState.set_value(st.trajectory_state or "")
                     self.iActionState.set_value(st.action_state or "")
                     self.ixPowered.set_value(st.powered or "")
-                    self.ixGripperCmd.set_value(st.gripper_cmd)
-                    self.ixShiftGripper.set_value(st.shift_gripper)
+                    self.iGripperState.set_value(st.gripper_state)
+                    self.iGripperHolderState.set_value(st.shift_gripper_state)
 
                     self.handle_power_cmd()
                     self.handle_traj_cmd()
@@ -222,27 +222,27 @@ class OPCUAServer:
 
     def handle_shift_gripper_cmd(self) -> None:  # 1 = ON, 0 = OFF
         try:
-            gcmd = int(self.qShiftGripper.get_value())
+            gcmd = int(self.qGripperHolderCommand.get_value())
             if self.gcmd_prev != gcmd:
-                self.cmd_queue.put(Command(CmdType.IO_SET,
+                self.cmd_queue.put(Command(CmdType.SHIFT_GRIPPER_CMD,
                                            {'index': SHIFT_GRIPPER_DO_INDEX,
                                             'value': bool(gcmd)},
                                            source="OPC"))
             self.gcmd_prev = gcmd
         except Exception as e:
-            raise RuntimeError(f"qShiftGripper Error, {e}")
+            raise RuntimeError(f"qGripperHolderCommand Error, {e}")
 
     def handle_gripper_cmd(self) -> None:  # 1 = ON, 0 = OFF
         try:
-            gcmd = int(self.qGripperCmd.get_value())
+            gcmd = int(self.qGripperCommand.get_value())
             if self.gcmd_prev != gcmd:
-                self.cmd_queue.put(Command(CmdType.IO_SET,
+                self.cmd_queue.put(Command(CmdType.GRIPPER_CMD,
                                            {'index': GRIPPER_DO_INDEX,
                                             'value': bool(gcmd)},
                                            source="OPC"))
             self.gcmd_prev = gcmd
         except Exception as e:
-            raise RuntimeError(f"qGripperCmd Error, {e}")
+            raise RuntimeError(f"qGripperCommand Error, {e}")
 
     def stop(self) -> None:
         self.stop_event.set()
