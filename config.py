@@ -25,7 +25,7 @@ PLC_VTOL_ADDRESS = "opc.tcp://192.168.88.102:4840/freeopcua/server/"  # для �
 
 # Команды
 EXEC_TRAJ = "EXECUTE_TRAJECTORY"
-IO_SET = "IO_SET"
+GRIPPER_CMD = "GRIPPER_CMD"
 WAIT_LIFT = "WAIT_VTOL_LIFT"
 
 # IO и прочее
@@ -51,8 +51,8 @@ VTOL_LIFT_WAIT_TIMEOUT = 60
 PLC_CMD_POWER_ON = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxPowerOn"
 PLC_CMD_FREE_DRIVE = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxFreeDrive"
 PLC_CMD_FIND_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxFindNearest"
-PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qxGripperCmd"
-PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.LocalControl.Control.qxShiftGripper"
+PLC_CMD_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qGripperCommand"
+PLC_CMD_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.LocalControl.Control.qGripperHolderCommand"
 PLC_CMD_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qAction"
 PLC_CMD_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.qTrajectory"
 
@@ -67,9 +67,14 @@ ENABLE_MOVE_TO_HOME = "|var|HCFA-PLC.Application.OPC.Robot.TableMovePermissions.
 STATE_TRAJECTORY = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.iTrajectoryState"
 STATE_ACTION = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.iActionState"
 STATE_POWER = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixPowered"
-STATE_GRIPPER_CMD = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixGripperCmd"
+GRIPPER_STATE = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.iGripperState"
+GRIPPER_LOCKED = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixGripperLocked"
+GRIPPER_UNLOCKED = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixGripperUnlocked "
 STATE_NEAREST = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixNearestState"
-STATE_SHIFT_GRIPPER = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixShiftGripper"
+GRIPPER_HOLDER_STATE = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.iGripperHolderState"
+GRIPPER_HOLDER_LOCKED = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixGripperHolderLocked"
+GRIPPER_HOLDER_UNLOCKED = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.ixGripperHolderUnlocked"
+ACTUAL_POSITION = "|var|HCFA-PLC.Application.OPC.Robot.LocalControl.iActualPosition"
 
 STATE_POSITION = "|var|HCFA-PLC.Application.OPC.Robot.State.iPosition"
 STATE_CONTROLLER = "|var|HCFA-PLC.Application.OPC.Robot.State.iControllerState"
