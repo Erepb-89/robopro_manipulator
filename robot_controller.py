@@ -16,7 +16,7 @@ from routes import routes
 from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, \
     FINISHED, BLOCK, EXCEPTION, \
-    EXEC_TRAJ, IO_SET, ACTIONS_PATH, PORT_TYPE, VTOL_LIFT_WAIT_TIMEOUT, WAIT_LIFT, VTOL_LIFT_REQUIRED_POSITION
+    EXEC_TRAJ, GRIPPER_CMD, ACTIONS_PATH, PORT_TYPE, VTOL_LIFT_WAIT_TIMEOUT, WAIT_LIFT, VTOL_LIFT_REQUIRED_POSITION
 from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotPoints
 
 # sys.path.append("/home/user/robot-api")
@@ -47,8 +47,10 @@ class RobotState:
     trajectory_state: int = 0
     action_state: int = 0
     gripper_cmd: bool = False
-    shift_gripper: bool = False
+    shift_gripper_cmd: bool = False
     current_point: int = 0
+    gripper_state : int = 0
+    shift_gripper_state: int = 0
 
 
 # state_manager.py
@@ -551,7 +553,7 @@ class RobotController:
                 )
 
             self.Robot.motion.mode.set(MotionMode.move)
-            self.state.update(mode='move', last_command=trajectory.name)
+            # self.state.update(mode='move', last_command=trajectory.name)
             self.log.info(f"Executing trajectory: {trajectory.name}")
 
             if trajectory:
@@ -568,7 +570,7 @@ class RobotController:
             self.log.error("Can't move by selected trajectory from current point!")
 
     def _vtol_lift_at_position(self, position: str) -> bool:
-        """Проверяет находится ли лифт ВТОЛ в указанной позиции."""
+        """Проверяет, находится ли лифт ВТОЛ в указанной позиции."""
         if position == 'bottom':
             return bool(VtolPoints.lift_bottom)
         if position == 'top':
@@ -641,9 +643,9 @@ class RobotController:
                             {'num': int(getattr(RobotTrajectories, command.name))},
                             source="GUI"
                         ))
-                    if command.cmd_type == IO_SET:
+                    if command.cmd_type == GRIPPER_CMD:
                         self.cmd_queue.put(Command(
-                            CmdType.IO_SET,
+                            CmdType.GRIPPER_CMD,
                             {'index': GRIPPER_DO_INDEX, 'value': bool(command.name)},
                             source="GUI"
                         ))
@@ -694,6 +696,71 @@ class RobotController:
     #             {'num': int(getattr(RobotTrajectories, traj.name))},
     #             source="GUI"
     #         ))
+
+    # ---------- Грипперы ----------
+    def execute_gripper(self, clamp: bool) -> None:
+        """Выполнение основной команды Гриппера"""
+        self.state.update(last_error=0)
+
+        if not self.state.get_field('powered'):
+            self.state.update(
+                gripper_state=BLOCK,
+                last_error=LastError.err_not_ready
+            )
+            self.log.error("Gripper command rejected: manipulator not powered")
+            return
+
+        try:
+            self.run_controller()
+            self.state.update(gripper_state=EXECUTION)
+
+            success = self.io.control_digital_outputs(GRIPPER_DO_INDEX, clamp)
+
+            if success:
+                self.state.update(gripper_cmd=clamp, gripper_state=FINISHED)
+                self.log.info(f"Gripper: {'CLAMPED' if clamp else 'RELEASED'}")
+            else:
+                self.state.update(gripper_state=EXCEPTION, last_error=LastError.err_io_control)
+                self.log.error("Failed to execute gripper command")
+
+        except Exception as e:
+            self.state.update(gripper_state=EXCEPTION, last_error=LastError.err_gripper_cmd)
+            self.log.error(f"Error executing gripper command: {e}")
+
+    def execute_shift_gripper(self, shift: bool) -> None:
+        """Выполнить команду смены Гриппера"""
+        self.state.update(last_error=0)
+
+        if not self.state.get_field('powered'):
+            self.state.update(
+                shift_gripper_state=BLOCK,
+                last_error=LastError.err_not_ready
+            )
+            self.log.error("Shift gripper command rejected: manipulator not powered")
+            return
+
+        # Дополнительная проверка безопасности для замены
+        if shift and not self.state.get_field('gripper_cmd'):
+            # self.log.warning("Attempting to shift gripper while gripper is open")
+            # # Можно либо заблокировать, либо позволить - зависит от требований
+            pass
+
+        try:
+            self.run_controller()
+            self.state.update(shift_gripper_state=EXECUTION)
+
+            success = self.io.control_digital_outputs(SHIFT_GRIPPER_DO_INDEX, shift)
+
+            if success:
+                self.state.update(shift_gripper=shift, shift_gripper_state=FINISHED)
+                self.log.info(f"Shift gripper: {'SHIFTED' if shift else 'NOT SHIFTED'}")
+            else:
+                self.state.update(shift_gripper_state=EXCEPTION, last_error=LastError.err_io_control)
+                self.log.error("Failed to execute shift gripper command")
+
+        except Exception as e:
+            self.state.update(shift_gripper_state=EXCEPTION, last_error=LastError.err_shift_gripper_cmd)
+            self.log.error(f"Error executing shift gripper command: {e}")
 
     # ---------- Утилиты ----------
 
@@ -827,14 +894,15 @@ class RobotController:
                     motion = cmd.payload.get('motion', 'line')
                     self.move_to_point(cmd.payload['name'], motion)
 
-                elif cmd.type == CmdType.IO_SET:
+                elif cmd.type == CmdType.GRIPPER_CMD:
                     index = cmd.payload['index']
                     value = bool(cmd.payload['value'])
-                    self.io.control_digital_outputs(index, value)
                     if index == GRIPPER_DO_INDEX:
-                        self.state.update(gripper_cmd=value)
+                        self.execute_gripper(value)
                     elif index == SHIFT_GRIPPER_DO_INDEX:
-                        self.state.update(shift_gripper=value)
+                        self.execute_shift_gripper(value)
+                    else:
+                        self.log.warning(f"Unknown gripper index: {index}")
 
                 elif cmd.type == CmdType.REFRESH_WAYPOINTS:
                     self.data.load_waypoints()

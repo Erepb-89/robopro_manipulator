@@ -22,8 +22,8 @@ from config import HELICOPTER_MODULE, VTOL_MODULE, PAYLOAD_STORAGE, GRIPPERS_STO
     PLC_CMD_SHIFT_GRIPPER, SHIFT_GRIPPER_DO_INDEX, PLC_CMD_TRAJECTORY, PLC_CMD_ACTION, H_TABLE_LIFT_POS_TOP, \
     H_TABLE_LIFT_POS_BOTTOM, H_TABLE_LIFT_ALARM, V_TABLE_LIFT_POS_TOP, V_TABLE_LIFT_POS_BOTTOM, V_TABLE_LIFT_ALARM, \
     H_BOX_LIFT_POS_TOP, H_BOX_LIFT_POS_BOTTOM, H_BOX_LIFT_ALARM, STATE_POSITION, STATE_CONTROLLER, STATE_SAFETY, \
-    STATE_MODE, STATE_LAST_ERROR, STATE_TRAJECTORY, STATE_ACTION, STATE_POWER, STATE_GRIPPER_CMD, STATE_NEAREST, \
-    STATE_SHIFT_GRIPPER
+    STATE_MODE, STATE_LAST_ERROR, STATE_TRAJECTORY, STATE_ACTION, STATE_POWER, GRIPPER_STATE, STATE_NEAREST, \
+    GRIPPER_HOLDER_STATE
 
 
 @dataclass
@@ -199,9 +199,9 @@ class OPCUAClient:
         await self.write_node(STATE_TRAJECTORY, st.trajectory_state)
         await self.write_node(STATE_ACTION, st.action_state)
         await self.write_node(STATE_POWER, st.powered)
-        await self.write_node(STATE_GRIPPER_CMD, st.gripper_cmd)
+        await self.write_node(GRIPPER_STATE, st.gripper_state)
         # await self.write_node(STATE_NEAREST, st.)
-        await self.write_node(STATE_SHIFT_GRIPPER, st.shift_gripper)
+        await self.write_node(GRIPPER_HOLDER_STATE, st.shift_gripper_state)
 
     async def _get_current_waypoint(self) -> WaypointInfo:
         """
@@ -302,14 +302,14 @@ class OPCUAClientManipulator(OPCUAClient):
         await self.handle_gripper_command(PLC_CMD_GRIPPER,
                                           self._plc_gripper_prev,
                                           GRIPPER_DO_INDEX,
-                                          CmdType.IO_SET,
-                                          'FREE_DRIVE')
+                                          CmdType.GRIPPER_CMD,
+                                          'GRIPPER_CMD')
 
         await self.handle_gripper_command(PLC_CMD_SHIFT_GRIPPER,
                                           self._plc_shift_gripper_prev,
                                           SHIFT_GRIPPER_DO_INDEX,
-                                          CmdType.IO_SET,
-                                          'FREE_DRIVE')
+                                          CmdType.GRIPPER_CMD,
+                                          'SHIFT_GRIPPER')
 
         await self.handle_traj_cmd(PLC_CMD_TRAJECTORY,
                                    self._plc_traj_prev,
@@ -404,9 +404,6 @@ class OPCUAClientManipulator(OPCUAClient):
         self.y_pos_has_zeroed = await self.convert(Y_POSITION_HAS_ZEROED)
         self.y_pos_powered = await self.convert(Y_POSITION_POWERED)
         self.y_pos_alarm = await self.convert(Y_POSITION_ALARM)
-
-        # Чтение команд с PLC, заготовка
-        # await self.handle_plc_commands()
 
     def check_position(self):
         """Проверка позиции манипулятора по осям"""
