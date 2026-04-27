@@ -415,6 +415,7 @@ class RobotController:
                 self.state.update(free_drive=True, mode='hold')
             elif free_drive == 0:
                 self.log.info("Deactivating Zero Gravity Mode")
+                # self.Robot.motion.mode.set('hold')
                 self.Robot.motion.mode.set(MotionMode.hold)
                 self.state.update(free_drive=False, mode='hold')
             else:
@@ -426,9 +427,9 @@ class RobotController:
     def run_controller(self):
         """Запуск контроллера в режим RUN"""
         try:
-            if self.Robot.controller_state.get() != ControllerState.run:
-                self.Robot.controller_state.set(ControllerState.off, await_sec=1)
-                self.Robot.controller_state.set(ControllerState.run, await_sec=10)
+            if self.Robot.controller_state.get() != 'run':
+                self.Robot.controller_state.set('off', await_sec=1)
+                self.Robot.controller_state.set('run', await_sec=10)
         except Exception as e:
             self.state.update(last_error=LastError.err_switching_run_mode)
             self.log.error(f"Run Mode Switching Error: {e}")
