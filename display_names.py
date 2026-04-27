@@ -29,14 +29,14 @@ POINT_NAMES: dict[str, str] = {
     "pCharger":                  "Зарядная станция",
     "pCharger1":                 "Зарядное место 1",
     "pCharger2":                 "Зарядное место 2",
-    # ВТОЛ2 — батарея (серия 1)
+    # ВТОЛ2 — батарея 1
     "pVTOL2Battery":             "ВТОЛ2: батарея",
     "pVTOL2BatteryOut":          "ВТОЛ2: батарея — вынос",
     "pVTOL2BatteryIn":           "ВТОЛ2: батарея — установка",
     "pVTOL2BatteryPreCharge":    "ВТОЛ2: батарея — подача к зарядке",
     "pVTOL2BatteryUp":           "ВТОЛ2: батарея — подъём",
     "pVTOL2BatteryOnCharge":     "ВТОЛ2: батарея — на зарядке",
-    # ВТОЛ2 — батарея (серия 2)
+    # ВТОЛ2 — батарея 2
     "pVTOL2Battery2":            "ВТОЛ2: батарея 2",
     "pVTOL2Battery2Out":         "ВТОЛ2: батарея 2 — вынос",
     "pVTOL2Battery2OutPreMove":  "ВТОЛ2: батарея 2 — подготовка выноса",

@@ -17,7 +17,7 @@ from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     STOP_BTN_STYLE, POWER_OFF_BTN_STYLE,
                     POWER_ON_ACTIVE_STYLE, POWER_OFF_ACTIVE_STYLE,
                     POWER_BTN_INACTIVE_STYLE, JOURNAL_COUNT, COMMON_BTN_STYLE,
-                    ACTIVATED_BTN_STYLE, LABEL_PADDING)
+                    ACTIVATED_BTN_STYLE, LABEL_PADDING, GREEN_BTN_STYLE)
 from ui_form import Ui_Form
 from utils import atomic_write_json
 from trajectory_map_widget import TrajectoryMapWidget
@@ -64,7 +64,7 @@ class MainWindow(QMainWindow):
         self.ZGTimer.timeout.connect(self._zg_tick)
 
         self.PowerCheckTimer = QtCore.QTimer()
-        # self.PowerCheckTimer.timeout.connect(self.update_power_button_state)
+        self.PowerCheckTimer.timeout.connect(self.update_power_button_state)
         self.PowerCheckTimer.start(1000)
 
         self.InitUI()
@@ -399,16 +399,16 @@ class MainWindow(QMainWindow):
 
         def _handle_state(prev: int, current: int, code_label: str) -> bool:
             """Обрабатывает переход состояния в терминальную зону. Возвращает True если переход был."""
-            if prev < 200 and 200 <= current < 300:  # EXECUTION → FINISHED
+            if prev < 2000 and 2000 <= current < 3000:  # EXECUTION → FINISHED
                 self._add_log_entry(label, "✓", LOG_COLOR_SUCCESS)
                 QtWidgets.QMessageBox.information(self, "Выполнено", f"✓  {label}")
                 self._pending_cmd = ""
                 return True
-            elif prev < 300 and 300 <= current < 400:  # EXECUTION → EXCEPTION
+            elif prev < 3000 and 3000 <= current < 4000:  # EXECUTION → EXCEPTION
                 self._add_log_entry(label, f"✗  ошибка ({code_label} {current})", LOG_COLOR_ERROR)
                 self._pending_cmd = ""
                 return True
-            elif prev < 400 and current >= 400:  # EXECUTION → BLOCK
+            elif prev < 4000 and current >= 4000:  # EXECUTION → BLOCK
                 self._add_log_entry(label, "✗  заблокировано", LOG_COLOR_ERROR)
                 self._pending_cmd = ""
                 return True
@@ -530,10 +530,10 @@ class MainWindow(QMainWindow):
     def update_power_button_state(self) -> None:
         is_running = (self.RobotController.get_controller_state() == 'run')
         if is_running:
-            self.ui.PowerOn.setStyleSheet(POWER_ON_ACTIVE_STYLE)
-            self.ui.PowerOff.setStyleSheet(POWER_BTN_INACTIVE_STYLE)
+            self.ui.PowerOn.setStyleSheet(GREEN_BTN_STYLE) # POWER_ON_ACTIVE_STYLE
+            self.ui.PowerOff.setStyleSheet(POWER_OFF_BTN_STYLE) # POWER_BTN_INACTIVE_STYLE
         else:
-            self.ui.PowerOn.setStyleSheet(POWER_BTN_INACTIVE_STYLE)
+            self.ui.PowerOn.setStyleSheet(COMMON_BTN_STYLE) # POWER_BTN_INACTIVE_STYLE
             self.ui.PowerOff.setStyleSheet(POWER_OFF_ACTIVE_STYLE)
 
     def save_waypoints(self) -> bool:

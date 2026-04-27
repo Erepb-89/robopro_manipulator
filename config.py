@@ -35,10 +35,10 @@ SHIFT_GRIPPER_DO_INDEX = 1
 LOG_PATH = BASE_DIR / "robopro.log"
 
 """Состояния выполнения команды"""
-EXECUTION = 100
-FINISHED = 200
-EXCEPTION = 300
-BLOCK = 400
+EXECUTION = 1000
+FINISHED = 2000
+EXCEPTION = 3000
+BLOCK = 4000
 
 # OPC
 OPC_CLIENT_TIME = 1
@@ -165,6 +165,18 @@ CONN_INIT_STYLE = "padding:2px 6px; color: #9e9e9e;"
 COMMON_BTN_STYLE = (
     "QPushButton {"
     "  background-color: #E1E1E1;"
+    "  border-radius: 5px;"
+    "  border-style: solid;"
+    "  border-color: #212121;"
+    "  border-width: 1px;"
+    "}"
+    "QPushButton:hover { background-color: #d2d2d2; }"
+    "QPushButton:pressed { background-color: #BEBEBE; }"
+)
+
+GREEN_BTN_STYLE = (
+    "QPushButton {"
+    "  background-color: #7CFC00;"
     "  border-radius: 5px;"
     "  border-style: solid;"
     "  border-color: #212121;"
@@ -307,26 +319,26 @@ SEP_COLOR = "color:#ddd;"
 #   pVTOL2 → tVTOL2_To_VTOL2Battery_Mobile — траектория для мобильного порта
 #            (waypoint добавляется в points.json / trajectories.json при наладке)
 #
-VTOL_TRAJECTORIES_BY_PORT: dict[str, dict[str, set]] = {
-    "stationary": {
-        "pVTOL2": {
-            "tVTOL2_To_VTOLModule",
-            "tVTOL2_To_VTOL2Battery",  # подход под хвост снизу
-        },
-        "pVTOL2Battery": {
-            "tVTOL2Battery_To_VTOL2",
-        },
-    },
-    "mobile": {
-        "pVTOL2": {
-            "tVTOL2_To_VTOLModule",
-            "tVTOL2_To_VTOL2Battery_Mobile",  # подход сверху + доворот (наладка)
-        },
-        "pVTOL2Battery": {
-            "tVTOL2Battery_Mobile_To_VTOL2",
-        },
-    },
-}
+# VTOL_TRAJECTORIES_BY_PORT: dict[str, dict[str, set]] = {
+#     "stationary": {
+#         "pVTOL2": {
+#             "tVTOL2_To_VTOLModule",
+#             "tVTOL2_To_VTOL2Battery",  # подход под хвост снизу
+#         },
+#         "pVTOL2Battery": {
+#             "tVTOL2Battery_To_VTOL2",
+#         },
+#     },
+#     "mobile": {
+#         "pVTOL2": {
+#             "tVTOL2_To_VTOLModule",
+#             "tVTOL2_To_VTOL2Battery_Mobile",  # подход сверху + доворот (наладка)
+#         },
+#         "pVTOL2Battery": {
+#             "tVTOL2Battery_Mobile_To_VTOL2",
+#         },
+#     },
+# }
 
 # Требуемая позиция лифта ВТОЛ перед подходом к батарее, по типу порта:
 # stationary — стол внизу (Легионер опущен хвостом к манипулятору)
