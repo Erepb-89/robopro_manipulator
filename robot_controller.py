@@ -17,7 +17,7 @@ from available_trajectories import available_trajectories
 from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHIFT_GRIPPER_DO_INDEX, EXECUTION, \
     FINISHED, BLOCK, EXCEPTION, \
     EXEC_TRAJ, GRIPPER_CMD, ACTIONS_PATH, PORT_TYPE, VTOL_LIFT_WAIT_TIMEOUT, WAIT_LIFT, VTOL_LIFT_REQUIRED_POSITION
-from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotPoints
+from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotPoints, RobotRoutes
 
 # sys.path.append("/home/user/robot-api")
 from states_modes_errors import ControllerState, SafetyStatus, MotionMode, LastError
@@ -85,13 +85,14 @@ class StateManager:
 class DataManager:
     """Управление waypoints и trajectories"""
 
-    def __init__(self, points_path: Path, traj_path: Path, actions_dict: dict, logger):
+    def __init__(self, points_path: Path, traj_path: Path, actions_dict: dict, routes_dict: dict, logger):
         self.points_path = points_path
         self.traj_path = traj_path
         self.log = logger
         self.waypoints: Dict[str, Dict] = {}
         self.trajectories: Dict[str, Dict] = {}
         self.actions = actions_dict
+        self.routes = routes_dict
 
     def load_waypoints(self) -> Dict[str, Dict]:
         """Загрузить waypoints из файла"""
@@ -333,7 +334,7 @@ class RobotController:
 
         # Компоненты
         self.state = StateManager()
-        self.data = DataManager(POINTS_PATH, TRAJ_PATH, actions, logger)
+        self.data = DataManager(POINTS_PATH, TRAJ_PATH, actions, routes, logger)
         # Раскомментить для отладки с манипулятором по месту
         # self.mc = MotionController(self.Robot, self.data, logger)
         # self.io = IOController(self.Robot, logger, NUM_DIGITAL_IO)
@@ -362,6 +363,9 @@ class RobotController:
 
     def get_actions_snapshot(self) -> dict:
         return dict(self.data.actions)
+
+    def get_routes_snapshot(self) -> dict:
+        return dict(self.data.routes)
 
     def get_current_tcp_position(self) -> List[float]:
         return self.state.get_field('tcp_position')
@@ -689,14 +693,14 @@ class RobotController:
                               last_error=LastError.err_common_action)
             self.log.error(f"EXECUTE_ACTION failed: {e}")
 
-    # def execute_route(self, route: RobotRoutes) -> None:
-    #     """Выполнить маршрут"""
-    #     for traj in self.Routes.get(route.name).trajectories:
-    #         self.cmd_queue.put(Command(
-    #             CmdType.EXECUTE_TRAJECTORY,
-    #             {'num': int(getattr(RobotTrajectories, traj.name))},
-    #             source="GUI"
-    #         ))
+    def execute_route(self, route: RobotRoutes) -> None:
+        """Выполнить маршрут"""
+        for traj in self.data.routes.get(route.name).trajectories:
+            self.cmd_queue.put(Command(
+                CmdType.EXECUTE_ROUTE,
+                {'num': int(getattr(RobotRoutes, traj.name))},
+                source="GUI"
+            ))
 
     # ---------- Грипперы ----------
     def execute_gripper(self, clamp: bool) -> None:
