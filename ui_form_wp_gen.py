@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QFrame, \
 from PyQt5.QtGui import QColor
 from datetime import datetime
 
-from commands import Command, CmdType, RobotTrajectories, RobotActions
+from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotRoutes
 from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     LOG_STYLESHEET, LOG_COLOR_NEUTRAL, LOG_COLOR_STOP,
                     LOG_COLOR_OPC, LOG_COLOR_ERROR, LOG_COLOR_SUCCESS,
@@ -57,6 +57,7 @@ class MainWindow(QMainWindow):
         self.Waypoints = self.RobotController.get_waypoints_snapshot()
         self.Trajectories = self.RobotController.get_trajectories_snapshot()
         self.Actions = self.RobotController.get_actions_snapshot()
+        self.Routes = self.RobotController.get_routes_snapshot()
         self.opc_handler = opc_handler
 
         self.ZGTimer = QtCore.QTimer()
@@ -78,6 +79,7 @@ class MainWindow(QMainWindow):
         self.ui.ActivateZG.toggled.connect(self.manipulator_free_drive)
         self.ui.ActivateSJ.clicked.connect(self.start_simple_joystick)
         self.ui.MoveTrajectory.clicked.connect(self.move_by_selected_trajectory)
+        self.ui.MoveRoute.clicked.connect(self.execute_selected_route)
         self.ui.ExecuteAction.clicked.connect(self.execute_selected_action)
         self.ui.OutputControl.setCheckable(True)
         self.ui.OutputControl.toggled.connect(self.manipulator_gripper_control)
@@ -105,6 +107,7 @@ class MainWindow(QMainWindow):
         self.update_combo_box()
         self.update_trajectories()
         self.update_actions()
+        self.update_routes()
         self._init_trajectory_map()
         self.ui.PowerOn.clicked.connect(lambda: self.cmd_queue.put(
             Command(CmdType.POWER, {'state': 1}, source="GUI")
@@ -587,6 +590,15 @@ class MainWindow(QMainWindow):
             items_model.appendRow(item)
         self.ui.actionsListView.setModel(items_model)
 
+    def update_routes(self) -> None:
+        items_model = QStandardItemModel()
+        for route in self.Routes.keys():
+            item = QStandardItem(route)
+            item.setData(route, Qt.UserRole)
+            item.setEditable(False)
+            items_model.appendRow(item)
+        self.ui.RoutesComboBox.setModel(items_model)
+
     def on_traj_list_clicked(self) -> None:
         index = self.ui.trajListView.currentIndex()
         internal = index.data(Qt.UserRole) or index.data()
@@ -795,22 +807,22 @@ class MainWindow(QMainWindow):
         except Exception as e:
             self._add_log_entry(f"Траектория: {trajectory_name}", f"✗  OPC: {e}", LOG_COLOR_ERROR)
 
-    # def execute_selected_route(self) -> None:
-    #     route_name = self.ui.ActionName.text()
-    #     if not route_name:
-    #         QtWidgets.QMessageBox.warning(None, "Warning",
-    #                                       "Please select a route first!")
-    #         return
-    #     try:
-    #         # команда через OPC
-    #         route_enum = getattr(RobotRoutes, route_name)
-    #         self.opc_handler.set_route(route_enum.value)
-    #
-    #         QtWidgets.QMessageBox.information(None, "Success",
-    #                                           f"Executing route '{route_name}'")
-    #     except Exception as e:
-    #         QtWidgets.QMessageBox.critical(None, "Error",
-    #                                        f"Failed to execute route: {e}")
+    def execute_selected_route(self) -> None:
+        route_name = self.ui.RouteName.text()
+        if not route_name:
+            QtWidgets.QMessageBox.warning(None, "Warning",
+                                          "Please select a route first!")
+            return
+        try:
+            # команда через OPC
+            route_enum = getattr(RobotRoutes, route_name)
+            self.opc_handler.set_route(route_enum.value)
+
+            QtWidgets.QMessageBox.information(None, "Success",
+                                              f"Executing route '{route_name}'")
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(None, "Error",
+                                           f"Failed to execute route: {e}")
 
     def execute_selected_action(self) -> None:
         action_name = self.ui.ActionName.text()

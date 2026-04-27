@@ -8,7 +8,7 @@ class CmdType(Enum):
     POWER = auto()  # {'state': False/True}
     FREE_DRIVE = auto()  # {'state': 0|1}
     EXECUTE_TRAJECTORY = auto()  # {'num': int}
-    # EXECUTE_ROUTE = auto()  # {'num': int}
+    EXECUTE_ROUTE = auto()  # {'num': int}
     EXECUTE_ACTION = auto()  # {'num': int}
     MOVE_TO_POINT = auto()  # {'name': str}
     GRIPPER_CMD = auto()  # {'index': int, 'value': bool}
@@ -307,6 +307,8 @@ class RobotTrajectories(enum.Enum):
     tVTOL2Battery2WithBatt_To_VTOL2StickInBattery2Slot=112
     tVTOL2StickInBattery2Slot_To_VTOL2AfterBattery2Slot=113
 
+class RobotRoutes(enum.Enum):
+    rHomePosition_To_Helicopter1 = 1
 
 class RobotActions(enum.Enum):
     aVTOL2_To_VTOL2Battery = 1

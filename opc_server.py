@@ -36,9 +36,9 @@ class OPCUAServer:
                                                      0)  # EXECUTE_ACTION
         self.qAction.set_writable()
 
-        # self.qRoute = self.Manipulator.add_variable(self.ns, "qRoute",
-        #                                             0)  # EXECUTE_ROUTE
-        # self.qRoute.set_writable()
+        self.qRoute = self.Manipulator.add_variable(self.ns, "qRoute",
+                                                    0)  # EXECUTE_ROUTE
+        self.qRoute.set_writable()
 
         self.qPowerOn = self.Manipulator.add_variable(self.ns, "qPowerOn",
                                                       0)  # 0/1
@@ -131,8 +131,8 @@ class OPCUAServer:
     def set_trajectory(self, value):
         self.qTrajectory.set_value(value)
 
-    # def set_route(self, value):
-    #     self.qRoute.set_value(value)
+    def set_route(self, value):
+        self.qRoute.set_value(value)
 
     def set_action(self, value):
         self.qAction.set_value(value)

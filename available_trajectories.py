@@ -18,7 +18,12 @@ available_trajectories = {
         {"tHelicopter2_To_HelicopterModule",
          "tHelicopter2_To_Helicopter2Payload"},  # pHelicopter2
     "pHelicopter2Payload":
-        {"tHelicopter2Payload_To_Helicopter2"},  # pHelicopter2Payload
+        {"tHelicopter2Payload_To_Helicopter2,"
+         "tHelicopter2Payload_To_Helicopter2InsideSlot"},  # pHelicopter2Payload
+    "pHelicopter2InsideSlot":
+        {"tHelicopter2InsideSlot_To_Helicopter2BeforeSlot"},  # pHelicopter1InsideSlot
+    "pHelicopter2BeforeSlot":
+        {"pHelicopter2, pHelicopter2Payload"},  # pHelicopter2Payload
     "pPayload":
         {"tPayload_To_HomePosition",
          "tPayload_To_Payload1",
