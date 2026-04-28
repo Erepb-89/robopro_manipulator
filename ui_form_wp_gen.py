@@ -17,7 +17,7 @@ from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     STOP_BTN_STYLE, POWER_OFF_BTN_STYLE,
                     POWER_ON_ACTIVE_STYLE, POWER_OFF_ACTIVE_STYLE,
                     POWER_BTN_INACTIVE_STYLE, JOURNAL_COUNT, COMMON_BTN_STYLE,
-                    ACTIVATED_BTN_STYLE, LABEL_PADDING, GREEN_BTN_STYLE)
+                    ACTIVATED_BTN_STYLE, LABEL_PADDING, GREEN_BTN_STYLE, MOVE_BTN_STYLE)
 from ui_form import Ui_Form
 from utils import atomic_write_json
 from trajectory_map_widget import TrajectoryMapWidget
@@ -121,7 +121,7 @@ class MainWindow(QMainWindow):
 
         self._init_op_log_tab()
         self._init_status_bar()
-        self._init_stop_toolbar()
+        self._init_top_toolbar()
         self.show()
 
     def buttons_logging(self):
@@ -142,8 +142,8 @@ class MainWindow(QMainWindow):
             lambda on: self._add_log_entry(
                 f"Смещение захвата: {'ВКЛ' if on else 'ВЫКЛ'}", "→", LOG_COLOR_NEUTRAL))
 
-    def _init_stop_toolbar(self) -> None:
-        """Постоянная панель с кнопкой СТОП, видимой на всех вкладках."""
+    def _init_top_toolbar(self) -> None:
+        """Постоянная верхняя панель с кнопкой СТОП, видимой на всех вкладках."""
         toolbar = self.addToolBar("Аварийная остановка")
         toolbar.setMovable(False)
         toolbar.setFloatable(False)
@@ -166,6 +166,17 @@ class MainWindow(QMainWindow):
         power_off_btn.setStyleSheet(POWER_OFF_BTN_STYLE)
         power_off_btn.clicked.connect(self.power_off)
         toolbar.addWidget(power_off_btn)
+
+        move_to_nearest_btn = QtWidgets.QPushButton("> Двигаться к ближайшей точке")
+        font = move_to_nearest_btn.font()
+        font.setPointSize(14)
+        font.setBold(True)
+        move_to_nearest_btn.setFont(font)
+        move_to_nearest_btn.setMinimumHeight(48)
+        move_to_nearest_btn.setMinimumWidth(160)
+        move_to_nearest_btn.setStyleSheet(MOVE_BTN_STYLE)
+        move_to_nearest_btn.clicked.connect(self.move_to_nearest)
+        toolbar.addWidget(move_to_nearest_btn)
 
     def _init_status_bar(self) -> None:
         """Создаёт постоянную панель статуса робота в нижней строке окна."""
@@ -231,6 +242,13 @@ class MainWindow(QMainWindow):
                 CONN_ONLINE_STYLE if alive else CONN_OFFLINE_STYLE
             )
 
+    def _update_nearest(self):
+        nearest_info = self.RobotController.get_nearest_info()
+        nearest_wp = (nearest_info or {}).get('waypoint') or ""
+        if nearest_wp and nearest_wp != self._last_nearest_wp:
+            self._last_nearest_wp = nearest_wp
+            self.trajectory_map.set_current_position(self._last_nearest_wp)
+
     def _update_status(self) -> None:
         """Обновляет метки статуса на основе текущего состояния робота."""
         self._update_conn_indicators()
@@ -277,11 +295,7 @@ class MainWindow(QMainWindow):
             self._lbl_error.setText(f"Ошибка: {text}")
             self._lbl_error.setStyleSheet(LABEL_PADDING + style)
 
-            nearest_info = self.RobotController.get_nearest_info()
-            nearest_wp = (nearest_info or {}).get('waypoint') or ""
-            if nearest_wp and nearest_wp != self._last_nearest_wp:
-                self._last_nearest_wp = nearest_wp
-                self.trajectory_map.set_current_position(nearest_wp)
+            self._update_nearest()
 
         except Exception:
             pass
@@ -529,6 +543,13 @@ class MainWindow(QMainWindow):
             # Уходим с карты — сбрасываем подсветку рёбер
             if hasattr(self, 'trajectory_map'):
                 self.trajectory_map.reset_highlight()
+
+    def move_to_nearest(self):
+        motion = "line" if self.ui.chkLineMotion.isChecked() else "joint"
+        self.manipulator_command(
+            Command(CmdType.MOVE_TO_POINT,
+                    {'name': self._last_nearest_wp, 'motion': motion},
+                    source="GUI"))
 
     def update_power_button_state(self) -> None:
         is_running = (self.RobotController.get_controller_state() == 'run')

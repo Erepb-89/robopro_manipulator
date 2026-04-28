@@ -219,6 +219,16 @@ POWER_OFF_BTN_STYLE = (
     "QPushButton:hover { background-color: #616161; }"
     "QPushButton:pressed { background-color: #212121; }"
 )
+MOVE_BTN_STYLE = (
+    "QPushButton {"
+    "  background-color: #2e7d32;"
+    "  color: white;"
+    "  border-radius: 5px;"
+    "  padding: 4px 16px;"
+    "}"
+    "QPushButton:hover { background-color: #242424; }"
+    "QPushButton:pressed { background-color: #b71c1c; }"
+)
 
 # Подсветка кнопок питания
 POWER_ON_ACTIVE_STYLE = "background: rgb(124,252,0);"
