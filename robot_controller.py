@@ -725,7 +725,7 @@ class RobotController:
                 self.state.update(gripper_cmd=clamp, gripper_state=FINISHED)
                 self.log.info(f"Gripper: {'CLAMPED' if clamp else 'RELEASED'}")
             else:
-                self.state.update(gripper_state=EXCEPTION, last_error=LastError.err_io_control)
+                self.state.update(gripper_state=EXCEPTION, last_error=LastError.err_gripper_cmd)
                 self.log.error("Failed to execute gripper command")
 
         except Exception as e:
@@ -760,7 +760,7 @@ class RobotController:
                 self.state.update(shift_gripper=shift, shift_gripper_state=FINISHED)
                 self.log.info(f"Shift gripper: {'SHIFTED' if shift else 'NOT SHIFTED'}")
             else:
-                self.state.update(shift_gripper_state=EXCEPTION, last_error=LastError.err_io_control)
+                self.state.update(shift_gripper_state=EXCEPTION, last_error=LastError.err_shift_gripper_cmd)
                 self.log.error("Failed to execute shift gripper command")
 
         except Exception as e:
@@ -789,7 +789,6 @@ class RobotController:
             if dist < best_dist:
                 best_dist, best_name = dist, name
 
-        print('best_name', best_name)
         self.state.update(current_point=getattr(RobotPoints, best_name).value)
         if best_name is None:
             info = {"waypoint": "", "distance": 0.0, "trajectories": []}
