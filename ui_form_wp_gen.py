@@ -59,6 +59,7 @@ class MainWindow(QMainWindow):
         self.Actions = self.RobotController.get_actions_snapshot()
         self.Routes = self.RobotController.get_routes_snapshot()
         self.opc_handler = opc_handler
+        self.nearest_info = self.RobotController.get_nearest_info()
 
         self.ZGTimer = QtCore.QTimer()
         self.ZGTimer.setInterval(100)  # мс
@@ -178,6 +179,15 @@ class MainWindow(QMainWindow):
         move_to_nearest_btn.clicked.connect(self.move_to_nearest)
         toolbar.addWidget(move_to_nearest_btn)
 
+        self.distance = QtWidgets.QLineEdit('0.1')
+        self.distance.setMinimumSize(QtCore.QSize(28, 28))
+        self.distance.setMaximumWidth(60)
+        font.setPointSize(14)
+        font.setBold(True)
+        self.distance.setFont(font)
+        self.distance.setObjectName("Distance")
+        toolbar.addWidget(self.distance)
+
     def _init_status_bar(self) -> None:
         """Создаёт постоянную панель статуса робота в нижней строке окна."""
         sb = self.statusBar()
@@ -243,8 +253,10 @@ class MainWindow(QMainWindow):
             )
 
     def _update_nearest(self):
-        nearest_info = self.RobotController.get_nearest_info()
-        nearest_wp = (nearest_info or {}).get('waypoint') or ""
+        _ = self.RobotController.find_nearest_waypoint()
+        self.nearest_info = self.RobotController.get_nearest_info()
+        nearest_wp = (self.nearest_info or {}).get('waypoint') or ""
+        print(self.nearest_info)
         if nearest_wp and nearest_wp != self._last_nearest_wp:
             self._last_nearest_wp = nearest_wp
             self.trajectory_map.set_current_position(self._last_nearest_wp)
@@ -256,27 +268,18 @@ class MainWindow(QMainWindow):
             state = self.RobotController.get_state_snapshot()
 
             cs = state.controller_state
-            if not isinstance(cs, ControllerState):
-                cs = ControllerState(cs)
-            text, style = CONTROLLER_STATE_RU.get(cs, (cs.name, ""))
+            text, style = CONTROLLER_STATE_RU.get(getattr(ControllerState, cs), (str(cs), ""))
             self._lbl_state.setText(f"Состояние: {text}")
             self._lbl_state.setStyleSheet(LABEL_PADDING + style)
 
             ss = state.safety_status
-            if not isinstance(ss, SafetyStatus):
-                ss = SafetyStatus(ss)
-            text, style = SAFETY_STATUS_RU.get(ss, (ss.name, ""))
+            text, style = SAFETY_STATUS_RU.get(getattr(SafetyStatus, ss), (str(ss), ""))
             self._lbl_safety.setText(f"Безопасность: {text}")
             self._lbl_safety.setStyleSheet(LABEL_PADDING + style)
 
             mode = state.mode
-            if not isinstance(mode, MotionMode):
-                try:
-                    mode = MotionMode(mode)
-                except (ValueError, TypeError):
-                    mode = None
             if mode is not None:
-                text, style = MOTION_MODE_RU.get(mode, (str(mode), ""))
+                text, style = MOTION_MODE_RU.get(getattr(MotionMode, mode), (str(mode), ""))
             else:
                 text, style = "—", ""
             self._lbl_mode.setText(f"Режим: {text}")
@@ -297,8 +300,8 @@ class MainWindow(QMainWindow):
 
             self._update_nearest()
 
-        except Exception:
-            pass
+        except Exception as err:
+            print(err)
 
         # ── PLC состояния → карта ─────────────────────────────
         try:
@@ -545,11 +548,27 @@ class MainWindow(QMainWindow):
                 self.trajectory_map.reset_highlight()
 
     def move_to_nearest(self):
+        self.nearest_info = self.RobotController.get_nearest_info()
+        self.RobotController.log.info(
+            f"Nearest waypoint: {self.nearest_info.get('waypoint')}; "
+            f"distance={self.nearest_info.get('distance'):.3f}; "
+            f"trajectories={self.nearest_info.get('trajectories')}"
+        )
+
         motion = "line" if self.ui.chkLineMotion.isChecked() else "joint"
-        self.manipulator_command(
-            Command(CmdType.MOVE_TO_POINT,
-                    {'name': self._last_nearest_wp, 'motion': motion},
-                    source="GUI"))
+        # print("_last_nearest_wp", self._last_nearest_wp)
+
+        if float(self.nearest_info.get('distance')) < float(self.distance.text()):
+            self.manipulator_command(
+                Command(CmdType.MOVE_TO_POINT,
+                        {'name': self._last_nearest_wp, 'motion': motion},
+                        source="GUI"))
+        else:
+            print('Distance too long')
+            self.RobotController.log.info(
+                f"Distance to nearest waypoint: {self.nearest_info.get('waypoint')} "
+                f"={self.nearest_info.get('distance'):.2f} too long"
+            )
 
     def update_power_button_state(self) -> None:
         is_running = (self.RobotController.get_controller_state() == 'run')
@@ -583,8 +602,8 @@ class MainWindow(QMainWindow):
     def update_combo_box(self) -> None:
         items_model = QStandardItemModel()
         for point in self.Waypoints.keys():
-            display = POINT_NAMES.get(point, point)
-            item = QStandardItem(display)
+            # display = POINT_NAMES.get(point, point)
+            item = QStandardItem(point)
             item.setData(point, Qt.UserRole)
             item.setEditable(False)
             items_model.appendRow(item)
@@ -593,8 +612,8 @@ class MainWindow(QMainWindow):
     def update_trajectories(self) -> None:
         items_model = QStandardItemModel()
         for traj in self.Trajectories.keys():
-            display = traj_display_name(traj)
-            item = QStandardItem(display)
+            # display = traj_display_name(traj)
+            item = QStandardItem(traj)
             item.setData(traj, Qt.UserRole)
             item.setEditable(False)
             items_model.appendRow(item)
