@@ -18,10 +18,12 @@ from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     POWER_ON_ACTIVE_STYLE, POWER_OFF_ACTIVE_STYLE,
                     POWER_BTN_INACTIVE_STYLE, JOURNAL_COUNT, COMMON_BTN_STYLE,
                     ACTIVATED_BTN_STYLE, LABEL_PADDING, GREEN_BTN_STYLE, MOVE_BTN_STYLE)
+from robot_controller import RobotController
 from ui_form import Ui_Form
 from utils import atomic_write_json
 from trajectory_map_widget import TrajectoryMapWidget
 from available_trajectories import available_trajectories as AVAIL_TRAJS
+from available_points import available_points as AVAIL_PTS
 from states_modes_errors import ControllerState, SafetyStatus, MotionMode, \
     LastError, CONTROLLER_STATE_RU, \
     SAFETY_STATUS_RU, MOTION_MODE_RU, LAST_ERROR_RU
@@ -88,9 +90,8 @@ class MainWindow(QMainWindow):
         self.ui.ShiftGripper.toggled.connect(self.manipulator_shift_gripper)
         self.ui.SavePoint.clicked.connect(self.save_current_position)
         self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)
-
-        self.ui.comboBox.currentTextChanged.connect(self.waypoint_selected)
         self.ui.TrajectoriesComboBox.currentTextChanged.connect(self.trajectory_selected)
+        self.ui.availableTrajectoriesComboBox.currentTextChanged.connect(self.available_trajectory_selected)
         self.ui.trajListView.clicked.connect(self.on_traj_list_clicked)
         self.ui.actionsListView.clicked.connect(self.on_actions_list_clicked)
         self.ui.StopMove.setStyleSheet(STOP_BTN_STYLE)
@@ -105,7 +106,10 @@ class MainWindow(QMainWindow):
         self.ui.ExecuteAction.setStyleSheet(COMMON_BTN_STYLE)
         self.ui.OutputControl.setStyleSheet(COMMON_BTN_STYLE)
         self.ui.ShiftGripper.setStyleSheet(COMMON_BTN_STYLE)
-        self.update_combo_box()
+        self.ui.MoveRoute.setStyleSheet(COMMON_BTN_STYLE)
+        self.ui.AddTrajectoryToRoute.setStyleSheet(COMMON_BTN_STYLE)
+        self.update_waypoints_combo_box()
+        self.update_available_waypoints_combo_box()
         self.update_trajectories()
         self.update_actions()
         self.update_routes()
@@ -123,6 +127,9 @@ class MainWindow(QMainWindow):
         self._init_op_log_tab()
         self._init_status_bar()
         self._init_top_toolbar()
+        self.ui.waypointsComboBox.currentTextChanged.connect(self.waypoint_selected)
+        self.ui.availableWaypointsComboBox.currentTextChanged.connect(self.available_waypoint_selected)
+        self.update_available_trajectories_combo_box("pHomePosition")
         self.show()
 
     def buttons_logging(self):
@@ -131,7 +138,7 @@ class MainWindow(QMainWindow):
             lambda: self._add_log_entry("Питание ВКЛ", "→", LOG_COLOR_NEUTRAL))
         self.ui.MoveToPoint.clicked.connect(
             lambda: self._add_log_entry(
-                f"Перемещение: {self.ui.comboBox.currentData(Qt.UserRole) or self.ui.comboBox.currentText()}",
+                f"Перемещение: {self.ui.waypointsComboBox.currentData(Qt.UserRole) or self.ui.waypointsComboBox.currentText()}",
                 "→", LOG_COLOR_NEUTRAL))
         self.ui.ActivateZG.toggled.connect(
             lambda on: self._add_log_entry(
@@ -301,7 +308,8 @@ class MainWindow(QMainWindow):
             self._update_nearest()
 
         except Exception as err:
-            print(err)
+            pass
+            # print(err)
 
         # ── PLC состояния → карта ─────────────────────────────
         try:
@@ -375,8 +383,8 @@ class MainWindow(QMainWindow):
         """Добавляет строку в журнал, удаляет лишние при переполнении."""
         if icon == "→" and not command.startswith("[OPC]"):
             self._pending_cmd = command  # запоминаем для атрибуции возможной ошибки
-            self._log_last_cmd = ""      # сбрасываем, чтобы повторная та же команда детектировалась
-            self._log_last_err = 0       # сбрасываем ошибку в 0, чтобы та же ошибка снова отобразилась
+            self._log_last_cmd = ""  # сбрасываем, чтобы повторная та же команда детектировалась
+            self._log_last_err = 0  # сбрасываем ошибку в 0, чтобы та же ошибка снова отобразилась
         ts = datetime.now().strftime("%H:%M:%S")
         text = f"{ts}  {icon}  {command}"
         item = QListWidgetItem(text)
@@ -479,14 +487,14 @@ class MainWindow(QMainWindow):
         - Оператор видит подсветку на карте
         """
         # Синхронизация точки с Tab 1 (поиск по внутреннему имени в UserRole)
-        model = self.ui.comboBox.model()
+        model = self.ui.waypointsComboBox.model()
         index = next(
             (i for i in range(model.rowCount())
              if model.item(i).data(Qt.UserRole) == point_name),
             -1
         )
         if index >= 0:
-            self.ui.comboBox.setCurrentIndex(index)
+            self.ui.waypointsComboBox.setCurrentIndex(index)
 
         src = self.trajectory_map._current_point
         if not src or src == point_name:
@@ -520,15 +528,26 @@ class MainWindow(QMainWindow):
         dst_short = dst[1:] if dst.startswith('p') else dst
         src_short = src[1:] if src.startswith('p') else src
 
+        state = self.RobotController.get_state_snapshot()
         # Прямое направление: из src в dst
-        for traj in AVAIL_TRAJS.get(src, set()):
-            if f"_To_{dst_short}" in traj and traj in self.Trajectories:
-                return traj
+        if state.gripper_cmd:  # грипперы сжаты
+            for traj in AVAIL_TRAJS.get(src, set()):
+                if f"_To_{dst_short}" in traj and 'with' in traj and traj in self.Trajectories:
+                    return traj
+        else:  # грипперы разжаты
+            for traj in AVAIL_TRAJS.get(src, set()):
+                if f"_To_{dst_short}" in traj and 'with' not in traj and traj in self.Trajectories:
+                    return traj
 
         # Обратное направление: из dst в src
-        for traj in AVAIL_TRAJS.get(dst, set()):
-            if f"_To_{src_short}" in traj and traj in self.Trajectories:
-                return traj
+        if state.gripper_cmd:  # грипперы сжаты
+            for traj in AVAIL_TRAJS.get(dst, set()):
+                if f"_To_{src_short}" in traj and 'with' in traj and traj in self.Trajectories:
+                    return traj
+        else:  # грипперы разжаты
+            for traj in AVAIL_TRAJS.get(dst, set()):
+                if f"_To_{src_short}" in traj and 'with' not in traj and traj in self.Trajectories:
+                    return traj
 
         return None
 
@@ -573,10 +592,10 @@ class MainWindow(QMainWindow):
     def update_power_button_state(self) -> None:
         is_running = (self.RobotController.get_controller_state() == 'run')
         if is_running:
-            self.ui.PowerOn.setStyleSheet(GREEN_BTN_STYLE) # POWER_ON_ACTIVE_STYLE
-            self.ui.PowerOff.setStyleSheet(POWER_OFF_BTN_STYLE) # POWER_BTN_INACTIVE_STYLE
+            self.ui.PowerOn.setStyleSheet(GREEN_BTN_STYLE)  # POWER_ON_ACTIVE_STYLE
+            self.ui.PowerOff.setStyleSheet(POWER_OFF_BTN_STYLE)  # POWER_BTN_INACTIVE_STYLE
         else:
-            self.ui.PowerOn.setStyleSheet(COMMON_BTN_STYLE) # POWER_BTN_INACTIVE_STYLE
+            self.ui.PowerOn.setStyleSheet(COMMON_BTN_STYLE)  # POWER_BTN_INACTIVE_STYLE
             self.ui.PowerOff.setStyleSheet(POWER_OFF_ACTIVE_STYLE)
 
     def save_waypoints(self) -> bool:
@@ -599,7 +618,31 @@ class MainWindow(QMainWindow):
                                            f"Failed to save trajectories: {e}")
             return False
 
-    def update_combo_box(self) -> None:
+    def update_available_waypoints_combo_box(self) -> None:
+        current_point = self.nearest_info.get('waypoint')
+        items_model = QStandardItemModel()
+        for point in AVAIL_PTS.get(current_point):
+            item = QStandardItem(point)
+            item.setData(point, Qt.UserRole)
+            item.setEditable(False)
+            items_model.appendRow(item)
+        self.ui.availableWaypointsComboBox.setModel(items_model)
+
+    def update_available_trajectories_combo_box(self, target_point) -> None:
+        self.nearest_info = self.RobotController.get_nearest_info()
+
+        if float(self.nearest_info.get('distance')) < float(self.distance.text()):
+            current_point = self.nearest_info.get('waypoint')
+            traj = self._find_direct_trajectory(current_point, target_point)
+
+            items_model = QStandardItemModel()
+            item = QStandardItem(traj)
+            item.setData(traj, Qt.UserRole)
+            item.setEditable(False)
+            items_model.appendRow(item)
+            self.ui.availableTrajectoriesComboBox.setModel(items_model)
+
+    def update_waypoints_combo_box(self) -> None:
         items_model = QStandardItemModel()
         for point in self.Waypoints.keys():
             # display = POINT_NAMES.get(point, point)
@@ -607,7 +650,7 @@ class MainWindow(QMainWindow):
             item.setData(point, Qt.UserRole)
             item.setEditable(False)
             items_model.appendRow(item)
-        self.ui.comboBox.setModel(items_model)
+        self.ui.waypointsComboBox.setModel(items_model)
 
     def update_trajectories(self) -> None:
         items_model = QStandardItemModel()
@@ -623,8 +666,8 @@ class MainWindow(QMainWindow):
     def update_actions(self) -> None:
         items_model = QStandardItemModel()
         for action in self.Actions.keys():
-            display = ACTION_NAMES.get(action, action)
-            item = QStandardItem(display)
+            # display = ACTION_NAMES.get(action, action)
+            item = QStandardItem(action)
             item.setData(action, Qt.UserRole)
             item.setEditable(False)
             items_model.appendRow(item)
@@ -653,8 +696,25 @@ class MainWindow(QMainWindow):
         internal = self.ui.TrajectoriesComboBox.currentData(Qt.UserRole) or _display_name
         self.ui.TrajectoryName.setText(internal)
 
+    def available_trajectory_selected(self, _display_name) -> None:
+        internal = self.ui.availableTrajectoriesComboBox.currentData(Qt.UserRole) or _display_name
+        self.ui.TrajectoryName.setText(internal)
+
+    def available_waypoint_selected(self, _display_name) -> None:
+        point_name = self.ui.availableWaypointsComboBox.currentData(Qt.UserRole) or _display_name
+        self.update_available_trajectories_combo_box(point_name)
+
+        self.ui.PointName.setText(point_name)
+        if point_name in self.Waypoints:
+            wp = self.Waypoints[point_name]
+            self.ui.SetSpeed.setText(str(wp.get('speed', 0.5)))
+            self.ui.SetAccel.setText(str(wp.get('accel', 0.5)))
+            self.ui.SetBlend.setText(str(wp.get('blend', 0.0)))
+
     def waypoint_selected(self, _display_name) -> None:
-        point_name = self.ui.comboBox.currentData(Qt.UserRole) or _display_name
+        point_name = self.ui.waypointsComboBox.currentData(Qt.UserRole) or _display_name
+        self.update_available_trajectories_combo_box(point_name)
+
         self.ui.PointName.setText(point_name)
         if point_name in self.Waypoints:
             wp = self.Waypoints[point_name]
@@ -788,7 +848,7 @@ class MainWindow(QMainWindow):
             self.Waypoints[point_name] = new_point
 
             if self.save_waypoints():
-                self.update_combo_box()
+                self.update_waypoints_combo_box()
                 QtWidgets.QMessageBox.information(None, "Success",
                                                   f"Point '{point_name}' saved successfully!")
         except ValueError:
@@ -808,7 +868,7 @@ class MainWindow(QMainWindow):
         self.cmd_queue.put(Command(CmdType.POWER, {'state': 0}, source="GUI"))
 
     def move_to_selected_point(self) -> None:
-        point_name = self.ui.comboBox.currentData(Qt.UserRole) or self.ui.comboBox.currentText()
+        point_name = self.ui.waypointsComboBox.currentData(Qt.UserRole) or self.ui.waypointsComboBox.currentText()
         if not point_name:
             QtWidgets.QMessageBox.warning(None, "Warning",
                                           "Please select a point first!")
