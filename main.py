@@ -111,9 +111,9 @@ class MainAppClass:
         self.OpcServer.stop()
         self.RobotController.stop()
         self.OpcClientManipulator.stop_from_thread()
-        self.manipulator_wd.stop()
-        self.vt_wd.stop()
-        self.vtol_wd.stop()
+        # self.manipulator_wd.stop()
+        # self.vt_wd.stop()
+        # self.vtol_wd.stop()
 
         event.accept()
 
