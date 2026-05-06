@@ -1,10 +1,516 @@
 {
     "waypoints": [
         {
+            "name": "pHomePosition",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopterModule",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter1Payload",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Payload",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Battery1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2InsideBattery1Slot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2BeforeBattery1Slot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Battery2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2InsideBattery2Slot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2BeforeBattery2Slot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pPayload",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pPayload1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pPayload2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pGrippers",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pGrippers1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pGrippers2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pCharger",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1WithBatt",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
             "name": "pVTOLModule",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
             "tcp": {
                 "x": -0.859266093763763,
                 "y": -0.20341554927172206,
@@ -23,10 +529,84 @@
             }
         },
         {
+            "name": "pVTOL1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL1Payload",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL1Battery",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
             "name": "pVTOL2",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
+            "gripper_on": "False",
             "tcp": {
                 "x": -0.882530745986621,
                 "y": -0.028202464414265327,
@@ -49,6 +629,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": -0.884811992896924,
                 "y": 0.13805331622262548,
@@ -71,6 +652,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8684396472151289,
                 "y": -0.1019113190186618,
@@ -93,6 +675,7 @@
             "speed": 20.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.7432023266718367,
                 "y": -0.11187941476733892,
@@ -115,6 +698,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.4547300624276731,
                 "y": -0.663394802955231,
@@ -137,6 +721,7 @@
             "speed": 20.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.6120026796068861,
                 "y": -0.6603058234856604,
@@ -159,6 +744,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8923532423334676,
                 "y": -0.028776475998528006,
@@ -181,6 +767,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": -0.8933337218695042,
                 "y": 0.14319443096130505,
@@ -203,6 +790,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.873431601432595,
                 "y": -0.310519764568324,
@@ -225,6 +813,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8734156487554887,
                 "y": -0.3105366618675597,
@@ -247,6 +836,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8752951857862169,
                 "y": -0.39092199092069724,
@@ -269,6 +859,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.6794811530372759,
                 "y": -0.42484705974211523,
@@ -291,6 +882,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.2560089000138269,
                 "y": 0.6625899127285054,
@@ -313,6 +905,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.017252025285292516,
                 "y": 0.7146944097528465,
@@ -335,6 +928,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0667052398150065,
                 "y": 0.698938589209063,
@@ -357,6 +951,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.009017148585412804,
                 "y": 0.716054755361588,
@@ -379,6 +974,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8597402571029914,
                 "y": -0.371074562078923,
@@ -401,6 +997,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8892502660841849,
                 "y": -0.31829500324435,
@@ -423,6 +1020,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.90057076993173,
                 "y": -0.24433342467731095,
@@ -445,6 +1043,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8844002455722003,
                 "y": 0.14369268989102799,
@@ -467,6 +1066,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.8860556266304466,
                 "y": -0.023653665903823756,
@@ -489,6 +1089,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.9004410892309588,
                 "y": -0.16071140956619992,
@@ -511,6 +1112,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.9003074588726581,
                 "y": 0.12890668418330795,
@@ -533,6 +1135,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": -0.898746750012463,
                 "y": 0.13972636020630333,
@@ -555,6 +1158,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -577,6 +1181,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -599,6 +1204,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -621,6 +1227,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -643,6 +1250,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -665,6 +1273,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -687,6 +1296,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -709,6 +1319,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -731,6 +1342,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -753,6 +1365,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -775,6 +1388,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -797,6 +1411,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -815,10 +1430,11 @@
             }
         },
         {
-            "name": "pCharger1InsideSlot",
+            "name": "pHelicopter2Charger1Slot1",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -837,10 +1453,11 @@
             }
         },
         {
-            "name": "pCharger1BeforeSlot",
+            "name": "pHelicopter2Charger1Slot1WithBatt",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -859,10 +1476,11 @@
             }
         },
         {
-            "name": "pCharger2InsideSlot",
+            "name": "pHelicopter2Charger1InSlot1",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -881,10 +1499,517 @@
             }
         },
         {
-            "name": "pCharger2BeforeSlot",
+            "name": "pHelicopter2Charger1AfterSlot1",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1InsideSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1BeforeSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1Slot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1Slot2WithBatt",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1InSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1AfterSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1InsideSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2Charger1BeforeSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1Slot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1InsideSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1BeforeSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1Slot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1InsideSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1BeforeSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2Slot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2InsideSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2BeforeSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2Slot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2InsideSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2BeforeSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -907,6 +2032,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -929,6 +2055,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -951,6 +2078,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -973,6 +2101,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -995,6 +2124,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1017,6 +2147,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1035,10 +2166,11 @@
             }
         },
         {
-            "name": "pHomePosition_withSomeCargo",
+            "name": "pHomePositionWithSomeCargo",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1057,10 +2189,11 @@
             }
         },
         {
-            "name": "HelicopterModule_withPL",
+            "name": "pHelicopterModuleWithSomeCargo",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1079,274 +2212,11 @@
             }
         },
         {
-            "name": "pHelicopter1_withH1PL",
+            "name": "pHelicopter1WithPL",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pHelicopter1Payload_withH1PL",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pHelicopter2_withH2PL",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pHelicopter2Payload_withH2PL",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "Payload_withPL",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pPayload1_withPL",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "Payload2_withPL",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "Charger_withBatt",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "Charger1_withBatt",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "Charger2_withBatt",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "VTOLModule_withSomeCargo",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "VTOL1_withSomeCargo",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "VTOL2_withBatt",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1369,6 +2239,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1387,32 +2258,11 @@
             }
         },
         {
-            "name": "pHelicopter1StickInSlot",
+            "name": "pHelicopter2WithSomeCargo",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pHelicopter1AfterSlot",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1435,6 +2285,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1453,32 +2304,11 @@
             }
         },
         {
-            "name": "pHelicopter2StickInSlot",
+            "name": "pPayloadWithPL",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pHelicopter2AfterSlot",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1501,50 +2331,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pPayload1StickInSlot",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
-            "tcp": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "Rx": 0.0,
-                "Ry": 0.0,
-                "Rz": 0.0
-            },
-            "joints": {
-                "J1": 0.0,
-                "J2": 0.0,
-                "J3": 0.0,
-                "J4": 0.0,
-                "J5": 0.0,
-                "J6": 0.0
-            }
-        },
-        {
-            "name": "pPayload1AfterSlot",
-            "speed": 10.0,
-            "accel": 10.0,
-            "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1567,6 +2354,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1585,10 +2373,471 @@
             }
         },
         {
-            "name": "pPayload2StickInSlot",
+            "name": "pChargerWithBatt",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1Slot1WithBatt",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger1Slot2WithBatt",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2Slot1WithBatt",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2Slot2WithBatt",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "VTOLModuleWithSomeCargo",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOLModuleWithSomeCargo",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL1WithSomeCargo",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2WithBatt",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter1InSlot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter1AfterSlot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2WithBatt1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2InSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2AfterSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2WithBatt2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2InSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pHelicopter2AfterSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pPayload1InSlot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pPayload1AfterSlot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pPayload2WithPL",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pPayload2InSlot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1611,6 +2860,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1633,6 +2883,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1651,10 +2902,11 @@
             }
         },
         {
-            "name": "pGrippers1StickInSlot",
+            "name": "pGrippers1InSlot",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1677,6 +2929,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1699,6 +2952,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1717,10 +2971,11 @@
             }
         },
         {
-            "name": "pGrippers2StickInSlot",
+            "name": "pGrippers2InSlot",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1743,6 +2998,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1761,10 +3017,11 @@
             }
         },
         {
-            "name": "pCharger1WithBatt",
+            "name": "pVTOL2Charger1WithBatt",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1783,10 +3040,11 @@
             }
         },
         {
-            "name": "pCharger1StickInSlot",
+            "name": "pVTOL2Charger1InSlot1",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1805,10 +3063,11 @@
             }
         },
         {
-            "name": "pCharger1AfterSlot",
+            "name": "pVTOL2Charger1AfterSlot1",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1827,10 +3086,11 @@
             }
         },
         {
-            "name": "pCharger2WithBatt",
+            "name": "pVTOL2Charger1InSlot2",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1849,10 +3109,11 @@
             }
         },
         {
-            "name": "pCharger2StickInSlot",
+            "name": "pVTOL2Charger1AfterSlot2",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1871,10 +3132,103 @@
             }
         },
         {
-            "name": "pCharger2AfterSlot",
+            "name": "pVTOL2Charger2WithBatt",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2InSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2AfterSlot1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2InSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Charger2AfterSlot2",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1897,6 +3251,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1915,10 +3270,11 @@
             }
         },
         {
-            "name": "pVTOL1StickInPayloadSlot",
+            "name": "pVTOL1InPayloadSlot",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1941,6 +3297,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1963,6 +3320,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "True",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -1981,10 +3339,57 @@
             }
         },
         {
-            "name": "pVTOL1StickInBatterySlot",
+            "name": "pVTOL1InBatterySlot",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL1AfterBatterySlot",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
+            "tcp": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "Rx": 0.0,
+                "Ry": 0.0,
+                "Rz": 0.0
+            },
+            "joints": {
+                "J1": 0.0,
+                "J2": 0.0,
+                "J3": 0.0,
+                "J4": 0.0,
+                "J5": 0.0,
+                "J6": 0.0
+            }
+        },
+        {
+            "name": "pVTOL2Battery1",
+            "speed": 10.0,
+            "accel": 10.0,
+            "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -2007,6 +3412,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -2025,10 +3431,11 @@
             }
         },
         {
-            "name": "pVTOL2StickInBattery1Slot",
+            "name": "pVTOL2InBattery1Slot",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -2051,6 +3458,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -2073,6 +3481,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -2091,10 +3500,11 @@
             }
         },
         {
-            "name": "pVTOL2StickInBattery2Slot",
+            "name": "pVTOL2InBattery2Slot",
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,
@@ -2117,6 +3527,7 @@
             "speed": 10.0,
             "accel": 10.0,
             "blend": 0.5,
+            "base": "False",
             "tcp": {
                 "x": 0.0,
                 "y": 0.0,

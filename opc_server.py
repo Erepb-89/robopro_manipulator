@@ -80,7 +80,11 @@ class OPCUAServer:
         self.iActionState = self.Manipulator.add_variable(self.ns, "iActionState", 0)
         self.ixPowered = self.Manipulator.add_variable(self.ns, "ixPowered", False)
         self.iGripperState = self.Manipulator.add_variable(self.ns, "iGripperState", False)
+        self.ixGripperLocked = self.Manipulator.add_variable(self.ns, "ixGripperLocked", False)
+        self.ixGripperUnlocked = self.Manipulator.add_variable(self.ns, "ixGripperUnlocked", False)
         self.iGripperHolderState = self.Manipulator.add_variable(self.ns, "iGripperHolderState", False)
+        self.ixGripperHolderLocked = self.Manipulator.add_variable(self.ns, "ixGripperHolderLocked", False)
+        self.ixGripperHolderUnlocked = self.Manipulator.add_variable(self.ns, "ixGripperHolderUnlocked", False)
 
         self.running = False
         self.stop_event = threading.Event()
@@ -155,7 +159,11 @@ class OPCUAServer:
                     self.iActionState.set_value(st.action_state or "")
                     self.ixPowered.set_value(st.powered or "")
                     self.iGripperState.set_value(st.gripper_state)
+                    self.ixGripperLocked.set_value(st.gripper_cmd or "")
+                    self.ixGripperUnlocked.set_value((not st.gripper_cmd) or "")
                     self.iGripperHolderState.set_value(st.shift_gripper_state)
+                    self.ixGripperHolderLocked.set_value(st.shift_gripper_cmd or "")
+                    self.ixGripperHolderUnlocked.set_value((not st.shift_gripper_cmd) or "")
 
                     self.handle_power_cmd()
                     self.handle_traj_cmd()

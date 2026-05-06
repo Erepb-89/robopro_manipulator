@@ -18,11 +18,10 @@ from config import POINTS_PATH, TRAJ_PATH, NUM_DIGITAL_IO, GRIPPER_DO_INDEX, SHI
     FINISHED, BLOCK, EXCEPTION, \
     EXEC_TRAJ, GRIPPER_CMD, ACTIONS_PATH, PORT_TYPE, VTOL_LIFT_WAIT_TIMEOUT, WAIT_LIFT, VTOL_LIFT_REQUIRED_POSITION
 from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotPoints, RobotRoutes
-
-# sys.path.append("/home/user/robot-api")
 from states_modes_errors import ControllerState, SafetyStatus, MotionMode, LastError
 
-sys.path.append("robot-api")
+sys.path.append("/home/user/robot-api")
+# sys.path.append("robot-api")
 from API.rc_api import RobotApi
 from API.source.core.exceptions.data_validation_error.generic_error import (
     AddWaypointError, FunctionTimeOutError)
@@ -385,7 +384,8 @@ class RobotController:
         """Управление питанием манипулятора"""
         try:
             if power_on == 0:
-                self.Robot.controller_state.set(ControllerState.off, await_sec=10)
+                # self.Robot.controller_state.set('off', await_sec=10)
+                self.Robot.controller_state.set(str(ControllerState.off.name), await_sec=10)
                 self.state.update(powered=False, last_command="PowerOff")
                 self.log.info("Manipulator deactivated")
             elif power_on == 1:
@@ -405,7 +405,7 @@ class RobotController:
         """Остановка движения"""
         try:
             # self.Robot.motion.mode.set('hold')
-            self.Robot.motion.mode.set(MotionMode.hold)
+            self.Robot.motion.mode.set(str(MotionMode.hold.name))
         except Exception as e:
             self.state.update(last_error=LastError.err_switching_stop_mode)
             self.log.error(f"Stop Mode Switching Error: {e}")
@@ -420,7 +420,7 @@ class RobotController:
             elif free_drive == 0:
                 self.log.info("Deactivating Zero Gravity Mode")
                 # self.Robot.motion.mode.set('hold')
-                self.Robot.motion.mode.set(MotionMode.hold)
+                self.Robot.motion.mode.set(str(MotionMode.hold.name))
                 self.state.update(free_drive=False, mode='hold')
             else:
                 self.log.warning(f"Unknown free drive command: {free_drive}")
@@ -431,9 +431,12 @@ class RobotController:
     def run_controller(self):
         """Запуск контроллера в режим RUN"""
         try:
-            if self.Robot.controller_state.get() != 'run':
-                self.Robot.controller_state.set('off', await_sec=1)
-                self.Robot.controller_state.set('run', await_sec=10)
+            # if self.Robot.controller_state.get() != 'run':
+            if self.Robot.controller_state.get() != str(ControllerState.run.name):
+                # self.Robot.controller_state.set('off', await_sec=1)
+                self.Robot.controller_state.set(str(ControllerState.off.name), await_sec=1)
+                # self.Robot.controller_state.set('run', await_sec=10)
+                self.Robot.controller_state.set(str(ControllerState.run.name), await_sec=10)
         except Exception as e:
             self.state.update(last_error=LastError.err_switching_run_mode)
             self.log.error(f"Run Mode Switching Error: {e}")
@@ -466,7 +469,8 @@ class RobotController:
                 params['blend'] / 100
             )
 
-        self.Robot.motion.mode.set(MotionMode.move)
+        # self.Robot.motion.mode.set(MotionMode.move)
+        self.Robot.motion.mode.set("move")
         self.state.update(mode='move', last_command=f"MoveToPoint:{point_name}")
         self.log.info(f"Moving to point '{point_name}'")
 
@@ -557,7 +561,8 @@ class RobotController:
                     )
                 )
 
-            self.Robot.motion.mode.set(MotionMode.move)
+            # self.Robot.motion.mode.set(MotionMode.move)
+            self.Robot.motion.mode.set('move')
             # self.state.update(mode='move', last_command=trajectory.name)
             self.log.info(f"Executing trajectory: {trajectory.name}")
 
@@ -789,7 +794,12 @@ class RobotController:
             if dist < best_dist:
                 best_dist, best_name = dist, name
 
-        self.state.update(current_point=getattr(RobotPoints, best_name).value)
+        try:
+            self.state.update(current_point=getattr(RobotPoints, best_name).value)
+        finally:
+            self.state.update(
+                current_point=getattr(RobotPoints, "pUndefined").value)
+
         if best_name is None:
             info = {"waypoint": "", "distance": 0.0, "trajectories": []}
             self._nearest_info = info
@@ -804,10 +814,10 @@ class RobotController:
 
         info = {"waypoint": best_name, "distance": best_dist, "trajectories": traj_list}
         self._nearest_info = info
-        self.log.info(
-            f"Nearest waypoint: {best_name}; "
-            f"distance={best_dist:.3f}; trajectories={traj_list}"
-        )
+        # self.log.info(
+        #     f"Nearest waypoint: {best_name}; "
+        #     f"distance={best_dist:.3f}; trajectories={traj_list}"
+        # )
         return info
 
     def _joystick_worker(self, coord_sys=None) -> None:
@@ -887,8 +897,8 @@ class RobotController:
                     self.data.load_waypoints()
                     self.execute_trajectory(RobotTrajectories(cmd.payload['num']))
 
-                # elif cmd.type == CmdType.EXECUTE_ROUTE:
-                #     self.execute_route(RobotRoutes(cmd.payload['num']))
+                elif cmd.type == CmdType.EXECUTE_ROUTE:
+                    self.execute_route(RobotRoutes(cmd.payload['num']))
 
                 elif cmd.type == CmdType.EXECUTE_ACTION:
                     self.execute_action(RobotActions(cmd.payload['num']))
