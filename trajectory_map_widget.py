@@ -142,7 +142,7 @@ class NodeItem(QGraphicsEllipseItem):
                 # Восстанавливаем заблокированный вид
                 self._apply_blocked_style()
             else:
-                color = (NODE_HOME_COLOR if self.point_name == "pHomePosition"
+                color = (NODE_HOME_COLOR if "pHomePosition" in self.point_name
                          else NODE_ENDPOINT_COLOR if self.is_endpoint
                 else NODE_BASE_COLOR)
                 self.base_color = color
@@ -156,7 +156,7 @@ class NodeItem(QGraphicsEllipseItem):
             self._apply_blocked_style()
             self._tooltip.setPlainText(f"{self.point_name}\n🔒 {reason}")
         else:
-            color = (NODE_HOME_COLOR if self.point_name == "pHomePosition"
+            color = (NODE_HOME_COLOR if "pHomePosition" in self.point_name
                      else NODE_ENDPOINT_COLOR if self.is_endpoint
             else NODE_BASE_COLOR)
             self.base_color = color
@@ -200,79 +200,383 @@ class TrajectoryMapWidget(QWidget):
     node_clicked = pyqtSignal(str)
 
     NODE_LAYOUT = {
-        "pHomePosition": (500, 400, "Home", False),
+        # ========== ВЕРХНЯЯ ПОЛОВИНА (с грузом) ==========
+        "pHomePositionWithSomeCargo": (510, 250, "Home+", False),
 
-        "pHelicopterModule": (200, 400, "pH", False),
-        "pHelicopter1": (120, 250, "pH1", False),
-        "pHelicopter1Payload": (120, 150, "pH1L", True),
-        "pHelicopter2": (120, 550, "pH2", False),
-        "pHelicopter2Payload": (120, 650, "pH2L", True),
+        # --- Helicopter cargo ---
+        "pHelicopterModuleWithSomeCargo": (220, 250, "pH+", False),
+        "pHelicopter1WithPL": (130, 200, "pH1+", False),
+        "pHelicopter1PayloadWithPL": (100, 95, "pH1L+", False),
+        "pHelicopter1InSlot": (45, 130, "H1InS+", True),
+        "pHelicopter1AfterSlot": (45, 190, "H1Aft+", True),
 
-        "pPayload": (370, 250, "pL", False),
-        "pPayload1": (310, 150, "pL1", True),
-        "pPayload2": (430, 150, "pL2", True),
+        "pHelicopter2WithSomeCargo": (130, 300, "pH2+", False),
+        "pHelicopter2WithBatt1": (100, 460, "H2+B1", False),
+        "pHelicopter2InSlot1": (45, 410, "H2InS1", True),
+        "pHelicopter2AfterSlot1": (45, 330, "H2AftS1", True),
+        "pHelicopter2WithBatt2": (170, 460, "H2+B2", False),
+        "pHelicopter2InSlot2": (220, 410, "H2InS2", True),
+        "pHelicopter2AfterSlot2": (220, 330, "H2AftS2", True),
+        "pHelicopter2PayloadWithPL": (45, 250, "pH2L+", False),
 
-        "pGrippers": (560, 250, "pG", False),
-        "pGrippers1": (500, 150, "pG1", True),
-        "pGrippers2": (620, 150, "pG2", True),
+        # --- Payload cargo ---
+        "pPayloadWithPL": (390, 200, "pL+", False),
+        "pPayload1WithPL": (340, 150, "pL1+", False),
+        "pPayload1InSlot": (310, 95, "PL1InS+", True),
+        "pPayload1AfterSlot": (370, 95, "PL1Aft+", True),
+        "pPayload2WithPL": (440, 150, "pL2+", False),
+        "pPayload2InSlot": (470, 95, "PL2InS+", True),
+        "pPayload2AfterSlot": (410, 95, "PL2Aft+", True),
 
-        "pCharger": (420, 550, "pC", False),
-        "pCharger1": (370, 650, "pC1", True),
-        "pCharger2": (470, 650, "pC2", True),
+        # --- Grippers cargo ---
+        "pGrippersWithGrip": (650, 200, "pG+", False),
+        "pGrippers1WithGrip": (600, 150, "pG1+", False),
+        "pGrippers1InSlot": (570, 95, "G1InS+", True),
+        "pGrippers1AfterSlot": (630, 95, "G1Aft+", True),
+        "pGrippers2WithGrip": (700, 150, "pG2+", False),
+        "pGrippers2InSlot": (730, 95, "G2InS+", True),
+        "pGrippers2AfterSlot": (670, 95, "G2Aft+", True),
 
-        "pVTOLModule": (800, 400, "pV", False),
-        "pVTOL1": (880, 250, "pV1", False),
-        "pVTOL1Battery": (830, 150, "pV1B", True),
-        "pVTOL1Payload": (930, 150, "pV1L", True),
-        "pVTOL2": (880, 550, "pV2", False),
-        "pVTOL2Battery": (830, 650, "pV2C", True),
-        "pVTOL2Battery2": (930, 650, "pV2C2", False),
-        "pVTOL2Battery2Charge": (980, 750, "pV2C2С", True),
+        # --- Charger cargo ---
+        "pChargerWithBatt": (500, 330, "pC+", False),
+        "pHelicopter2Charger1WithBatt": (390, 370, "H2Ch1+", False),
+        "pHelicopter2Charger1Slot1WithBatt": (340, 330, "H2Ch1S1+", False),
+        "pHelicopter2Charger1InSlot1": (310, 290, "H2Ch1InS1", True),
+        "pHelicopter2Charger1AfterSlot1": (370, 290, "H2Ch1Aft1+", True),
+        "pHelicopter2Charger1Slot2WithBatt": (340, 410, "H2Ch1S2+", False),
+        "pHelicopter2Charger1InSlot2": (310, 460, "H2Ch1InS2", True),
+        "pHelicopter2Charger1AfterSlot2": (370, 460, "H2Ch1Aft2+", True),
+
+        "pVTOL2Charger1WithBatt": (500, 410, "V2Ch1+", False),
+        "pVTOL2Charger1Slot1WithBatt": (600, 330, "V2Ch1S1+", False),
+        "pVTOL2Charger1InSlot1": (570, 290, "V2Ch1InS1", True),
+        "pVTOL2Charger1AfterSlot1": (630, 290, "V2Ch1Aft1+", True),
+        "pVTOL2Charger1Slot2WithBatt": (600, 410, "V2Ch1S2+", False),
+        "pVTOL2Charger1InSlot2": (570, 460, "V2Ch1InS2", True),
+        "pVTOL2Charger1AfterSlot2": (630, 460, "V2Ch1Aft2+", True),
+
+        "pVTOL2Charger2WithBatt": (650, 370, "V2Ch2+", False),
+        "pVTOL2Charger2Slot1WithBatt": (700, 330, "V2Ch2S1+", False),
+        "pVTOL2Charger2InSlot1": (670, 290, "V2Ch2InS1", True),
+        "pVTOL2Charger2AfterSlot1": (730, 290, "V2Ch2Aft1+", True),
+        "pVTOL2Charger2Slot2WithBatt": (700, 410, "V2Ch2S2+", False),
+        "pVTOL2Charger2InSlot2": (670, 460, "V2Ch2InS2", True),
+        "pVTOL2Charger2AfterSlot2": (730, 460, "V2Ch2Aft2+", True),
+
+        # --- VTOL cargo ---
+        "pVTOLModuleWithSomeCargo": (810, 250, "pV+", False),
+        "pVTOL1WithSomeCargo": (890, 200, "pV1+", False),
+        "pVTOL1BatteryWithBatt": (860, 95, "V1B+", False),
+        "pVTOL1InBatterySlot": (810, 130, "V1BInS+", True),
+        "pVTOL1AfterBatterySlot": (810, 190, "V1BAft+", True),
+
+        "pVTOL2WithBatt": (890, 300, "pV2+", False),
+        "pVTOL2Battery1WithBatt": (860, 460, "V2B1+", False),
+        "pVTOL2InBattery1Slot": (810, 410, "V2B1InS+", True),
+        "pVTOL2AfterBattery1Slot": (810, 330, "V2B1Aft+", True),
+        "pVTOL2Battery2WithBatt": (930, 460, "V2B2+", False),
+        "pVTOL2InBattery2Slot": (980, 410, "V2B2InS+", True),
+        "pVTOL2AfterBattery2Slot": (980, 330, "V2B2Aft+", True),
+
+        # ========== НИЖНЯЯ ПОЛОВИНА (без груза) (Y + 500) ==========
+        "pHomePosition": (510, 750, "Home", False),
+
+        # --- Helicopter ---
+        "pHelicopterModule": (220, 750, "pH", False),
+        "pHelicopter1": (130, 700, "pH1", False),
+        "pHelicopter1Payload": (100, 595, "pH1L", False),
+        "pHelicopter1InsideSlot": (45, 630, "H1In", True),
+        "pHelicopter1BeforeSlot": (45, 690, "H1Bef", True),
+
+        "pHelicopter2": (130, 800, "pH2", False),
+        "pHelicopter2Battery1": (100, 960, "H2B1", False),
+        "pHelicopter2InsideBattery1Slot": (45, 910, "H2B1In", True),
+        "pHelicopter2BeforeBattery1Slot": (45, 830, "H2B1Bef", True),
+        "pHelicopter2Battery2": (170, 960, "H2B2", False),
+        "pHelicopter2InsideBattery2Slot": (220, 910, "H2B2In", True),
+        "pHelicopter2BeforeBattery2Slot": (220, 830, "H2B2Bef", True),
+        "pHelicopter2Payload": (45, 750, "pH2L", False),
+
+        # --- Payload ---
+        "pPayload": (390, 700, "pL", False),
+        "pPayload1": (340, 650, "pL1", False),
+        "pPayload1InsideSlot": (310, 595, "PL1In", True),
+        "pPayload1BeforeSlot": (370, 595, "PL1Bef", True),
+        "pPayload2": (440, 650, "pL2", False),
+        "pPayload2InsideSlot": (470, 595, "PL2In", True),
+        "pPayload2BeforeSlot": (410, 595, "PL2Bef", True),
+
+        # --- Grippers ---
+        "pGrippers": (650, 700, "pG", False),
+        "pGrippers1": (600, 650, "pG1", False),
+        "pGrippers1InsideSlot": (570, 595, "G1In", True),
+        "pGrippers1BeforeSlot": (630, 595, "G1Bef", True),
+        "pGrippers2": (700, 650, "pG2", False),
+        "pGrippers2InsideSlot": (730, 595, "G2In", True),
+        "pGrippers2BeforeSlot": (670, 595, "G2Bef", True),
+
+        # --- Charger ---
+        "pCharger": (500, 830, "pC", False),
+        "pHelicopter2Charger1": (390, 870, "H2Ch1", False),
+        "pHelicopter2Charger1Slot1": (340, 830, "H2Ch1S1", False),
+        "pHelicopter2Charger1InsideSlot1": (310, 790, "H2Ch1In1", True),
+        "pHelicopter2Charger1BeforeSlot1": (370, 790, "H2Ch1Bef1", True),
+        "pHelicopter2Charger1Slot2": (340, 910, "H2Ch1S2", False),
+        "pHelicopter2Charger1InsideSlot2": (310, 960, "H2Ch1In2", True),
+        "pHelicopter2Charger1BeforeSlot2": (370, 960, "H2Ch1Bef2", True),
+
+        "pVTOL2Charger1": (500, 910, "V2Ch1", False),
+        "pVTOL2Charger1Slot1": (600, 830, "V2Ch1S1", False),
+        "pVTOL2Charger1InsideSlot1": (570, 790, "V2Ch1In1", True),
+        "pVTOL2Charger1BeforeSlot1": (630, 790, "V2Ch1Bef1", True),
+        "pVTOL2Charger1Slot2": (600, 910, "V2Ch1S2", False),
+        "pVTOL2Charger1InsideSlot2": (570, 960, "V2Ch1In2", True),
+        "pVTOL2Charger1BeforeSlot2": (630, 960, "V2Ch1Bef2", True),
+
+        "pVTOL2Charger2": (650, 870, "V2Ch2", False),
+        "pVTOL2Charger2Slot1": (700, 830, "V2Ch2S1", False),
+        "pVTOL2Charger2InsideSlot1": (670, 790, "V2Ch2In1", True),
+        "pVTOL2Charger2BeforeSlot1": (730, 790, "V2Ch2Bef1", True),
+        "pVTOL2Charger2Slot2": (700, 910, "V2Ch2S2", False),
+        "pVTOL2Charger2InsideSlot2": (670, 960, "V2Ch2In2", True),
+        "pVTOL2Charger2BeforeSlot2": (730, 960, "V2Ch2Bef2", True),
+
+        # --- VTOL ---
+        "pVTOLModule": (810, 750, "pV", False),
+        "pVTOL1": (890, 700, "pV1", False),
+        "pVTOL1Battery": (860, 595, "pV1B", False),
+        "pVTOL1InsideBatterySlot": (810, 630, "V1BIn", True),
+        "pVTOL1BeforeBatterySlot": (810, 690, "V1BBef", True),
+
+        "pVTOL2": (890, 800, "pV2", False),
+        "pVTOL2Battery1": (860, 960, "V2B1", False),
+        "pVTOL2InsideBattery1Slot": (810, 910, "V2B1In", True),
+        "pVTOL2BeforeBattery1Slot": (810, 830, "V2B1Bef", True),
+        "pVTOL2Battery2": (930, 960, "V2B2", False),
+        "pVTOL2InsideBattery2Slot": (980, 910, "V2B2In", True),
+        "pVTOL2BeforeBattery2Slot": (980, 830, "V2B2Bef", True),
+
+        "pVTOL2Battery2Charge": (980, 980, "V2C2С", True),
     }
 
     EDGES = [
+        # ===== ТРАССА 1: БЕЗ ГРУЗА =====
+        # От Home
         ("pHomePosition", "pHelicopterModule"),
         ("pHomePosition", "pPayload"),
         ("pHomePosition", "pGrippers"),
         ("pHomePosition", "pCharger"),
         ("pHomePosition", "pVTOLModule"),
 
+        # Helicopter ветка
         ("pHelicopterModule", "pHelicopter1"),
         ("pHelicopterModule", "pHelicopter2"),
         ("pHelicopter1", "pHelicopter1Payload"),
-        ("pHelicopter2", "pHelicopter2Payload"),
+        ("pHelicopter1Payload", "pHelicopter1InsideSlot"),
+        ("pHelicopter1InsideSlot", "pHelicopter1BeforeSlot"),
 
+        ("pHelicopter2", "pHelicopter2Payload"),
+        ("pHelicopter2", "pHelicopter2Battery1"),
+        ("pHelicopter2", "pHelicopter2Battery2"),
+        ("pHelicopter2Battery1", "pHelicopter2InsideBattery1Slot"),
+        ("pHelicopter2Battery1", "pHelicopter2BeforeBattery1Slot"),
+        ("pHelicopter2InsideBattery1Slot", "pHelicopter2BeforeBattery1Slot"),
+        ("pHelicopter2Battery2", "pHelicopter2InsideBattery2Slot"),
+        ("pHelicopter2Battery2", "pHelicopter2BeforeBattery2Slot"),
+        ("pHelicopter2InsideBattery2Slot", "pHelicopter2BeforeBattery2Slot"),
+
+        # Payload ветка
         ("pPayload", "pPayload1"),
         ("pPayload", "pPayload2"),
+        ("pPayload1", "pPayload1InsideSlot"),
+        ("pPayload1", "pPayload1BeforeSlot"),
+        ("pPayload1InsideSlot", "pPayload1BeforeSlot"),
+        ("pPayload2", "pPayload2InsideSlot"),
+        ("pPayload2", "pPayload2BeforeSlot"),
+        ("pPayload2InsideSlot", "pPayload2BeforeSlot"),
 
+        # Grippers ветка
         ("pGrippers", "pGrippers1"),
         ("pGrippers", "pGrippers2"),
+        ("pGrippers1", "pGrippers1InsideSlot"),
+        ("pGrippers1", "pGrippers1BeforeSlot"),
+        ("pGrippers1InsideSlot", "pGrippers1BeforeSlot"),
+        ("pGrippers2", "pGrippers2InsideSlot"),
+        ("pGrippers2", "pGrippers2BeforeSlot"),
+        ("pGrippers2InsideSlot", "pGrippers2BeforeSlot"),
 
-        ("pCharger", "pCharger1"),
-        ("pCharger", "pCharger2"),
+        # Charger ветка
+        ("pCharger", "pHelicopter2Charger1"),
+        ("pCharger", "pVTOL2Charger1"),
+        ("pCharger", "pVTOL2Charger2"),
+        ("pHelicopter2Charger1", "pHelicopter2Charger1Slot1"),
+        ("pHelicopter2Charger1", "pHelicopter2Charger1Slot2"),
+        ("pHelicopter2Charger1", "pHelicopter2Charger1BeforeSlot1"),
+        ("pHelicopter2Charger1Slot1", "pHelicopter2Charger1InsideSlot1"),
+        ("pHelicopter2Charger1Slot1", "pHelicopter2Charger1BeforeSlot1"),
+        ("pHelicopter2Charger1InsideSlot1", "pHelicopter2Charger1BeforeSlot1"),
+        ("pHelicopter2Charger1Slot2", "pHelicopter2Charger1InsideSlot2"),
+        ("pHelicopter2Charger1Slot2", "pHelicopter2Charger1BeforeSlot2"),
+        ("pHelicopter2Charger1InsideSlot2", "pHelicopter2Charger1BeforeSlot2"),
 
+        ("pVTOL2Charger1", "pVTOL2Charger1Slot1"),
+        ("pVTOL2Charger1", "pVTOL2Charger1Slot2"),
+        ("pVTOL2Charger1Slot1", "pVTOL2Charger1InsideSlot1"),
+        ("pVTOL2Charger1Slot1", "pVTOL2Charger1BeforeSlot1"),
+        ("pVTOL2Charger1InsideSlot1", "pVTOL2Charger1BeforeSlot1"),
+        ("pVTOL2Charger1Slot2", "pVTOL2Charger1InsideSlot2"),
+        ("pVTOL2Charger1Slot2", "pVTOL2Charger1BeforeSlot2"),
+        ("pVTOL2Charger1InsideSlot2", "pVTOL2Charger1BeforeSlot2"),
+
+        ("pVTOL2Charger2", "pVTOL2Charger2Slot1"),
+        ("pVTOL2Charger2", "pVTOL2Charger2Slot2"),
+        ("pVTOL2Charger2Slot1", "pVTOL2Charger2InsideSlot1"),
+        ("pVTOL2Charger2Slot1", "pVTOL2Charger2BeforeSlot1"),
+        ("pVTOL2Charger2InsideSlot1", "pVTOL2Charger2BeforeSlot1"),
+        ("pVTOL2Charger2Slot2", "pVTOL2Charger2InsideSlot2"),
+        ("pVTOL2Charger2Slot2", "pVTOL2Charger2BeforeSlot2"),
+        ("pVTOL2Charger2InsideSlot2", "pVTOL2Charger2BeforeSlot2"),
+
+        # VTOL ветка
         ("pVTOLModule", "pVTOL1"),
         ("pVTOLModule", "pVTOL2"),
-        ("pVTOL1", "pVTOL1Battery"),
         ("pVTOL1", "pVTOL1Payload"),
-        ("pVTOL2", "pVTOL2Battery"),
+        ("pVTOL1", "pVTOL1Battery"),
+        ("pVTOL1Battery", "pVTOL1InsideBatterySlot"),
+        ("pVTOL1Battery", "pVTOL1BeforeBatterySlot"),
+        ("pVTOL1InsideBatterySlot", "pVTOL1BeforeBatterySlot"),
+
+        ("pVTOL2", "pVTOL2Battery1"),
         ("pVTOL2", "pVTOL2Battery2"),
+        ("pVTOL2Battery1", "pVTOL2InsideBattery1Slot"),
+        ("pVTOL2Battery1", "pVTOL2BeforeBattery1Slot"),
+        ("pVTOL2InsideBattery1Slot", "pVTOL2BeforeBattery1Slot"),
+        ("pVTOL2Battery2", "pVTOL2InsideBattery2Slot"),
+        ("pVTOL2Battery2", "pVTOL2BeforeBattery2Slot"),
+        ("pVTOL2InsideBattery2Slot", "pVTOL2BeforeBattery2Slot"),
         ("pVTOL2Battery2", "pVTOL2Battery2Charge"),
+
+        # ===== ТРАССА 2: С ГРУЗОМ =====
+        # От Home с грузом
+        ("pHomePositionWithSomeCargo", "pHelicopterModuleWithSomeCargo"),
+        ("pHomePositionWithSomeCargo", "pPayloadWithPL"),
+        ("pHomePositionWithSomeCargo", "pChargerWithBatt"),
+        ("pHomePositionWithSomeCargo", "pVTOLModuleWithSomeCargo"),
+        ("pHomePositionWithSomeCargo", "pGrippersWithGrip"),
+
+        # Helicopter ветка с грузом
+        ("pHelicopterModuleWithSomeCargo", "pHelicopter1WithPL"),
+        ("pHelicopterModuleWithSomeCargo", "pHelicopter2WithSomeCargo"),
+        ("pHelicopter1WithPL", "pHelicopter1PayloadWithPL"),
+        ("pHelicopter1PayloadWithPL", "pHelicopter1InSlot"),
+        ("pHelicopter1InSlot", "pHelicopter1AfterSlot"),
+
+        ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt1"),
+        ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt2"),
+        ("pHelicopter2WithSomeCargo", "pHelicopter2PayloadWithPL"),
+        ("pHelicopter2WithSomeCargo", "pHelicopter2AfterSlot1"),
+        ("pHelicopter2WithSomeCargo", "pHelicopter2AfterSlot2"),
+        ("pHelicopter2WithBatt1", "pHelicopter2InSlot1"),
+        ("pHelicopter2WithBatt1", "pHelicopter2AfterSlot1"),
+        ("pHelicopter2InSlot1", "pHelicopter2AfterSlot1"),
+        ("pHelicopter2WithBatt2", "pHelicopter2InSlot2"),
+        ("pHelicopter2WithBatt2", "pHelicopter2AfterSlot2"),
+        ("pHelicopter2InSlot2", "pHelicopter2AfterSlot2"),
+
+        # Payload ветка с грузом
+        ("pPayloadWithPL", "pPayload1WithPL"),
+        ("pPayloadWithPL", "pPayload2WithPL"),
+        ("pPayload1WithPL", "pPayload1InSlot"),
+        ("pPayload1WithPL", "pPayload1AfterSlot"),
+        ("pPayload1InSlot", "pPayload1AfterSlot"),
+        ("pPayload2WithPL", "pPayload2InSlot"),
+        ("pPayload2WithPL", "pPayload2AfterSlot"),
+        ("pPayload2InSlot", "pPayload2AfterSlot"),
+
+        # Grippers ветка с грузом
+        ("pGrippersWithGrip", "pGrippers1WithGrip"),
+        ("pGrippersWithGrip", "pGrippers2WithGrip"),
+        ("pGrippers1WithGrip", "pGrippers1InSlot"),
+        ("pGrippers1WithGrip", "pGrippers1AfterSlot"),
+        ("pGrippers1InSlot", "pGrippers1AfterSlot"),
+        ("pGrippers2WithGrip", "pGrippers2InSlot"),
+        ("pGrippers2WithGrip", "pGrippers2AfterSlot"),
+        ("pGrippers2InSlot", "pGrippers2AfterSlot"),
+
+        # Charger ветка с грузом
+        ("pChargerWithBatt", "pHelicopter2Charger1WithBatt"),
+        ("pChargerWithBatt", "pVTOL2Charger1WithBatt"),
+        ("pChargerWithBatt", "pVTOL2Charger2WithBatt"),
+
+        ("pHelicopter2Charger1WithBatt", "pHelicopter2Charger1Slot1WithBatt"),
+        ("pHelicopter2Charger1WithBatt", "pHelicopter2Charger1Slot2WithBatt"),
+        ("pHelicopter2Charger1Slot1WithBatt", "pHelicopter2Charger1InSlot1"),
+        ("pHelicopter2Charger1Slot1WithBatt", "pHelicopter2Charger1AfterSlot1"),
+        ("pHelicopter2Charger1InSlot1", "pHelicopter2Charger1AfterSlot1"),
+        ("pHelicopter2Charger1Slot2WithBatt", "pHelicopter2Charger1InSlot2"),
+        ("pHelicopter2Charger1Slot2WithBatt", "pHelicopter2Charger1AfterSlot2"),
+        ("pHelicopter2Charger1InSlot2", "pHelicopter2Charger1AfterSlot2"),
+
+        ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot1WithBatt"),
+        ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot2WithBatt"),
+        ("pVTOL2Charger1Slot1WithBatt", "pVTOL2Charger1InSlot1"),
+        ("pVTOL2Charger1Slot1WithBatt", "pVTOL2Charger1AfterSlot1"),
+        ("pVTOL2Charger1InSlot1", "pVTOL2Charger1AfterSlot1"),
+        ("pVTOL2Charger1Slot2WithBatt", "pVTOL2Charger1InSlot2"),
+        ("pVTOL2Charger1Slot2WithBatt", "pVTOL2Charger1AfterSlot2"),
+        ("pVTOL2Charger1InSlot2", "pVTOL2Charger1AfterSlot2"),
+
+        ("pVTOL2Charger2WithBatt", "pVTOL2Charger2Slot1WithBatt"),
+        ("pVTOL2Charger2WithBatt", "pVTOL2Charger2Slot2WithBatt"),
+        ("pVTOL2Charger2Slot1WithBatt", "pVTOL2Charger2InSlot1"),
+        ("pVTOL2Charger2Slot1WithBatt", "pVTOL2Charger2AfterSlot1"),
+        ("pVTOL2Charger2InSlot1", "pVTOL2Charger2AfterSlot1"),
+        ("pVTOL2Charger2Slot2WithBatt", "pVTOL2Charger2InSlot2"),
+        ("pVTOL2Charger2Slot2WithBatt", "pVTOL2Charger2AfterSlot2"),
+        ("pVTOL2Charger2InSlot2", "pVTOL2Charger2AfterSlot2"),
+
+        # VTOL ветка с грузом
+        ("pVTOLModuleWithSomeCargo", "pVTOL1WithSomeCargo"),
+        ("pVTOLModuleWithSomeCargo", "pVTOL2WithBatt"),
+        ("pVTOL1WithSomeCargo", "pVTOL1BatteryWithBatt"),
+        ("pVTOL1WithSomeCargo", "pVTOL1AfterBatterySlot"),
+        ("pVTOL1BatteryWithBatt", "pVTOL1InBatterySlot"),
+        ("pVTOL1BatteryWithBatt", "pVTOL1AfterBatterySlot"),
+        ("pVTOL1InBatterySlot", "pVTOL1AfterBatterySlot"),
+
+        ("pVTOL2WithBatt", "pVTOL2Battery1WithBatt"),
+        ("pVTOL2WithBatt", "pVTOL2Battery2WithBatt"),
+        ("pVTOL2WithBatt", "pVTOL2AfterBattery1Slot"),
+        ("pVTOL2WithBatt", "pVTOL2AfterBattery2Slot"),
+        ("pVTOL2Battery1WithBatt", "pVTOL2InBattery1Slot"),
+        ("pVTOL2Battery1WithBatt", "pVTOL2AfterBattery1Slot"),
+        ("pVTOL2InBattery1Slot", "pVTOL2AfterBattery1Slot"),
+        ("pVTOL2Battery2WithBatt", "pVTOL2InBattery2Slot"),
+        ("pVTOL2Battery2WithBatt", "pVTOL2AfterBattery2Slot"),
+        ("pVTOL2InBattery2Slot", "pVTOL2AfterBattery2Slot"),
     ]
 
     ZONES = [
-        (20, 100, 210, 600, "helicopter", "Модуль обслуживания\nвертолёта"),
-        (280, 100, 180, 200, "payload", "Зона полезной нагрузки"),
-        (470, 100, 180, 200, "grippers", "Зона захватов"),
-        (310, 500, 230, 200, "charger", "Зарядная станция"),
-        (760, 100, 200, 610, "vtol", "Модуль обслуживания\nВТОЛ"),
+        # --- Верхняя половина (с грузом) ---
+        (20, 50, 230, 450, "helicopter_cargo", "Вертолёт (с грузом)"),
+        (280, 50, 220, 190, "payload_cargo", "Нагрузка (с грузом)"),
+        (530, 50, 220, 190, "grippers_cargo", "Захваты (с грузом)"),
+        (280, 260, 470, 240, "charger_cargo", "Зарядка (с грузом)"),
+        (780, 50, 230, 450, "vtol_cargo", "ВТОЛ (с грузом)"),
+
+        # --- Нижняя половина (без груза) ---
+        (20, 550, 230, 450, "helicopter", "Вертолёт"),
+        (280, 550, 220, 190, "payload", "Нагрузка"),
+        (530, 550, 220, 190, "grippers", "Захваты"),
+        (280, 760, 470, 240, "charger", "Зарядка"),
+        (780, 550, 230, 450, "vtol", "ВТОЛ"),
     ]
 
     DRONE_LABELS = [
-        (120, 210, "ВТ-30Е", QColor(41, 98, 255)),
-        (120, 510, "Альфа-Е", QColor(41, 98, 255)),
-        (880, 210, "InnoVTOL-3e", QColor(76, 175, 80)),
-        (880, 510, "Легионер Е29", QColor(76, 175, 80)),
+        (100, 620, "ВТ-30Е", QColor(41, 98, 255)),
+        (100, 710, "Альфа-Е", QColor(41, 98, 255)),
+        (880, 620, "InnoVTOL-3e", QColor(76, 175, 80)),
+        (880, 710, "Легионер Е29", QColor(76, 175, 80)),
     ]
 
     def __init__(self, parent=None):
@@ -411,11 +715,11 @@ class TrajectoryMapWidget(QWidget):
 
         # x_chip_x, x_chip_y — позиция чипа X; Y-чип размещается на 16px ниже
         status_chips = [
-            ("helicopter", 240, 305),
-            ("vtol", 710, 305),
-            ("payload", 350, 305),
-            ("grippers", 595, 305),
-            ("charger", 485, 465),
+            ("helicopter", 180, 606),  # зона Helicopter
+            ("vtol", 940, 606),  # зона VTOL
+            ("payload", 290, 680),  # зона Payload
+            ("grippers", 540, 680),  # зона Grippers
+            ("charger", 420, 770),  # зона Charger
         ]
 
         for zone_key, chip_x, chip_y in status_chips:
@@ -428,11 +732,11 @@ class TrajectoryMapWidget(QWidget):
         # 2) Чипы состояния оборудования
         #    Зона helicopter (x=20..230, y=100..700) — H-Table, в левой полосе
         equip_def = [
-            ("h_hatch", "Люк", 25, 180),
-            ("h_lift", "Лифт", 25, 198),
-            ("h_box_lift", "Бокс", 25, 216),
-            ("v_hatch", "Люк", 765, 180),
-            ("v_lift", "Лифт", 765, 198),
+            ("h_hatch", "Люк", 180, 550),  # в зоне Helicopter
+            ("h_lift", "Лифт", 180, 568),
+            ("h_box_lift", "Бокс", 180, 586),
+            ("v_hatch", "Люк", 940, 550),  # ниже точек в зоне VTOL
+            ("v_lift", "Лифт", 940, 568),
         ]
         for key, chip_label, chip_x, chip_y in equip_def:
             chip = StatusChipItem(chip_label, chip_x, chip_y, 'gray', w=62, h=14)
@@ -480,8 +784,8 @@ class TrajectoryMapWidget(QWidget):
 
         # 5) Узлы
         for point_name, (node_x, node_y, display, is_endpoint) in self.NODE_LAYOUT.items():
-            if point_name == "pHomePosition":
-                color, radius = NODE_HOME_COLOR, 24
+            if "pHomePosition" in point_name:
+                color, radius = NODE_HOME_COLOR, 18
             elif is_endpoint:
                 color, radius = NODE_ENDPOINT_COLOR, 16
             else:
@@ -504,7 +808,7 @@ class TrajectoryMapWidget(QWidget):
         if point_name in self._nodes:
             self._nodes[point_name].set_current(True)
             self._info_label.setText(f"Текущая позиция: {point_name}")
-            self._info_label.setStyleSheet(GREEN_COLOR)
+            self._info_label.setStyleSheet(BEIGE_COLOR)
 
     def highlight_trajectory(self, src: str, dst: str, traj_name: str = ""):
         """Подсвечивает ребро src↔dst, остальные рёбра приглушает."""
@@ -521,11 +825,11 @@ class TrajectoryMapWidget(QWidget):
 
         label = traj_name if traj_name else f"{src} → {dst}"
         self._info_label.setText(f"Траектория: {label}")
-        self._info_label.setStyleSheet(BEIGE_COLOR)
+        self._info_label.setStyleSheet(GREEN_COLOR)
 
     def reset_highlight(self):
         """Сбрасывает подсветку всех рёбер."""
-        for (src, dst), edge_arrows in self._edge_items.items():
+        for (_, _), edge_arrows in self._edge_items.items():
             edge_arrows[0].setPen(PEN_NORMAL)
             edge_arrows[0].setZValue(5)
             edge_arrows[1].setPen(PEN_BACK_ARROW)

@@ -242,6 +242,12 @@ ZONE_COLORS = {
     "grippers": QColor(255, 152, 0, 30),
     "vtol": QColor(76, 175, 80, 30),
     "charger": QColor(156, 39, 176, 30),
+    # новые зоны с грузом
+    "helicopter_cargo": QColor(220, 235, 255),
+    "payload_cargo": QColor(255, 245, 220),
+    "grippers_cargo": QColor(255, 235, 220),
+    "charger_cargo": QColor(255, 210, 230, 200),
+    "vtol_cargo": QColor(220, 255, 235),
 }
 ZONE_BORDER_COLORS = {
     "helicopter": QColor(41, 98, 255, 180),
@@ -249,6 +255,12 @@ ZONE_BORDER_COLORS = {
     "grippers": QColor(255, 152, 0, 180),
     "vtol": QColor(76, 175, 80, 180),
     "charger": QColor(156, 39, 176, 180),
+    # новые зоны с грузом
+    "helicopter_cargo": QColor(100, 130, 230),
+    "payload_cargo": QColor(230, 180, 70),
+    "grippers_cargo": QColor(230, 130, 70),
+    "charger_cargo": QColor(200, 70, 120),
+    "vtol_cargo": QColor(100, 180, 100),
 }
 
 # ── Карта траекторий: цвета узлов ─────────────────────────────
