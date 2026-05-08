@@ -561,22 +561,32 @@ class TrajectoryMapWidget(QWidget):
         (20, 50, 230, 450, "helicopter_cargo", "Вертолёт (с грузом)"),
         (280, 50, 220, 190, "payload_cargo", "Нагрузка (с грузом)"),
         (530, 50, 220, 190, "grippers_cargo", "Захваты (с грузом)"),
-        (280, 260, 470, 240, "charger_cargo", "Зарядка (с грузом)"),
+        (280, 260, 470, 240, "charger_cargo", ""),
         (780, 50, 230, 450, "vtol_cargo", "ВТОЛ (с грузом)"),
 
         # --- Нижняя половина (без груза) ---
         (20, 550, 230, 450, "helicopter", "Вертолёт"),
         (280, 550, 220, 190, "payload", "Нагрузка"),
         (530, 550, 220, 190, "grippers", "Захваты"),
-        (280, 760, 470, 240, "charger", "Зарядка"),
+        (280, 760, 470, 240, "charger", ""),
         (780, 550, 230, 450, "vtol", "ВТОЛ"),
     ]
 
     DRONE_LABELS = [
-        (100, 620, "ВТ-30Е", QColor(41, 98, 255)),
-        (100, 710, "Альфа-Е", QColor(41, 98, 255)),
-        (880, 620, "InnoVTOL-3e", QColor(76, 175, 80)),
-        (880, 710, "Легионер Е29", QColor(76, 175, 80)),
+        (145, 605, "ВТ-30Е", QColor(41, 98, 255)),
+        (140, 1000, "Альфа-Е", QColor(41, 98, 255)),
+        (920, 605, "InnoVTOL-3e", QColor(76, 175, 80)),
+        (900, 1000, "Легионер Е29", QColor(76, 175, 80)),
+        (310, 1000, "Зарядка", QColor(156, 39, 176, 180).darker(120)),
+    ]
+
+    DRONE_LABELS_CARGO = [
+        (145, 105, "ВТ-30Е", QColor(41, 98, 255)),
+        (140, 500, "Альфа-Е", QColor(41, 98, 255)),
+        (920, 105, "InnoVTOL-3e", QColor(76, 175, 80)),
+        (900, 500, "Легионер Е29", QColor(76, 175, 80)),
+        (340, 500, "Зарядка (с грузом)", QColor(156, 39, 176, 180).darker(120)),
+
     ]
 
     def __init__(self, parent=None):
@@ -745,6 +755,15 @@ class TrajectoryMapWidget(QWidget):
 
         # 3) Подписи моделей дронов
         for (drone_x, drone_y, drone_text, drone_color) in self.DRONE_LABELS:
+            lbl = QGraphicsTextItem(drone_text)
+            lbl.setFont(QFont("Segoe UI", 7))
+            lbl.setDefaultTextColor(drone_color.darker(130))
+            br = lbl.boundingRect()
+            lbl.setPos(drone_x - br.width() / 2, drone_y - br.height())
+            lbl.setZValue(1)
+            self._scene.addItem(lbl)
+
+        for (drone_x, drone_y, drone_text, drone_color) in self.DRONE_LABELS_CARGO:
             lbl = QGraphicsTextItem(drone_text)
             lbl.setFont(QFont("Segoe UI", 7))
             lbl.setDefaultTextColor(drone_color.darker(130))
