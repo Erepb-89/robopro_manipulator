@@ -78,6 +78,7 @@ class OPCUAServer:
 
         self.iTrajectoryState = self.Manipulator.add_variable(self.ns, "iTrajectoryState", 0)
         self.iActionState = self.Manipulator.add_variable(self.ns, "iActionState", 0)
+        self.iPosition = self.Manipulator.add_variable(self.ns, "iPosition", 0)
         self.ixPowered = self.Manipulator.add_variable(self.ns, "ixPowered", False)
         self.iGripperState = self.Manipulator.add_variable(self.ns, "iGripperState", False)
         self.ixGripperLocked = self.Manipulator.add_variable(self.ns, "ixGripperLocked", False)
@@ -151,6 +152,7 @@ class OPCUAServer:
                 try:
                     st = self.RobotController.get_state_snapshot()
                     self.TcpPosition.set_value(st.tcp_position)
+                    self.iPosition.set_value(st.current_point)
                     self.iControllerState.set_value(st.controller_state or "")
                     self.iSafetyStatus.set_value(st.safety_status or "")
                     self.iMode.set_value(st.mode or "")
