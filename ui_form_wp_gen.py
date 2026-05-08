@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QFrame, \
 from PyQt5.QtGui import QColor
 from datetime import datetime
 
-from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotRoutes
+from commands import Command, CmdType, RobotTrajectories, RobotActions, RobotRoutes, RobotPoints
 from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     LOG_STYLESHEET, LOG_COLOR_NEUTRAL, LOG_COLOR_STOP,
                     LOG_COLOR_OPC, LOG_COLOR_ERROR, LOG_COLOR_SUCCESS,
@@ -186,14 +186,23 @@ class MainWindow(QMainWindow):
         move_to_nearest_btn.clicked.connect(self.move_to_nearest)
         toolbar.addWidget(move_to_nearest_btn)
 
-        self.distance = QtWidgets.QLineEdit('0.1')
-        self.distance.setMinimumSize(QtCore.QSize(28, 28))
-        self.distance.setMaximumWidth(60)
+        self.exact_dist = QtWidgets.QLineEdit('0.1')
+        self.exact_dist.setMinimumSize(QtCore.QSize(28, 28))
+        self.exact_dist.setMaximumWidth(60)
         font.setPointSize(14)
         font.setBold(True)
-        self.distance.setFont(font)
-        self.distance.setObjectName("Distance")
-        toolbar.addWidget(self.distance)
+        self.exact_dist.setFont(font)
+        self.exact_dist.setObjectName("exactDistance")
+        toolbar.addWidget(self.exact_dist)
+
+        self.close_dist = QtWidgets.QLineEdit('0.2')
+        self.close_dist.setMinimumSize(QtCore.QSize(28, 28))
+        self.close_dist.setMaximumWidth(60)
+        font.setPointSize(14)
+        font.setBold(True)
+        self.close_dist.setFont(font)
+        self.close_dist.setObjectName("closeDistance")
+        toolbar.addWidget(self.close_dist)
 
     def _init_status_bar(self) -> None:
         """Создаёт постоянную панель статуса робота в нижней строке окна."""
@@ -515,6 +524,8 @@ class MainWindow(QMainWindow):
                 self.ui.TrajectoriesComboBox.setCurrentIndex(tidx)
             self.ui.TrajectoryName.setText(traj_name)
         else:
+            # Сброс подсветки ребер на карте
+            self.trajectory_map.reset_highlight()
             self.trajectory_map._info_label.setText(
                 f"Нет прямой траектории: {src} → {point_name}")
             self.trajectory_map._info_label.setStyleSheet(
@@ -577,7 +588,7 @@ class MainWindow(QMainWindow):
         motion = "line" if self.ui.chkLineMotion.isChecked() else "joint"
         # print("_last_nearest_wp", self._last_nearest_wp)
 
-        if float(self.nearest_info.get('distance')) < float(self.distance.text()):
+        if float(self.nearest_info.get('distance')) < float(self.exact_dist.text()):
             self.manipulator_command(
                 Command(CmdType.MOVE_TO_POINT,
                         {'name': self._last_nearest_wp, 'motion': motion},
@@ -631,8 +642,11 @@ class MainWindow(QMainWindow):
     def update_available_trajectories_combo_box(self, target_point) -> None:
         self.nearest_info = self.RobotController.get_nearest_info()
 
-        if float(self.nearest_info.get('distance')) < float(self.distance.text()):
+        if float(self.nearest_info.get('distance')) < float(self.exact_dist.text()):
             current_point = self.nearest_info.get('waypoint')
+            self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value)
+            st = self.RobotController.get_state_snapshot()
+            print(st.current_point)
             traj = self._find_direct_trajectory(current_point, target_point)
 
             items_model = QStandardItemModel()
@@ -641,6 +655,12 @@ class MainWindow(QMainWindow):
             item.setEditable(False)
             items_model.appendRow(item)
             self.ui.availableTrajectoriesComboBox.setModel(items_model)
+
+        elif float(self.nearest_info.get('distance')) < float(self.close_dist.text()):
+            current_point = self.nearest_info.get('waypoint')
+            self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value + 1)
+            st = self.RobotController.get_state_snapshot()
+            print(st.current_point)
 
     def update_waypoints_combo_box(self) -> None:
         items_model = QStandardItemModel()
