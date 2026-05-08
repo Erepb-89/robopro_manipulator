@@ -156,25 +156,29 @@ available_points = {
     "pGrippers1BeforeSlot":
         {"pGrippers"},  # pGrippers1BeforeSlot
 
+    "pGrippersWithGrip":
+        {"pHomePositionWithSomeCargo",
+         "pGrippers1WithGrip",
+         "pGrippers2WithGrip"},  # pGrippersWithGrip
     "pGrippers1WithGrip":
-        {"pGrippers",
+        {"pGrippersWithGrip",
          "pGrippers1InSlot",
          "pGrippers1AfterSlot"},  # pGrippers1WithGrip
     "pGrippers1InSlot":
         {"pGrippers1WithGrip",
          "pGrippers1AfterSlot"},  # pGrippers1InSlot
     "pGrippers1AfterSlot":
-        {"pGrippers"},  # pGrippers1AfterSlot
+        {"pGrippersWithGrip"},  # pGrippers1AfterSlot
 
     "pGrippers2":
-        {"pGrippers",
+        {"pGrippersWithGrip",
          "pGrippers2InsideSlot",
          "pGrippers2BeforeSlot"},  # pGrippers2
     "pGrippers2InsideSlot":
         {"pGrippers2",
          "pGrippers2BeforeSlot"},  # pGrippers2InsideSlot
     "pGrippers2BeforeSlot":
-        {"pGrippers"},  # pGrippers2BeforeSlot
+        {"pGrippersWithGrip"},  # pGrippers2BeforeSlot
 
     "pGrippers2WithGrip":
         {"pGrippers",
@@ -214,8 +218,7 @@ available_points = {
     "pVTOL2Charger1":
         {"pCharger",
          "pVTOL2Charger1Slot1",
-         "pVTOL2Charger1Slot2",
-         "pVTOL2Charger1BeforeSlot1"},  # pVTOL2Charger1
+         "pVTOL2Charger1Slot2",},  # pVTOL2Charger1
 
     "pVTOL2Charger1Slot1":
         {"pVTOL2Charger1",
@@ -260,8 +263,7 @@ available_points = {
     "pVTOL2Charger2":
         {"pCharger",
          "pVTOL2Charger2Slot1",
-         "pVTOL2Charger2Slot2",
-         "pVTOL2Charger2BeforeSlot1"},  # pVTOL2Charger2
+         "pVTOL2Charger2Slot2"},  # pVTOL2Charger2
 
     "pVTOL2Charger2Slot1":
         {"pVTOL2Charger2",
