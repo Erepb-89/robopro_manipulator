@@ -90,7 +90,6 @@ class MainWindow(QMainWindow):
         self.ui.OutputControl.toggled.connect(self.manipulator_gripper_control)
         self.ui.ShiftGripper.setCheckable(True)
         self.ui.ShiftGripper.toggled.connect(self.manipulator_shift_gripper)
-        self.ui.SavePoint.clicked.connect(self.save_current_position)
         self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)
         self.ui.TrajectoriesComboBox.currentTextChanged.connect(self.trajectory_selected)
         self.ui.availableTrajectoriesComboBox.currentTextChanged.connect(self.available_trajectory_selected)
@@ -565,7 +564,7 @@ class MainWindow(QMainWindow):
                     return traj
         else:  # грипперы разжаты
             for traj in AVAIL_TRAJS.get(src):
-                if f"_To_{dst_short}" in traj and 'With' not in dst_short and traj in self.Trajectories:
+                if f"_To_{dst_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
                     return traj
 
         # Обратное направление: из dst в src
@@ -575,7 +574,7 @@ class MainWindow(QMainWindow):
                     return traj
         else:  # грипперы разжаты
             for traj in AVAIL_TRAJS.get(dst):
-                if f"_To_{src_short}" in traj and 'With' not in src_short and traj in self.Trajectories:
+                if f"_To_{src_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
                     return traj
 
         return None
