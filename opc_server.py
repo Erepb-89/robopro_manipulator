@@ -216,7 +216,7 @@ class OPCUAServer:
                     Command(CmdType.STOP_MOVE, {},
                             source="OPC"))
             else:
-                if q_trajectory in range(1, 100):
+                if q_trajectory in range(1, 999):
                     self.cmd_queue.put(
                         Command(CmdType.EXECUTE_TRAJECTORY, {'num': int(q_trajectory)},
                                 source="OPC"))
