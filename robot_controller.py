@@ -762,7 +762,7 @@ class RobotController:
             success = self.io.control_digital_outputs(SHIFT_GRIPPER_DO_INDEX, shift)
 
             if success:
-                self.state.update(shift_gripper=shift, shift_gripper_state=FINISHED)
+                self.state.update(shift_gripper_cmd=shift, shift_gripper_state=FINISHED)
                 self.log.info(f"Shift gripper: {'SHIFTED' if shift else 'NOT SHIFTED'}")
             else:
                 self.state.update(shift_gripper_state=EXCEPTION, last_error=LastError.err_shift_gripper_cmd)
