@@ -477,12 +477,12 @@ class RobotController:
     def execute_trajectory(self, trajectory: RobotTrajectories) -> None:
         """Выполнить траекторию"""
         self.state.update(last_error=0)
-        if not self.state.get_field('powered'):
+        if self.state.get_field('controller_state') != 'run':
             self.state.update(
                 trajectory_state=trajectory.value + BLOCK,
                 last_error=LastError.err_not_ready
             )
-            self.log.error("Trajectory rejected: manipulator not powered / not in run state")
+            self.log.error("Trajectory rejected: manipulator not in run state")
             return
 
         try:
@@ -627,12 +627,12 @@ class RobotController:
     def execute_action(self, action: RobotActions) -> None:
         """Выполнить действие"""
         self.state.update(last_error=0)
-        if not self.state.get_field('powered'):
+        if self.state.get_field('controller_state') != 'run':
             self.state.update(
                 action_state=action.value + BLOCK,
                 last_error=LastError.err_not_ready
             )
-            self.log.error("Action rejected: manipulator not powered / not in run state")
+            self.log.error("Action rejected: manipulator not in run state")
             return
 
         try:
@@ -712,12 +712,12 @@ class RobotController:
         """Выполнение основной команды Гриппера"""
         self.state.update(last_error=0)
 
-        if not self.state.get_field('powered'):
+        if self.state.get_field('controller_state') != 'run':
             self.state.update(
                 gripper_state=BLOCK,
                 last_error=LastError.err_not_ready
             )
-            self.log.error("Gripper command rejected: manipulator not powered")
+            self.log.error("Gripper command rejected: manipulator not in run state")
             return
 
         try:
@@ -741,12 +741,12 @@ class RobotController:
         """Выполнить команду смены Гриппера"""
         self.state.update(last_error=0)
 
-        if not self.state.get_field('powered'):
+        if self.state.get_field('controller_state') != 'run':
             self.state.update(
                 shift_gripper_state=BLOCK,
                 last_error=LastError.err_not_ready
             )
-            self.log.error("Shift gripper command rejected: manipulator not powered")
+            self.log.error("Shift gripper command rejected: manipulator not in run state")
             return
 
         # Дополнительная проверка безопасности для замены
@@ -796,6 +796,8 @@ class RobotController:
 
         try:
             self.state.update(current_point=getattr(RobotPoints, best_name).value)
+        except AttributeError:
+            pass
         finally:
             self.state.update(
                 current_point=getattr(RobotPoints, "pUndefined").value)
