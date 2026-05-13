@@ -4,16 +4,22 @@ available_points = {
          "pPayload",
          "pGrippers",
          "pCharger",
-         "pVTOLModule"},  # pHomePosition
+         "pVTOLModule",
+         "pHomePositionWithSomeCargo",
+         },  # pHomePosition
     "pHelicopterModule":
         {"pHomePosition",
          "pHelicopter1",
-         "pHelicopter2"},  # pHelicopterModule
+         "pHelicopter2",
+         "pHelicopterModuleWithSomeCargo",
+         },  # pHelicopterModule
 
     "pHelicopterModuleWithSomeCargo":
         {"pHomePositionWithSomeCargo",
          "pHelicopter1WithPL",
-         "pHelicopter2WithSomeCargo"},  # pHelicopterModuleWithSomeCargo
+         "pHelicopter2WithSomeCargo",
+         "pHelicopterModule",
+         },  # pHelicopterModuleWithSomeCargo
 
     "pHelicopter1WithPL":
         {"pHelicopterModuleWithSomeCargo",
@@ -99,7 +105,9 @@ available_points = {
     "pPayload":
         {"pHomePosition",
          "pPayload1",
-         "pPayload2"},  # pPayload
+         "pPayload2",
+         "pPayloadWithPL",
+         },  # pPayload
 
     "pPayload1":
         {"pPayload",
@@ -109,7 +117,7 @@ available_points = {
         {"pPayload1",
          "pPayload1BeforeSlot"},  # pPayload1InsideSlot
     "pPayload1BeforeSlot":
-        {"pPayload"},  # pPayload1BeforeSlot
+        {"pPayload1"},  # pPayload1BeforeSlot
 
     "pPayload1WithPL":
         {"pPayload",
@@ -129,7 +137,7 @@ available_points = {
         {"pPayload2",
          "pPayload2BeforeSlot"},  # pPayload2InsideSlot
     "pPayload2BeforeSlot":
-        {"pPayload"},  # pPayload2BeforeSlot
+        {"pPayload2"},  # pPayload2BeforeSlot
 
     "pPayload2WithPL":
         {"pPayload",
@@ -144,7 +152,9 @@ available_points = {
     "pGrippers":
         {"pHomePosition",
          "pGrippers1",
-         "pGrippers2"},  # pGrippers
+         "pGrippers2",
+         "pGrippersWithGrip",
+         },  # pGrippers
 
     "pGrippers1":
         {"pGrippers",
@@ -159,7 +169,9 @@ available_points = {
     "pGrippersWithGrip":
         {"pHomePositionWithSomeCargo",
          "pGrippers1WithGrip",
-         "pGrippers2WithGrip"},  # pGrippersWithGrip
+         "pGrippers2WithGrip",
+         "pGrippers",
+         },  # pGrippersWithGrip
     "pGrippers1WithGrip":
         {"pGrippersWithGrip",
          "pGrippers1InSlot",
@@ -194,13 +206,17 @@ available_points = {
         {"pHomePosition",
          "pVTOL2Charger1",
          "pVTOL2Charger2",
-         "pHelicopter2Charger1"},  # pCharger
+         "pHelicopter2Charger1",
+         "pChargerWithBatt",
+         },  # pCharger
 
     "pChargerWithBatt":
         {"pHomePositionWithSomeCargo",
          "pVTOL2Charger1WithBatt",
          "pVTOL2Charger2WithBatt",
-         "pHelicopter2Charger1WithBatt"},  # pChargerWithBatt
+         "pHelicopter2Charger1WithBatt",
+         "pCharger",
+         },  # pChargerWithBatt
 
     "pVTOL2Charger1WithBatt":
         {"pChargerWithBatt",
@@ -354,12 +370,16 @@ available_points = {
     "pVTOLModule":
         {"pHomePosition",
          "pVTOL1",
-         "pVTOL2"},  # pVTOLModule
+         "pVTOL2",
+         "pVTOLModuleWithSomeCargo",
+         },  # pVTOLModule
 
     "pVTOLModuleWithSomeCargo":
         {"pHomePositionWithSomeCargo",
          "pVTOL1WithSomeCargo",
-         "pVTOL2WithBatt"},  # pVTOLModuleWithSomeCargo
+         "pVTOL2WithBatt",
+         "pVTOLModule",
+         },  # pVTOLModuleWithSomeCargo
 
     "pVTOL1":
         {"pVTOLModule",
@@ -451,9 +471,14 @@ available_points = {
         {"pHelicopterModuleWithSomeCargo",
          "pPayloadWithPL",
          "pChargerWithBatt",
-         "pVTOLModuleWithSomeCargo"},  # pHomePositionWithSomeCargo
+         "pVTOLModuleWithSomeCargo",
+         "pGrippersWithGrip",
+         "pHomePosition",
+         },  # pHomePositionWithSomeCargo
     "pPayloadWithPL":
         {"pHomePositionWithSomeCargo",
          "pPayload1WithPL",
-         "pPayload2WithPL"},  # pPayloadWithPL
+         "pPayload2WithPL",
+         "pPayload",
+         },  # pPayloadWithPL
 }
