@@ -394,6 +394,71 @@ class RobotTrajectories(enum.Enum):
     tPayload1_To_Payload1BeforeSlot = 205
     tPayload2_To_Payload2InsideSlot = 206
     tPayload2_To_Payload2BeforeSlot = 207
+    # ===== НОВЫЕ ТРАЕКТОРИИ (МОСТИКИ) =====
+    # Home
+    tHomePosition_To_HomePositionWithSomeCargo = 208
+    tHomePositionWithSomeCargo_To_HomePosition = 209
+
+    # Helicopter
+    tHelicopterModule_To_HelicopterModuleWithSomeCargo = 210
+    tHelicopterModuleWithSomeCargo_To_HelicopterModule = 211
+
+    # Payload
+    tPayload_To_PayloadWithPL = 212
+    tPayloadWithPL_To_Payload = 213
+
+    # Grippers
+    tGrippers_To_GrippersWithGrip = 214
+    tGrippersWithGrip_To_Grippers = 215
+
+    # Charger
+    tCharger_To_ChargerWithBatt = 216
+    tChargerWithBatt_To_Charger = 217
+
+    # VTOL
+    tVTOLModule_To_VTOLModuleWithSomeCargo = 218
+    tVTOLModuleWithSomeCargo_To_VTOLModule = 219
+
+    # ===== НЕДОСТАЮЩИЕ ТРАЕКТОРИИ ДЛЯ BEFORE SLOT =====
+    tHelicopter1BeforeSlot_To_Helicopter1Payload = 220
+    tPayload1BeforeSlot_To_Payload1 = 221
+    tPayload2BeforeSlot_To_Payload2 = 222
+    tGrippers1BeforeSlot_To_Grippers1 = 223
+    tGrippers2BeforeSlot_To_Grippers2 = 224
+    tVTOL1BeforeBatterySlot_To_VTOL1Battery = 225
+    tVTOL1BeforePayloadSlot_To_VTOL1Payload = 226
+    tVTOL2BeforeBattery1Slot_To_VTOL2Battery1 = 227
+    tVTOL2BeforeBattery2Slot_To_VTOL2Battery2 = 228
+
+    # ===== НЕДОСТАЮЩИЕ ТРАЕКТОРИИ ДЛЯ AFTER SLOT (с грузом) =====
+    tHelicopter1AfterSlot_To_Helicopter1PayloadWithPL = 229
+    tPayload1AfterSlot_To_Payload1WithPL = 230
+    tPayload2AfterSlot_To_Payload2WithPL = 231
+    tGrippers1AfterSlot_To_Grippers1WithGrip = 232
+    tGrippers2AfterSlot_To_Grippers2WithGrip = 233
+    tVTOL1AfterBatterySlot_To_VTOL1BatteryWithBatt = 234
+    tVTOL1AfterPayloadSlot_To_VTOL1PayloadWithPL = 235
+    tVTOL2AfterBattery1Slot_To_VTOL2Battery1WithBatt = 236
+    tVTOL2AfterBattery2Slot_To_VTOL2Battery2WithBatt = 237
+
+    # ===== НЕДОСТАЮЩИЕ ТРАЕКТОРИИ ДЛЯ CHARGER (с грузом) =====
+    tVTOL2Charger1WithBatt_To_VTOL2Charger1 = 238
+    tVTOL2Charger2WithBatt_To_VTOL2Charger2 = 239
+    tHelicopter2Charger1WithBatt_To_Helicopter2Charger1 = 240
+
+    # ===== ОБРАТНЫЕ ТРАЕКТОРИИ ДЛЯ PAYLOAD =====
+    tPayload1InsideSlot_To_Payload1 = 241
+    tPayload2InsideSlot_To_Payload2 = 242
+
+    # ===== ОБРАТНЫЕ ТРАЕКТОРИИ ДЛЯ GRIPPERS =====
+    tGrippers1InsideSlot_To_Grippers1 = 243
+    tGrippers2InsideSlot_To_Grippers2 = 244
+
+    # ===== ОБРАТНЫЕ ТРАЕКТОРИИ ДЛЯ VTOL =====
+    tVTOL1InsideBatterySlot_To_VTOL1Battery = 245
+    tVTOL1InsidePayloadSlot_To_VTOL1Payload = 246
+    tVTOL2InsideBattery1Slot_To_VTOL2Battery1 = 247
+    tVTOL2InsideBattery2Slot_To_VTOL2Battery2 = 248
 
 
 class RobotRoutes(enum.Enum):
