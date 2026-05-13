@@ -2157,6 +2157,96 @@
                     "motion": "joint"
                 }
             ]
+        },
+        {
+            "name": "tCharger_To_ChargerWithBatt",
+            "positions": [
+                {
+                    "name": "pCharger",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tChargerWithBatt_To_Charger",
+            "positions": [
+                {
+                    "name": "pChargerWithBatt",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tHelicopterModule_To_HelicopterModuleWithSomeCargo",
+            "positions": [
+                {
+                    "name": "pHelicopterModule",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tHelicopterModuleWithSomeCargo_To_HelicopterModule",
+            "positions": [
+                {
+                    "name": "pHelicopterModuleWithSomeCargo",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tPayload_To_PayloadWithPL",
+            "positions": [
+                {
+                    "name": "pPayload",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tPayloadWithPL_To_Payload",
+            "positions": [
+                {
+                    "name": "pPayloadWithPL",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tGrippers_To_GrippersWithGrip",
+            "positions": [
+                {
+                    "name": "pGrippers",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tGrippersWithGrip_To_Grippers",
+            "positions": [
+                {
+                    "name": "pGrippersWithGrip",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOLModule_To_VTOLModuleWithSomeCargo",
+            "positions": [
+                {
+                    "name": "pVTOLModule",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOLModuleWithSomeCargo_To_VTOLModule",
+            "positions": [
+                {
+                    "name": "pVTOLModuleWithSomeCargo",
+                    "motion": "joint"
+                }
+            ]
         }
     ]
 }
