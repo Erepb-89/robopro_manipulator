@@ -104,12 +104,12 @@ class NodeItem(QGraphicsEllipseItem):
 
         # Тултип
         self._tooltip = QGraphicsTextItem(point_name, self)
-        self._tooltip.setFont(QFont("Segoe UI", 8))
+        self._tooltip.setFont(QFont("Segoe UI", 10))
         self._tooltip.setDefaultTextColor(QColor(30, 30, 30))
         self._tooltip.setZValue(100)
         self._tooltip.setVisible(False)
         tbr = self._tooltip.boundingRect()
-        self._tooltip.setPos(-tbr.width() / 2, -radius - tbr.height() - 4)
+        self._tooltip.setPos(-tbr.width() / 2, +radius + tbr.height() + 4)
 
     def hoverEnterEvent(self, event):
         if not self._is_blocked:
@@ -554,6 +554,14 @@ class TrajectoryMapWidget(QWidget):
         ("pVTOL2Battery2WithBatt", "pVTOL2InBattery2Slot"),
         ("pVTOL2Battery2WithBatt", "pVTOL2AfterBattery2Slot"),
         ("pVTOL2InBattery2Slot", "pVTOL2AfterBattery2Slot"),
+
+        # ===== МОСТИКИ между состояниями (без груза ↔ с грузом) =====
+        ("pHomePosition", "pHomePositionWithSomeCargo"),
+        ("pHelicopterModule", "pHelicopterModuleWithSomeCargo"),
+        ("pPayload", "pPayloadWithPL"),
+        ("pGrippers", "pGrippersWithGrip"),
+        ("pCharger", "pChargerWithBatt"),
+        ("pVTOLModule", "pVTOLModuleWithSomeCargo"),
     ]
 
     ZONES = [
