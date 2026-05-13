@@ -51,6 +51,8 @@ class MainWindow(QMainWindow):
         self._log_last_cmd: str = ""
         self._log_last_traj_state: int = -1
         self._log_last_action_state: int = -1
+        self._log_last_gripper_state: int = -1
+        self._log_last_shift_gripper_state: int = -1
         self._log_last_err: int = 0  # для детекции новых ошибок
         self._pending_cmd: str = ""  # последняя GUI-команда (для атрибуции ошибки)
 
@@ -129,6 +131,10 @@ class MainWindow(QMainWindow):
         self._init_top_toolbar()
         self.ui.waypointsComboBox.currentTextChanged.connect(self.waypoint_selected)
         self.ui.availableWaypointsComboBox.currentTextChanged.connect(self.available_waypoint_selected)
+        try:
+            self.ui.SavePoint.clicked.connect(self.save_current_position)
+        except Exception as err:
+            print(err)
         self.update_available_trajectories_combo_box("pHomePosition")
         self.show()
 
@@ -204,6 +210,17 @@ class MainWindow(QMainWindow):
         self.close_dist.setObjectName("closeDistance")
         toolbar.addWidget(self.close_dist)
 
+        move_to_btn = QtWidgets.QPushButton("> Двигаться к точке")
+        font = move_to_btn.font()
+        font.setPointSize(14)
+        font.setBold(True)
+        move_to_btn.setFont(font)
+        move_to_btn.setMinimumHeight(48)
+        move_to_btn.setMinimumWidth(160)
+        move_to_btn.setStyleSheet(MOVE_BTN_STYLE)
+        move_to_btn.clicked.connect(self.move_by_selected_trajectory)
+        toolbar.addWidget(move_to_btn)
+
     def _init_status_bar(self) -> None:
         """Создаёт постоянную панель статуса робота в нижней строке окна."""
         sb = self.statusBar()
@@ -272,8 +289,9 @@ class MainWindow(QMainWindow):
         _ = self.RobotController.find_nearest_waypoint()
         self.nearest_info = self.RobotController.get_nearest_info()
         nearest_wp = (self.nearest_info or {}).get('waypoint') or ""
-        print(self.nearest_info)
         if nearest_wp and nearest_wp != self._last_nearest_wp:
+            self.update_available_trajectories_combo_box(nearest_wp)
+            self.update_available_waypoints_combo_box()
             self._last_nearest_wp = nearest_wp
             self.trajectory_map.set_current_position(self._last_nearest_wp)
 
@@ -646,7 +664,6 @@ class MainWindow(QMainWindow):
             current_point = self.nearest_info.get('waypoint')
             self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value)
             st = self.RobotController.get_state_snapshot()
-            print(st.current_point)
             traj = self._find_direct_trajectory(current_point, target_point)
 
             items_model = QStandardItemModel()
@@ -660,7 +677,6 @@ class MainWindow(QMainWindow):
             current_point = self.nearest_info.get('waypoint')
             self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value + 1)
             st = self.RobotController.get_state_snapshot()
-            print(st.current_point)
 
     def update_waypoints_combo_box(self) -> None:
         items_model = QStandardItemModel()
@@ -733,7 +749,9 @@ class MainWindow(QMainWindow):
 
     def waypoint_selected(self, _display_name) -> None:
         point_name = self.ui.waypointsComboBox.currentData(Qt.UserRole) or _display_name
+        self.update_available_waypoints_combo_box()
         self.update_available_trajectories_combo_box(point_name)
+        self.available_trajectory_selected(_display_name)
 
         self.ui.PointName.setText(point_name)
         if point_name in self.Waypoints:
@@ -888,7 +906,7 @@ class MainWindow(QMainWindow):
         self.cmd_queue.put(Command(CmdType.POWER, {'state': 0}, source="GUI"))
 
     def move_to_selected_point(self) -> None:
-        point_name = self.ui.waypointsComboBox.currentData(Qt.UserRole) or self.ui.waypointsComboBox.currentText()
+        point_name = self.ui.PointName.text().strip()
         if not point_name:
             QtWidgets.QMessageBox.warning(None, "Warning",
                                           "Please select a point first!")
