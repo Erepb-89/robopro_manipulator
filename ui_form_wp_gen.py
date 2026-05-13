@@ -560,22 +560,22 @@ class MainWindow(QMainWindow):
         state = self.RobotController.get_state_snapshot()
         # Прямое направление: из src в dst
         if state.gripper_cmd:  # грипперы сжаты
-            for traj in AVAIL_TRAJS.get(src, set()):
-                if f"_To_{dst_short}" in traj and 'with' in traj and traj in self.Trajectories:
+            for traj in AVAIL_TRAJS.get(src):
+                if f"_To_{dst_short}" in traj and 'With' in dst_short and traj in self.Trajectories:
                     return traj
         else:  # грипперы разжаты
-            for traj in AVAIL_TRAJS.get(src, set()):
-                if f"_To_{dst_short}" in traj and 'with' not in traj and traj in self.Trajectories:
+            for traj in AVAIL_TRAJS.get(src):
+                if f"_To_{dst_short}" in traj and 'With' not in dst_short and traj in self.Trajectories:
                     return traj
 
         # Обратное направление: из dst в src
         if state.gripper_cmd:  # грипперы сжаты
-            for traj in AVAIL_TRAJS.get(dst, set()):
-                if f"_To_{src_short}" in traj and 'with' in traj and traj in self.Trajectories:
+            for traj in AVAIL_TRAJS.get(dst):
+                if f"_To_{src_short}" in traj and 'With' in src_short and traj in self.Trajectories:
                     return traj
         else:  # грипперы разжаты
-            for traj in AVAIL_TRAJS.get(dst, set()):
-                if f"_To_{src_short}" in traj and 'with' not in traj and traj in self.Trajectories:
+            for traj in AVAIL_TRAJS.get(dst):
+                if f"_To_{src_short}" in traj and 'With' not in src_short and traj in self.Trajectories:
                     return traj
 
         return None
@@ -649,6 +649,7 @@ class MainWindow(QMainWindow):
 
     def update_available_waypoints_combo_box(self) -> None:
         current_point = self.nearest_info.get('waypoint')
+        print(current_point)
         items_model = QStandardItemModel()
         for point in AVAIL_PTS.get(current_point):
             item = QStandardItem(point)

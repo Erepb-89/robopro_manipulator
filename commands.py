@@ -460,6 +460,19 @@ class RobotTrajectories(enum.Enum):
     tVTOL2InsideBattery1Slot_To_VTOL2Battery1 = 247
     tVTOL2InsideBattery2Slot_To_VTOL2Battery2 = 248
 
+    tHelicopter2BeforeBattery1Slot_To_Helicopter2 = 249
+    tHelicopter2BeforeBattery2Slot_To_Helicopter2 = 250
+    tVTOL2Charger1BeforeSlot1_To_VTOL2Charger1 = 251
+    tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1 = 252
+    tVTOL2Charger2BeforeSlot1_To_VTOL2Charger2 = 253
+    tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2 = 254
+    tHelicopter2Charger1BeforeSlot1_To_Helicopter2Charger1WithBatt = 255
+    tHelicopter2Charger1BeforeSlot2_To_Helicopter2Charger1WithBatt = 256
+    tVTOL2BeforeBattery1Slot_To_VTOL2WithBatt = 257
+    tVTOL2BeforeBattery1Slot_To_VTOL2 = 258
+    tVTOL2BeforeBattery2Slot_To_VTOL2WithBatt = 259
+    tVTOL2BeforeBattery2Slot_To_VTOL2 = 260
+
 
 class RobotRoutes(enum.Enum):
     rHomePosition_To_Helicopter1 = 1
