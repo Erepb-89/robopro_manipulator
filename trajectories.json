@@ -6,6 +6,10 @@
                 {
                     "name": "pHomePosition",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopterModule",
+                    "motion": "joint"
                 }
             ]
         },
@@ -14,6 +18,10 @@
             "positions": [
                 {
                     "name": "pHomePosition",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHomePositionWithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -24,6 +32,10 @@
                 {
                     "name": "pHomePositionWithSomeCargo",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHomePosition",
+                    "motion": "joint"
                 }
             ]
         },
@@ -32,6 +44,10 @@
             "positions": [
                 {
                     "name": "pHelicopterModule",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHomePosition",
                     "motion": "joint"
                 }
             ]
@@ -42,6 +58,10 @@
                 {
                     "name": "pHelicopterModule",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -50,6 +70,10 @@
             "positions": [
                 {
                     "name": "pHelicopter1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopterModule",
                     "motion": "joint"
                 }
             ]
@@ -60,6 +84,10 @@
                 {
                     "name": "pHelicopter1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1Payload",
+                    "motion": "joint"
                 }
             ]
         },
@@ -68,6 +96,10 @@
             "positions": [
                 {
                     "name": "pHelicopter1Payload",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1",
                     "motion": "joint"
                 }
             ]
@@ -78,6 +110,10 @@
                 {
                     "name": "pHelicopterModule",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -86,6 +122,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopterModule",
                     "motion": "joint"
                 }
             ]
@@ -96,6 +136,10 @@
                 {
                     "name": "pHelicopter2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Payload",
+                    "motion": "joint"
                 }
             ]
         },
@@ -104,6 +148,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Battery1",
                     "motion": "joint"
                 }
             ]
@@ -114,6 +162,10 @@
                 {
                     "name": "pHelicopter2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Battery2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -122,6 +174,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Payload",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2",
                     "motion": "joint"
                 }
             ]
@@ -132,6 +188,10 @@
                 {
                     "name": "pHelicopter2Battery1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -140,6 +200,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Battery1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot",
                     "motion": "joint"
                 }
             ]
@@ -150,6 +214,10 @@
                 {
                     "name": "pHelicopter2Battery1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2BeforeBattery1Slot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -158,6 +226,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2InsideBattery1Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Battery1",
                     "motion": "joint"
                 }
             ]
@@ -168,6 +240,10 @@
                 {
                     "name": "pHelicopter2InsideBattery1Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2BeforeBattery1Slot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -176,6 +252,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2BeforeBattery1Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -186,6 +266,10 @@
                 {
                     "name": "pHelicopter2BeforeBattery1Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -194,6 +278,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Battery2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2",
                     "motion": "joint"
                 }
             ]
@@ -204,6 +292,10 @@
                 {
                     "name": "pHelicopter2Battery2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery2Slot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -212,6 +304,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Battery2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2BeforeBattery2Slot",
                     "motion": "joint"
                 }
             ]
@@ -222,6 +318,10 @@
                 {
                     "name": "pHelicopter2InsideBattery2Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Battery2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -230,6 +330,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2InsideBattery2Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2BeforeBattery2Slot",
                     "motion": "joint"
                 }
             ]
@@ -240,6 +344,10 @@
                 {
                     "name": "pHelicopter2BeforeBattery2Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -248,6 +356,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2BeforeBattery2Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2",
                     "motion": "joint"
                 }
             ]
@@ -258,6 +370,10 @@
                 {
                     "name": "pHelicopter2WithSomeCargo",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithBatt1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -266,6 +382,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2WithSomeCargo",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithBatt2",
                     "motion": "joint"
                 }
             ]
@@ -276,6 +396,10 @@
                 {
                     "name": "pHelicopter2WithSomeCargo",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2PayloadWithPL",
+                    "motion": "joint"
                 }
             ]
         },
@@ -284,6 +408,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2WithSomeCargo",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2AfterSlot1",
                     "motion": "joint"
                 }
             ]
@@ -294,6 +422,10 @@
                 {
                     "name": "pHelicopter2WithSomeCargo",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2AfterSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -302,6 +434,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2WithBatt1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -312,6 +448,10 @@
                 {
                     "name": "pHelicopter2WithBatt1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -320,6 +460,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2WithBatt1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2AfterSlot1",
                     "motion": "joint"
                 }
             ]
@@ -330,6 +474,10 @@
                 {
                     "name": "pHelicopter2InSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithBatt1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -338,6 +486,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2InSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2AfterSlot1",
                     "motion": "joint"
                 }
             ]
@@ -348,6 +500,10 @@
                 {
                     "name": "pHelicopter2AfterSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -356,6 +512,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2WithBatt2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -366,6 +526,10 @@
                 {
                     "name": "pHelicopter2WithBatt2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -374,6 +538,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2WithBatt2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2AfterSlot2",
                     "motion": "joint"
                 }
             ]
@@ -384,6 +552,10 @@
                 {
                     "name": "pHelicopter2InSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithBatt2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -392,6 +564,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2InSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2AfterSlot2",
                     "motion": "joint"
                 }
             ]
@@ -402,6 +578,10 @@
                 {
                     "name": "pHelicopter2AfterSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -410,6 +590,10 @@
             "positions": [
                 {
                     "name": "pHomePosition",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pPayload",
                     "motion": "joint"
                 }
             ]
@@ -420,6 +604,10 @@
                 {
                     "name": "pPayload",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHomePosition",
+                    "motion": "joint"
                 }
             ]
         },
@@ -428,6 +616,10 @@
             "positions": [
                 {
                     "name": "pPayload",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pPayload1",
                     "motion": "joint"
                 }
             ]
@@ -438,6 +630,10 @@
                 {
                     "name": "pPayload1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pPayload",
+                    "motion": "joint"
                 }
             ]
         },
@@ -446,6 +642,10 @@
             "positions": [
                 {
                     "name": "pPayload1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pPayload1InsideSlot",
                     "motion": "joint"
                 }
             ]
@@ -456,6 +656,10 @@
                 {
                     "name": "pPayload1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pPayload1BeforeSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -464,6 +668,10 @@
             "positions": [
                 {
                     "name": "pPayload",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pPayload2",
                     "motion": "joint"
                 }
             ]
@@ -474,6 +682,10 @@
                 {
                     "name": "pPayload2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pPayload",
+                    "motion": "joint"
                 }
             ]
         },
@@ -482,6 +694,10 @@
             "positions": [
                 {
                     "name": "pPayload2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pPayload2InsideSlot",
                     "motion": "joint"
                 }
             ]
@@ -492,6 +708,10 @@
                 {
                     "name": "pPayload2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pPayload2BeforeSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -500,6 +720,10 @@
             "positions": [
                 {
                     "name": "pHomePosition",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippers",
                     "motion": "joint"
                 }
             ]
@@ -510,6 +734,10 @@
                 {
                     "name": "pGrippers",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHomePosition",
+                    "motion": "joint"
                 }
             ]
         },
@@ -518,6 +746,10 @@
             "positions": [
                 {
                     "name": "pGrippers",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippers1",
                     "motion": "joint"
                 }
             ]
@@ -528,6 +760,10 @@
                 {
                     "name": "pGrippers1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pGrippers",
+                    "motion": "joint"
                 }
             ]
         },
@@ -536,6 +772,10 @@
             "positions": [
                 {
                     "name": "pGrippers",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippers2",
                     "motion": "joint"
                 }
             ]
@@ -546,6 +786,10 @@
                 {
                     "name": "pGrippers2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pGrippers",
+                    "motion": "joint"
                 }
             ]
         },
@@ -554,6 +798,10 @@
             "positions": [
                 {
                     "name": "pHomePosition",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pCharger",
                     "motion": "joint"
                 }
             ]
@@ -564,6 +812,10 @@
                 {
                     "name": "pCharger",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHomePosition",
+                    "motion": "joint"
                 }
             ]
         },
@@ -572,6 +824,10 @@
             "positions": [
                 {
                     "name": "pCharger",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1",
                     "motion": "joint"
                 }
             ]
@@ -582,6 +838,10 @@
                 {
                     "name": "pCharger",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -590,6 +850,14 @@
             "positions": [
                 {
                     "name": "pCharger",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1_bef",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1",
                     "motion": "joint"
                 }
             ]
@@ -600,6 +868,10 @@
                 {
                     "name": "pChargerWithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -608,6 +880,18 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1_bef",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pCharger",
                     "motion": "joint"
                 }
             ]
@@ -618,6 +902,10 @@
                 {
                     "name": "pHelicopter2Charger1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -626,6 +914,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot2",
                     "motion": "joint"
                 }
             ]
@@ -636,6 +928,10 @@
                 {
                     "name": "pHelicopter2Charger1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1BeforeSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -644,6 +940,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1Slot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1",
                     "motion": "joint"
                 }
             ]
@@ -654,6 +954,10 @@
                 {
                     "name": "pHelicopter2Charger1Slot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1InsideSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -662,6 +966,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1Slot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1BeforeSlot1",
                     "motion": "joint"
                 }
             ]
@@ -672,6 +980,10 @@
                 {
                     "name": "pHelicopter2Charger1InsideSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -680,6 +992,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1InsideSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1BeforeSlot1",
                     "motion": "joint"
                 }
             ]
@@ -690,6 +1006,10 @@
                 {
                     "name": "pHelicopter2Charger1BeforeSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -698,6 +1018,14 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1BeforeSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot1WithBatt2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -708,6 +1036,10 @@
                 {
                     "name": "pHelicopter2Charger1Slot1WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -716,6 +1048,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1Slot1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1InSlot1",
                     "motion": "joint"
                 }
             ]
@@ -726,6 +1062,10 @@
                 {
                     "name": "pHelicopter2Charger1Slot1WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1AfterSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -734,6 +1074,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1InSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot1WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -744,6 +1088,10 @@
                 {
                     "name": "pHelicopter2Charger1InSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1AfterSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -752,6 +1100,14 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1AfterSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
             ]
@@ -762,6 +1118,10 @@
                 {
                     "name": "pHelicopter2Charger1Slot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -770,6 +1130,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1Slot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1InsideSlot2",
                     "motion": "joint"
                 }
             ]
@@ -780,6 +1144,10 @@
                 {
                     "name": "pHelicopter2Charger1Slot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1BeforeSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -788,6 +1156,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1InsideSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot2",
                     "motion": "joint"
                 }
             ]
@@ -798,6 +1170,10 @@
                 {
                     "name": "pHelicopter2Charger1InsideSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1BeforeSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -806,6 +1182,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1BeforeSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1",
                     "motion": "joint"
                 }
             ]
@@ -816,6 +1196,10 @@
                 {
                     "name": "pHelicopter2Charger1BeforeSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -824,6 +1208,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1Slot2WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
             ]
@@ -834,6 +1222,10 @@
                 {
                     "name": "pHelicopter2Charger1Slot2WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1InSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -842,6 +1234,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1Slot2WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1AfterSlot2",
                     "motion": "joint"
                 }
             ]
@@ -852,6 +1248,10 @@
                 {
                     "name": "pHelicopter2Charger1InSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot2WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -860,6 +1260,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1InSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1AfterSlot2",
                     "motion": "joint"
                 }
             ]
@@ -870,6 +1274,10 @@
                 {
                     "name": "pHelicopter2Charger1AfterSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -878,6 +1286,14 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot1WithBatt_3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot1WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -888,6 +1304,10 @@
                 {
                     "name": "pHelicopter2Charger1WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1Slot2WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -896,6 +1316,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
             ]
@@ -906,6 +1330,10 @@
                 {
                     "name": "pVTOL2Charger1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pCharger",
+                    "motion": "joint"
                 }
             ]
         },
@@ -914,6 +1342,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot1",
                     "motion": "joint"
                 }
             ]
@@ -924,6 +1356,10 @@
                 {
                     "name": "pVTOL2Charger1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -932,6 +1368,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1BeforeSlot1",
                     "motion": "joint"
                 }
             ]
@@ -942,6 +1382,10 @@
                 {
                     "name": "pVTOL2Charger1Slot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -950,6 +1394,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1Slot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1InsideSlot1",
                     "motion": "joint"
                 }
             ]
@@ -960,6 +1408,10 @@
                 {
                     "name": "pVTOL2Charger1Slot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1BeforeSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -968,6 +1420,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1InsideSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot1",
                     "motion": "joint"
                 }
             ]
@@ -978,6 +1434,10 @@
                 {
                     "name": "pVTOL2Charger1InsideSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1BeforeSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -986,6 +1446,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1BeforeSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -996,6 +1460,10 @@
                 {
                     "name": "pVTOL2Charger1BeforeSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1004,6 +1472,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1Slot1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1014,6 +1486,10 @@
                 {
                     "name": "pVTOL2Charger1Slot1WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1InSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1022,6 +1498,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1Slot1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1AfterSlot1",
                     "motion": "joint"
                 }
             ]
@@ -1032,6 +1512,10 @@
                 {
                     "name": "pVTOL2Charger1InSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot1WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1040,6 +1524,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1InSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1AfterSlot1",
                     "motion": "joint"
                 }
             ]
@@ -1050,6 +1538,10 @@
                 {
                     "name": "pVTOL2Charger1AfterSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1058,6 +1550,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1Slot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1",
                     "motion": "joint"
                 }
             ]
@@ -1068,6 +1564,10 @@
                 {
                     "name": "pVTOL2Charger1Slot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1InsideSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1076,6 +1576,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1Slot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1BeforeSlot2",
                     "motion": "joint"
                 }
             ]
@@ -1086,6 +1590,10 @@
                 {
                     "name": "pVTOL2Charger1InsideSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1094,6 +1602,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1InsideSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1BeforeSlot2",
                     "motion": "joint"
                 }
             ]
@@ -1104,6 +1616,10 @@
                 {
                     "name": "pVTOL2Charger1BeforeSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1112,6 +1628,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1BeforeSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1",
                     "motion": "joint"
                 }
             ]
@@ -1122,6 +1642,10 @@
                 {
                     "name": "pVTOL2Charger1Slot2WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1130,6 +1654,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1Slot2WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1InSlot2",
                     "motion": "joint"
                 }
             ]
@@ -1140,6 +1668,10 @@
                 {
                     "name": "pVTOL2Charger1Slot2WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1AfterSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1148,6 +1680,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1InSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1158,6 +1694,10 @@
                 {
                     "name": "pVTOL2Charger1InSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1AfterSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1166,6 +1706,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1AfterSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1176,6 +1720,10 @@
                 {
                     "name": "pVTOL2Charger2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pCharger",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1184,6 +1732,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2Slot1",
                     "motion": "joint"
                 }
             ]
@@ -1194,6 +1746,10 @@
                 {
                     "name": "pVTOL2Charger2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2Slot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1202,6 +1758,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1",
                     "motion": "joint"
                 }
             ]
@@ -1212,6 +1772,10 @@
                 {
                     "name": "pVTOL2Charger2Slot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1220,6 +1784,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2Slot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InsideSlot1",
                     "motion": "joint"
                 }
             ]
@@ -1230,6 +1798,10 @@
                 {
                     "name": "pVTOL2Charger2Slot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1238,6 +1810,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2InsideSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2Slot1",
                     "motion": "joint"
                 }
             ]
@@ -1248,6 +1824,10 @@
                 {
                     "name": "pVTOL2Charger2InsideSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1256,6 +1836,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2BeforeSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1266,6 +1850,10 @@
                 {
                     "name": "pVTOL2Charger2BeforeSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1274,6 +1862,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2Slot1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1284,6 +1876,10 @@
                 {
                     "name": "pVTOL2Charger2Slot1WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InSlot1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1292,6 +1888,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2Slot1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2AfterSlot1",
                     "motion": "joint"
                 }
             ]
@@ -1302,6 +1902,10 @@
                 {
                     "name": "pVTOL2Charger2InSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2Slot1WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1310,6 +1914,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2InSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2AfterSlot1",
                     "motion": "joint"
                 }
             ]
@@ -1320,6 +1928,10 @@
                 {
                     "name": "pVTOL2Charger2AfterSlot1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1328,6 +1940,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2Slot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2",
                     "motion": "joint"
                 }
             ]
@@ -1338,6 +1954,10 @@
                 {
                     "name": "pVTOL2Charger2Slot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InsideSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1346,6 +1966,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2Slot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2",
                     "motion": "joint"
                 }
             ]
@@ -1356,6 +1980,10 @@
                 {
                     "name": "pVTOL2Charger2InsideSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2Slot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1364,6 +1992,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2InsideSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2",
                     "motion": "joint"
                 }
             ]
@@ -1374,6 +2006,10 @@
                 {
                     "name": "pVTOL2Charger2BeforeSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1382,6 +2018,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2BeforeSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2",
                     "motion": "joint"
                 }
             ]
@@ -1392,6 +2032,10 @@
                 {
                     "name": "pVTOL2Charger2Slot2WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1400,6 +2044,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2Slot2WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InSlot2",
                     "motion": "joint"
                 }
             ]
@@ -1410,6 +2058,10 @@
                 {
                     "name": "pVTOL2Charger2Slot2WithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2AfterSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1418,6 +2070,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2InSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2Slot2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1428,6 +2084,10 @@
                 {
                     "name": "pVTOL2Charger2InSlot2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2AfterSlot2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1436,6 +2096,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger2AfterSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1446,6 +2110,10 @@
                 {
                     "name": "pHomePosition",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOLModule",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1454,6 +2122,10 @@
             "positions": [
                 {
                     "name": "pVTOLModule",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHomePosition",
                     "motion": "joint"
                 }
             ]
@@ -1464,6 +2136,10 @@
                 {
                     "name": "pVTOLModule",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1472,6 +2148,10 @@
             "positions": [
                 {
                     "name": "pVTOL1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOLModule",
                     "motion": "joint"
                 }
             ]
@@ -1482,6 +2162,10 @@
                 {
                     "name": "pVTOL1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1Payload",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1490,6 +2174,10 @@
             "positions": [
                 {
                     "name": "pVTOL1Payload",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1",
                     "motion": "joint"
                 }
             ]
@@ -1500,6 +2188,10 @@
                 {
                     "name": "pVTOL1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1Battery",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1509,6 +2201,10 @@
                 {
                     "name": "pVTOL1Battery",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1517,6 +2213,10 @@
             "positions": [
                 {
                     "name": "pVTOLModule",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2",
                     "motion": "joint"
                 }
             ]
@@ -1822,6 +2522,10 @@
                 {
                     "name": "pVTOL2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery1",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1830,6 +2534,10 @@
             "positions": [
                 {
                     "name": "pVTOL2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Battery2",
                     "motion": "joint"
                 }
             ]
@@ -1840,6 +2548,10 @@
                 {
                     "name": "pHomePosition",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopterModuleWithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1848,6 +2560,10 @@
             "positions": [
                 {
                     "name": "pHelicopterModule",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHomePositionWithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -1858,6 +2574,10 @@
                 {
                     "name": "pHelicopterModule",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1WithPL",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1867,6 +2587,10 @@
                 {
                     "name": "pHelicopter1WithPL",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopterModuleWithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1875,6 +2599,10 @@
             "positions": [
                 {
                     "name": "pHelicopter1InsideSlot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1BeforeSlot",
                     "motion": "joint"
                 }
             ]
@@ -1885,6 +2613,10 @@
                 {
                     "name": "pHelicopter1BeforeSlot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1WithPL",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1893,6 +2625,10 @@
             "positions": [
                 {
                     "name": "pHelicopterModule",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2WithPL",
                     "motion": "joint"
                 }
             ]
@@ -1903,6 +2639,10 @@
                 {
                     "name": "pHelicopter1WithPL",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1PayloadWithPL",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1911,6 +2651,10 @@
             "positions": [
                 {
                     "name": "pHomePosition",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pPayloadWithPL",
                     "motion": "joint"
                 }
             ]
@@ -1921,6 +2665,10 @@
                 {
                     "name": "pPayload",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHomePositionWithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1929,6 +2677,10 @@
             "positions": [
                 {
                     "name": "pHomePosition",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1939,6 +2691,10 @@
                 {
                     "name": "pHomePosition",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOLModuleWithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1947,6 +2703,10 @@
             "positions": [
                 {
                     "name": "pVTOLModule",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHomePositionWithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -1957,6 +2717,10 @@
                 {
                     "name": "pVTOL2Battery2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_withVTOL2Batt2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -1965,6 +2729,10 @@
             "positions": [
                 {
                     "name": "pHelicopter1Payload",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1InsideSlot",
                     "motion": "joint"
                 }
             ]
@@ -1975,14 +2743,9 @@
                 {
                     "name": "pHelicopter1Payload",
                     "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1InsideSlot_To_Helicopter1BeforeSlot",
-            "positions": [
+                },
                 {
-                    "name": "pHelicopter1InsideSlot",
+                    "name": "pHelicopter1BeforeSlot",
                     "motion": "joint"
                 }
             ]
@@ -1993,6 +2756,10 @@
                 {
                     "name": "pGrippers1InsideSlot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pGrippers1BeforeSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2001,6 +2768,10 @@
             "positions": [
                 {
                     "name": "pGrippers1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippers1InsideSlot",
                     "motion": "joint"
                 }
             ]
@@ -2011,6 +2782,10 @@
                 {
                     "name": "pGrippers2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pGrippers2InsideSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2019,6 +2794,10 @@
             "positions": [
                 {
                     "name": "pGrippers2InsideSlot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippers2BeforeSlot",
                     "motion": "joint"
                 }
             ]
@@ -2029,6 +2808,10 @@
                 {
                     "name": "pVTOL1Payload",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1InsidePayloadSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2037,6 +2820,10 @@
             "positions": [
                 {
                     "name": "pVTOL1InsidePayloadSlot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1BeforePayloadSlot",
                     "motion": "joint"
                 }
             ]
@@ -2047,6 +2834,10 @@
                 {
                     "name": "pVTOL1Battery",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1InsideBatterySlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2055,6 +2846,10 @@
             "positions": [
                 {
                     "name": "pVTOL1InsideBattery1Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1BeforeBatterySlot",
                     "motion": "joint"
                 }
             ]
@@ -2065,6 +2860,10 @@
                 {
                     "name": "pVTOL2Battery1",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2073,6 +2872,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Battery1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2InsideBattery1Slot",
                     "motion": "joint"
                 }
             ]
@@ -2083,6 +2886,10 @@
                 {
                     "name": "pVTOL2InsideBattery1Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BeforeBattery1Slot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2091,6 +2898,10 @@
             "positions": [
                 {
                     "name": "pVTOL2BeforeBattery1Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -2101,6 +2912,10 @@
                 {
                     "name": "pVTOL2BeforeBattery1Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2109,6 +2924,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Battery2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2",
                     "motion": "joint"
                 }
             ]
@@ -2119,6 +2938,10 @@
                 {
                     "name": "pVTOL2Battery2",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2InsideBattery2Slot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2127,6 +2950,10 @@
             "positions": [
                 {
                     "name": "pVTOL2InsideBattery2Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2BeforeBattery2Slot",
                     "motion": "joint"
                 }
             ]
@@ -2137,6 +2964,10 @@
                 {
                     "name": "pVTOL2BeforeBattery2Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2WithBatt",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2145,6 +2976,10 @@
             "positions": [
                 {
                     "name": "pVTOL2BeforeBattery2Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2",
                     "motion": "joint"
                 }
             ]
@@ -2155,6 +2990,10 @@
                 {
                     "name": "pHelicopter1PayloadWithPL",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1InSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2163,6 +3002,10 @@
             "positions": [
                 {
                     "name": "pHelicopter1InSlot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter1AfterSlot",
                     "motion": "joint"
                 }
             ]
@@ -2173,6 +3016,10 @@
                 {
                     "name": "pPayload1WithPL",
                     "motion": "joint"
+                },
+                {
+                    "name": "pPayload1InSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2181,6 +3028,10 @@
             "positions": [
                 {
                     "name": "pGrippers1InSlot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippers1AfterSlot",
                     "motion": "joint"
                 }
             ]
@@ -2191,6 +3042,10 @@
                 {
                     "name": "pGrippers1WithGrip",
                     "motion": "joint"
+                },
+                {
+                    "name": "pGrippers1InSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2199,6 +3054,10 @@
             "positions": [
                 {
                     "name": "pGrippers2WithGrip",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippers2InSlot",
                     "motion": "joint"
                 }
             ]
@@ -2209,6 +3068,10 @@
                 {
                     "name": "pGrippers2InSlot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pGrippers2AfterSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2217,6 +3080,10 @@
             "positions": [
                 {
                     "name": "pVTOL1PayloadWithPL",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1InPayloadSlot",
                     "motion": "joint"
                 }
             ]
@@ -2227,6 +3094,10 @@
                 {
                     "name": "pVTOL1InPayloadSlot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1AfterPayloadSlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2235,6 +3106,10 @@
             "positions": [
                 {
                     "name": "pVTOL1BatteryWithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1InBatterySlot",
                     "motion": "joint"
                 }
             ]
@@ -2245,6 +3120,10 @@
                 {
                     "name": "pVTOL1InBattery1Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL1AfterBatterySlot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2253,6 +3132,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Battery1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2InBattery1Slot",
                     "motion": "joint"
                 }
             ]
@@ -2263,6 +3146,10 @@
                 {
                     "name": "pVTOL2InBattery1Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2AfterBattery1Slot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2271,6 +3158,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Battery2WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2InBattery2Slot",
                     "motion": "joint"
                 }
             ]
@@ -2281,6 +3172,10 @@
                 {
                     "name": "pVTOL2InBattery2Slot",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2AfterBattery2Slot",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2289,6 +3184,10 @@
             "positions": [
                 {
                     "name": "pCharger",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
             ]
@@ -2299,6 +3198,10 @@
                 {
                     "name": "pChargerWithBatt",
                     "motion": "joint"
+                },
+                {
+                    "name": "pCharger",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2307,6 +3210,10 @@
             "positions": [
                 {
                     "name": "pHelicopterModule",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopterModuleWithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -2317,6 +3224,10 @@
                 {
                     "name": "pHelicopterModuleWithSomeCargo",
                     "motion": "joint"
+                },
+                {
+                    "name": "pHelicopterModule",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2325,6 +3236,10 @@
             "positions": [
                 {
                     "name": "pPayload",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pPayloadWithPL",
                     "motion": "joint"
                 }
             ]
@@ -2335,6 +3250,10 @@
                 {
                     "name": "pPayloadWithPL",
                     "motion": "joint"
+                },
+                {
+                    "name": "pPayload",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2343,6 +3262,10 @@
             "positions": [
                 {
                     "name": "pGrippers",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pGrippersWithGrip",
                     "motion": "joint"
                 }
             ]
@@ -2353,6 +3276,10 @@
                 {
                     "name": "pGrippersWithGrip",
                     "motion": "joint"
+                },
+                {
+                    "name": "pGrippers",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2362,6 +3289,10 @@
                 {
                     "name": "pVTOLModule",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOLModuleWithSomeCargo",
+                    "motion": "joint"
                 }
             ]
         },
@@ -2370,6 +3301,10 @@
             "positions": [
                 {
                     "name": "pVTOLModuleWithSomeCargo",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOLModule",
                     "motion": "joint"
                 }
             ]
