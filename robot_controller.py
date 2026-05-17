@@ -48,7 +48,7 @@ class RobotState:
     gripper_cmd: bool = False
     shift_gripper_cmd: bool = False
     current_point: int = 0
-    gripper_state : int = 0
+    gripper_state: int = 0
     shift_gripper_state: int = 0
 
 
@@ -477,6 +477,7 @@ class RobotController:
     def execute_trajectory(self, trajectory: RobotTrajectories) -> None:
         """Выполнить траекторию"""
         self.state.update(last_error=0)
+        print(self.state.get_field('controller_state'))
         if self.state.get_field('controller_state') != 'run':
             self.state.update(
                 trajectory_state=trajectory.value + BLOCK,
@@ -646,20 +647,24 @@ class RobotController:
                 if action:
                     self.state.update(action_state=action.value + EXECUTION)
 
+                finish_motion = self.mc.wait_motion_complete(await_sec=-1)  # не работает, возможно нужно через await
+
                 for command in self.data.actions.get(action.name).commands:
-                    if command.cmd_type == EXEC_TRAJ:
-                        self.cmd_queue.put(Command(
-                            CmdType.EXECUTE_TRAJECTORY,
-                            {'num': int(getattr(RobotTrajectories, command.name))},
-                            source="GUI"
-                        ))
-                    if command.cmd_type == GRIPPER_CMD:
+                    if command.cmd_type == EXEC_TRAJ and finish_motion:
+                        # self.cmd_queue.put(Command(
+                        #     CmdType.EXECUTE_TRAJECTORY,
+                        #     {'num': int(getattr(RobotTrajectories, command.name).value)},
+                        #     source="GUI"
+                        # ))
+                        self.execute_trajectory(getattr(RobotTrajectories, command.name))
+
+                    if command.cmd_type == GRIPPER_CMD and finish_motion:
                         self.cmd_queue.put(Command(
                             CmdType.GRIPPER_CMD,
                             {'index': GRIPPER_DO_INDEX, 'value': bool(command.name)},
                             source="GUI"
                         ))
-                    if command.cmd_type == WAIT_LIFT:
+                    if command.cmd_type == WAIT_LIFT and finish_motion:
                         # Синхронное ожидание позиции лифта перед следующей командой.
                         # Для стационарного порта — нижняя позиция (Легионер опущен).
                         # Для мобильного порта — пока пропускаем, условие при наладке.
