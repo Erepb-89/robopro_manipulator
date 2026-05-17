@@ -93,6 +93,7 @@ class OPCUAServer:
         self._heartbeat_cb = heartbeat_cb
 
         self.q_traj_prev = 0
+        self.q_act_prev = 0
         self.gcmd_prev = 0
         self.q_power_on_prev = 0
         self.q_free_drive_prev = 0
@@ -164,11 +165,12 @@ class OPCUAServer:
                     self.ixGripperLocked.set_value(st.gripper_cmd or "")
                     self.ixGripperUnlocked.set_value((not st.gripper_cmd) or "")
                     self.iGripperHolderState.set_value(st.shift_gripper_state)
-                    self.ixGripperHolderLocked.set_value(st.shift_gripper_cmd or "")
-                    self.ixGripperHolderUnlocked.set_value((not st.shift_gripper_cmd) or "")
+                    self.ixGripperHolderLocked.set_value(st.shift_gripper_cmd)
+                    self.ixGripperHolderUnlocked.set_value((not st.shift_gripper_cmd))
 
                     self.handle_power_cmd()
                     self.handle_traj_cmd()
+                    self.handle_action_cmd()
                     self.handle_free_drive_cmd()
                     self.handle_gripper_cmd()
                     self.handle_shift_gripper_cmd()
@@ -221,6 +223,20 @@ class OPCUAServer:
                         Command(CmdType.EXECUTE_TRAJECTORY, {'num': int(q_trajectory)},
                                 source="OPC"))
         self.q_traj_prev = q_trajectory
+
+    def handle_action_cmd(self):
+        q_action = self.qAction.get_value()
+        if self.q_act_prev != q_action:
+            if q_action == 0:
+                self.cmd_queue.put(
+                    Command(CmdType.STOP_MOVE, {},
+                            source="OPC"))
+            else:
+                if q_action in range(1, 999):
+                    self.cmd_queue.put(
+                        Command(CmdType.EXECUTE_ACTION, {'num': int(q_action)},
+                                source="OPC"))
+        self.q_act_prev = q_action
 
     def handle_free_drive_cmd(self) -> None:  # 1 = ON, 0 = OFF
         q_free_drive = self.qFreeDrive.get_value()
