@@ -19,7 +19,7 @@ PORT_TYPE: str = "stationary"  # "stationary" | "mobile"
 ROBOT_IP = "127.0.0.1"
 # OPC_ENDPOINT = "opc.tcp://0.0.0.0:4840"  # для отладки по месту
 OPC_ENDPOINT = "opc.tcp://127.0.0.1:4840"  # для теста
-PLC_MANIPULATOR_ADDRESS = "opc.tcp://192.168.88.100:4840/freeopcua/server/"  # для теста
+PLC_MANIPULATOR_ADDRESS = "opc.tcp://192.168.202.212:4840/freeopcua/server/"  # для теста
 PLC_VT_ADDRESS = "opc.tcp://192.168.88.101:4840/freeopcua/server/"  # для теста
 PLC_VTOL_ADDRESS = "opc.tcp://192.168.88.102:4840/freeopcua/server/"  # для теста
 

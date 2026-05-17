@@ -180,10 +180,18 @@ class RobotPoints(enum.Enum):
     pVTOL2Battery2WithBatt = 12500
     pVTOL2InBattery2Slot = 12600
     pVTOL2AfterBattery2Slot = 12700
-    pVTOL2Battery2Charge = 96  # test
-    pVTOL2Battery2Up = 97  # test
-    pVTOL2BatteryUp = 98  # test
-    pVTOL2BatteryOut = 99  # test
+    pVTOL2Battery2Charge = 99001  # test
+    pVTOL2Battery2Up = 99002  # test
+    pVTOL2BatteryUp = 99003  # test
+    pVTOL2BatteryOut = 99004  # test
+    pVTOL2Charger1BeforeSlot1_pre = 99005
+    pHelicopter2Charger1_bef = 99005
+    pHelicopter2Charger1Slot1WithBatt2 = 99005
+    pHelicopter2Charger1BeforeSlot1_2 = 99005
+    pHelicopter2Charger1Slot1WithBatt_3 = 99005
+    pVTOL2Charger1_mid = 99005
+    pVTOL2Charger1InSlot1_pre = 99005
+    pVTOL2Charger1InSlot1_pre2 = 99005
 
 
 class RobotTrajectories(enum.Enum):
@@ -481,3 +489,4 @@ class RobotRoutes(enum.Enum):
 class RobotActions(enum.Enum):
     aVTOL2_To_VTOL2Battery = 1
     aVTOL2Battery_To_VTOL2 = 2
+    aCharger_To_Helicopter2Batt1 = 3

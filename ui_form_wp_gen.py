@@ -90,6 +90,7 @@ class MainWindow(QMainWindow):
         self.ui.OutputControl.toggled.connect(self.manipulator_gripper_control)
         self.ui.ShiftGripper.setCheckable(True)
         self.ui.ShiftGripper.toggled.connect(self.manipulator_shift_gripper)
+        # self.ui.SavePoint.clicked.connect(self.save_current_position)
         self.ui.AddPointToTrajectory.clicked.connect(self.add_current_point_to_trajectory)
         self.ui.TrajectoriesComboBox.currentTextChanged.connect(self.trajectory_selected)
         self.ui.availableTrajectoriesComboBox.currentTextChanged.connect(self.available_trajectory_selected)
@@ -558,24 +559,27 @@ class MainWindow(QMainWindow):
 
         state = self.RobotController.get_state_snapshot()
         # Прямое направление: из src в dst
-        if state.gripper_cmd:  # грипперы сжаты
-            for traj in AVAIL_TRAJS.get(src):
-                if f"_To_{dst_short}" in traj and 'With' in dst_short and traj in self.Trajectories:
-                    return traj
-        else:  # грипперы разжаты
-            for traj in AVAIL_TRAJS.get(src):
-                if f"_To_{dst_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
-                    return traj
+        try:
+            if state.gripper_cmd:  # грипперы сжаты
+                for traj in AVAIL_TRAJS.get(src):
+                    if f"_To_{dst_short}" in traj and 'With' in dst_short and traj in self.Trajectories:
+                        return traj
+            else:  # грипперы разжаты
+                for traj in AVAIL_TRAJS.get(src):
+                    if f"_To_{dst_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
+                        return traj
 
-        # Обратное направление: из dst в src
-        if state.gripper_cmd:  # грипперы сжаты
-            for traj in AVAIL_TRAJS.get(dst):
-                if f"_To_{src_short}" in traj and 'With' in src_short and traj in self.Trajectories:
-                    return traj
-        else:  # грипперы разжаты
-            for traj in AVAIL_TRAJS.get(dst):
-                if f"_To_{src_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
-                    return traj
+            # Обратное направление: из dst в src
+            if state.gripper_cmd:  # грипперы сжаты
+                for traj in AVAIL_TRAJS.get(dst):
+                    if f"_To_{src_short}" in traj and 'With' in src_short and traj in self.Trajectories:
+                        return traj
+            else:  # грипперы разжаты
+                for traj in AVAIL_TRAJS.get(dst):
+                    if f"_To_{src_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
+                        return traj
+        except Exception as err:
+            print(err)
 
         return None
 
@@ -650,36 +654,43 @@ class MainWindow(QMainWindow):
         current_point = self.nearest_info.get('waypoint')
         print(current_point)
         items_model = QStandardItemModel()
-        for point in AVAIL_PTS.get(current_point):
-            item = QStandardItem(point)
-            item.setData(point, Qt.UserRole)
-            item.setEditable(False)
-            items_model.appendRow(item)
-        self.ui.availableWaypointsComboBox.setModel(items_model)
+        try:
+            for point in AVAIL_PTS.get(current_point):
+                item = QStandardItem(point)
+                item.setData(point, Qt.UserRole)
+                item.setEditable(False)
+                items_model.appendRow(item)
+            self.ui.availableWaypointsComboBox.setModel(items_model)
+        except Exception as err:
+            print(err)
 
     def update_available_trajectories_combo_box(self, target_point) -> None:
         self.nearest_info = self.RobotController.get_nearest_info()
 
-        if float(self.nearest_info.get('distance')) < float(self.exact_dist.text()):
-            current_point = self.nearest_info.get('waypoint')
-            self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value)
-            st = self.RobotController.get_state_snapshot()
-            traj = self._find_direct_trajectory(current_point, target_point)
+        try:
+            if float(self.nearest_info.get('distance')) < float(self.exact_dist.text()):
+                current_point = self.nearest_info.get('waypoint')
+                self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value)
+                st = self.RobotController.get_state_snapshot()
+                traj = self._find_direct_trajectory(current_point, target_point)
 
-            items_model = QStandardItemModel()
-            item = QStandardItem(traj)
-            item.setData(traj, Qt.UserRole)
-            item.setEditable(False)
-            items_model.appendRow(item)
-            self.ui.availableTrajectoriesComboBox.setModel(items_model)
+                items_model = QStandardItemModel()
+                item = QStandardItem(traj)
+                item.setData(traj, Qt.UserRole)
+                item.setEditable(False)
+                items_model.appendRow(item)
+                self.ui.availableTrajectoriesComboBox.setModel(items_model)
 
-        elif float(self.nearest_info.get('distance')) < float(self.close_dist.text()):
-            current_point = self.nearest_info.get('waypoint')
-            self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value + 1)
-            st = self.RobotController.get_state_snapshot()
+            elif float(self.nearest_info.get('distance')) < float(self.close_dist.text()):
+                current_point = self.nearest_info.get('waypoint')
+                self.RobotController.state.update(current_point=getattr(RobotPoints, current_point).value + 1)
+                st = self.RobotController.get_state_snapshot()
+        except Exception as err:
+            print(err)
 
     def update_waypoints_combo_box(self) -> None:
         items_model = QStandardItemModel()
+        last_index = len(self.Waypoints) - 1
         for point in self.Waypoints.keys():
             # display = POINT_NAMES.get(point, point)
             item = QStandardItem(point)
@@ -687,6 +698,7 @@ class MainWindow(QMainWindow):
             item.setEditable(False)
             items_model.appendRow(item)
         self.ui.waypointsComboBox.setModel(items_model)
+        self.ui.waypointsComboBox.setCurrentIndex(last_index)
 
     def update_trajectories(self) -> None:
         items_model = QStandardItemModel()
@@ -740,7 +752,7 @@ class MainWindow(QMainWindow):
         point_name = self.ui.availableWaypointsComboBox.currentData(Qt.UserRole) or _display_name
         self.update_available_trajectories_combo_box(point_name)
 
-        self.ui.PointName.setText(point_name)
+        # self.ui.PointName.setText(point_name) # comment
         if point_name in self.Waypoints:
             wp = self.Waypoints[point_name]
             self.ui.SetSpeed.setText(str(wp.get('speed', 0.5)))
@@ -934,7 +946,7 @@ class MainWindow(QMainWindow):
             return
 
         state = self.RobotController.get_state_snapshot()
-        if not state.powered:
+        if state.controller_state != 'run':
             self._add_log_entry(f"Траектория: {trajectory_name}", "✗  не готов", LOG_COLOR_ERROR)
             return
 
@@ -970,7 +982,7 @@ class MainWindow(QMainWindow):
             return
 
         state = self.RobotController.get_state_snapshot()
-        if not state.powered:
+        if state.controller_state != 'run':
             self._add_log_entry(f"Действие: {action_name}", "✗  не готов", LOG_COLOR_ERROR)
             return
 

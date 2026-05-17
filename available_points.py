@@ -251,6 +251,7 @@ available_points = {
          "pVTOL2Charger1BeforeSlot1"],  # pVTOL2Charger1Slot1
     "pVTOL2Charger1InsideSlot1":
         ["pVTOL2Charger1Slot1",
+         "pVTOL2Charger1BeforeSlot1_pre",
          "pVTOL2Charger1BeforeSlot1"],  # pVTOL2Charger1InsideSlot1
     "pVTOL2Charger1BeforeSlot1":
         ["pVTOL2Charger1WithBatt",

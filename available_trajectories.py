@@ -439,6 +439,7 @@ available_trajectories = {
     ],
     "pVTOL2Charger1WithBatt": [
         "tVTOL2Charger1WithBatt_To_ChargerWithBatt",
+        "tVTOL2Charger1WithBatt_To_VTOL2Charger1Slot1WithBatt",
     ],
     "pVTOL2Charger1Slot1WithBatt": [
         "tVTOL2Charger1Slot1WithBatt_To_pVTOL2Charger1WithBatt",
