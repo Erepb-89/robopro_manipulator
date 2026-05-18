@@ -390,10 +390,10 @@ class Ui_Form(object):
         self.tab2Layout = QtWidgets.QVBoxLayout(self.tab_2)
         self.tab2Layout.setContentsMargins(5, 5, 5, 5)
         self.tab2Layout.setObjectName("tab2Layout")
-        self.webView = QtWebEngineWidgets.QWebEngineView(self.tab_2)
-        self.webView.setMinimumSize(QtCore.QSize(800, 600))
-        self.webView.setObjectName("webView")
-        self.tab2Layout.addWidget(self.webView)
+        # self.webView = QtWebEngineWidgets.QWebEngineView(self.tab_2)
+        # self.webView.setMinimumSize(QtCore.QSize(800, 600))
+        # self.webView.setObjectName("webView")
+        # self.tab2Layout.addWidget(self.webView)
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -460,4 +460,4 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Form", "Waypoints"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Form", "PLC Visualization"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Form", "Trajectory Map"))
-from PyQt5 import QtWebEngineWidgets
+# from PyQt5 import QtWebEngineWidgets
