@@ -445,7 +445,7 @@ class RobotController:
 
     def move_to_point(self, point_name: str, motion: str = 'line') -> None:
         """Движение к точке по имени"""
-        self.run_controller()
+        # self.run_controller()
 
         if point_name not in self.data.waypoints:
             raise ValueError(f"Waypoint {point_name} not found")
@@ -487,7 +487,7 @@ class RobotController:
             return
 
         try:
-            self.run_controller()
+            # self.run_controller()
 
             if trajectory.name not in self.data.trajectories:
                 raise ValueError(f"No trajectory mapped for {trajectory}")
@@ -638,7 +638,7 @@ class RobotController:
             return
 
         try:
-            self.run_controller()
+            # self.run_controller()
 
             if action.name not in self.data.actions:
                 raise ValueError(f"No Action mapped for {action}")
@@ -727,7 +727,7 @@ class RobotController:
             return
 
         try:
-            self.run_controller()
+            # self.run_controller()
             self.state.update(gripper_state=EXECUTION)
 
             success = self.io.control_digital_outputs(GRIPPER_DO_INDEX, clamp)
@@ -762,7 +762,7 @@ class RobotController:
             pass
 
         try:
-            self.run_controller()
+            # self.run_controller()
             self.state.update(shift_gripper_state=EXECUTION)
 
             success = self.io.control_digital_outputs(SHIFT_GRIPPER_DO_INDEX, shift)
