@@ -495,9 +495,10 @@ class RobotController:
             nearest_point = self.find_nearest_waypoint()
             nearest_wp = nearest_point.get("waypoint")
 
-            if nearest_wp not in available_trajectories:
-                self.log.error("available_trajectories not filled correctly")
-                return
+            # commissioning
+            # if nearest_wp not in available_trajectories:
+            #     self.log.error("available_trajectories not filled correctly")
+            #     return
 
             self.exec_available_trajectory(nearest_wp, trajectory)
 
@@ -552,7 +553,7 @@ class RobotController:
 
         attr = self.manipulator_points.get(nearest_wp)
         wp_available = getattr(ManipulatorPoints, attr, False) if attr else True
-        if trajectory.name in available_trajectories.get(nearest_wp) and wp_available:
+        if wp_available:  # trajectory.name in available_trajectories.get(nearest_wp) # commissioning
             for position in self.data.trajectories[trajectory.name]['positions']:
                 self.cmd_queue.put(
                     Command(
@@ -633,7 +634,7 @@ class RobotController:
                 action_state=action.value + BLOCK,
                 last_error=LastError.err_not_ready
             )
-            self.log.error("Action rejected: manipulator not in run state")
+            self.log.error("Action rejected: manipulator ot in run state")
             return
 
         try:
@@ -647,7 +648,7 @@ class RobotController:
                 if action:
                     self.state.update(action_state=action.value + EXECUTION)
 
-                finish_motion = self.mc.wait_motion_complete(await_sec=-1)  # не работает, возможно нужно через await
+                finish_motion = self.mc.wait_motion_complete(await_sec=-1)
 
                 for command in self.data.actions.get(action.name).commands:
                     if command.cmd_type == EXEC_TRAJ and finish_motion:
