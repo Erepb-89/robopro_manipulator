@@ -192,6 +192,22 @@ class RobotPoints(enum.Enum):
     pVTOL2Charger1_mid = 99005
     pVTOL2Charger1InSlot1_pre = 99005
     pVTOL2Charger1InSlot1_pre2 = 99005
+    pVTOL2_under_cap = 99006
+    pVTOL2_open_cap1 = 99007
+    pVTOL2_open_cap2 = 99008
+    pVTOL2_open_cap3 = 99009
+    pVTOL2_open_cap4 = 99010
+    pVTOL2_open_cap5 = 99011
+    pVTOL2_open_cap6 = 99012
+    pVTOL2_open_cap7 = 99013
+    pVTOL2_open_cap8 = 99014
+    pVTOL2_open_cap9 = 99015
+    pVTOL2_open_cap10 = 99016
+    pVTOL2_open_cap11 = 99017
+    pVTOL2_open_cap12 = 99018
+    pVTOL2_open_cap13 = 99019
+    pVTOL2_open_cap14 = 99020
+    pVTOL2_open_cap15 = 99021
 
 
 class RobotTrajectories(enum.Enum):
@@ -480,6 +496,8 @@ class RobotTrajectories(enum.Enum):
     tVTOL2BeforeBattery1Slot_To_VTOL2 = 258
     tVTOL2BeforeBattery2Slot_To_VTOL2WithBatt = 259
     tVTOL2BeforeBattery2Slot_To_VTOL2 = 260
+
+    tOpenCap = 261
 
 
 class RobotRoutes(enum.Enum):
