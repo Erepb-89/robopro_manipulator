@@ -827,6 +827,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pVTOL2Charger1_mid",
+                    "motion": "joint"
+                },
+                {
                     "name": "pVTOL2Charger1",
                     "motion": "joint"
                 }
@@ -870,7 +874,50 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pChargerWithBatt_pre",
+                    "motion": "joint"
+                },
+                {
                     "name": "pHelicopter2Charger1WithBatt",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tChargerWithBatt_To_HomePositionWithSomeCargo",
+            "positions": [
+                {
+                    "name": "pChargerWithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHomePositionWithSomeCargo",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tChargerWithBatt_To_VTOL2Charger1WithBatt",
+            "positions": [
+                {
+                    "name": "pChargerWithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tChargerWithBatt_To_VTOL2Charger2WithBatt",
+            "positions": [
+                {
+                    "name": "pChargerWithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1018,10 +1065,6 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1BeforeSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1Slot1WithBatt2",
                     "motion": "joint"
                 },
                 {
@@ -1289,10 +1332,6 @@
                     "motion": "joint"
                 },
                 {
-                    "name": "pHelicopter2Charger1Slot1WithBatt_3",
-                    "motion": "joint"
-                },
-                {
                     "name": "pHelicopter2Charger1Slot1WithBatt",
                     "motion": "joint"
                 }
@@ -1319,6 +1358,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pChargerWithBatt_pre",
+                    "motion": "joint"
+                },
+                {
                     "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
@@ -1329,6 +1372,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1_mid",
                     "motion": "joint"
                 },
                 {
@@ -1436,6 +1483,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pVTOL2Charger1BeforeSlot1_pre",
+                    "motion": "joint"
+                },
+                {
                     "name": "pVTOL2Charger1BeforeSlot1",
                     "motion": "joint"
                 }
@@ -1485,6 +1536,10 @@
             "positions": [
                 {
                     "name": "pVTOL2Charger1Slot1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1InSlot1_pre",
                     "motion": "joint"
                 },
                 {
@@ -1710,6 +1765,45 @@
                 },
                 {
                     "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger1WithBatt_To_ChargerWithBatt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pChargerWithBatt",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger1WithBatt_To_VTOL2Charger1Slot1WithBatt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot1WithBatt",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger1WithBatt_To_VTOL2Charger1Slot2WithBatt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger1WithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1Slot2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -3187,6 +3281,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pVTOL2Charger1_mid",
+                    "motion": "joint"
+                },
+                {
                     "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
@@ -3197,6 +3295,10 @@
             "positions": [
                 {
                     "name": "pChargerWithBatt",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger1_mid",
                     "motion": "joint"
                 },
                 {
@@ -3305,6 +3407,71 @@
                 },
                 {
                     "name": "pVTOLModule",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tOpenCap",
+            "positions": [
+                {
+                    "name": "pVTOL2_under_cap",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap4",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap5",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap7",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap8",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap9",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap10",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap11",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap12",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap13",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_open_cap14",
                     "motion": "joint"
                 }
             ]
