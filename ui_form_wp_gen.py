@@ -579,7 +579,7 @@ class MainWindow(QMainWindow):
                     if f"_To_{src_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
                         return traj
         except Exception as err:
-            print(err)
+            pass
 
         return None
 
@@ -652,7 +652,6 @@ class MainWindow(QMainWindow):
 
     def update_available_waypoints_combo_box(self) -> None:
         current_point = self.nearest_info.get('waypoint')
-        print(current_point)
         items_model = QStandardItemModel()
         try:
             for point in AVAIL_PTS.get(current_point):
@@ -702,6 +701,7 @@ class MainWindow(QMainWindow):
 
     def update_trajectories(self) -> None:
         items_model = QStandardItemModel()
+        last_index = len(self.Trajectories) - 1
         for traj in self.Trajectories.keys():
             # display = traj_display_name(traj)
             item = QStandardItem(traj)
@@ -710,6 +710,7 @@ class MainWindow(QMainWindow):
             items_model.appendRow(item)
         self.ui.TrajectoriesComboBox.setModel(items_model)
         self.ui.trajListView.setModel(items_model)
+        self.ui.TrajectoriesComboBox.setCurrentIndex(last_index)
 
     def update_actions(self) -> None:
         items_model = QStandardItemModel()
