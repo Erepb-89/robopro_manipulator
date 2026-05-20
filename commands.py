@@ -29,29 +29,6 @@ class Command:
 
 
 class RobotPoints(enum.Enum):
-    # pHomePosition = 1
-    # pHelicopterModule = 2
-    # pHelicopter1 = 3
-    # pHelicopter1Payload = 4
-    # pHelicopter2 = 5
-    # pHelicopter2Payload = 6
-    # pPayload = 7
-    # pPayload1 = 8
-    # pPayload2 = 9
-    # pGrippers = 10
-    # pGrippers1 = 11
-    # pGrippers2 = 12
-    # pCharger = 13
-    # pCharger1 = 14
-    # pCharger2 = 15
-    # pVTOLModule = 16
-    # pVTOL1 = 17
-    # pVTOL1Payload = 18
-    # pVTOL1Battery = 19
-    # pVTOL2 = 20
-    # pVTOL2Battery = 21
-    # pVTOL2Battery2Charge = 22
-
     pUndefined = 0
     pHomePosition = 100
     pHomePositionWithSomeCargo = 200
@@ -85,7 +62,7 @@ class RobotPoints(enum.Enum):
     pGrippers2InsideSlot = 3000
     pGrippers2BeforeSlot = 3100
     pCharger = 3200
-    pChargerWithBatt = 3300
+    # pChargerWithBatt = 3300  # удалено
     pHelicopter2Charger1 = 3400
     pHelicopter2Charger1Slot1 = 3500
     pHelicopter2Charger1InsideSlot1 = 3600
@@ -147,25 +124,25 @@ class RobotPoints(enum.Enum):
     pGrippers2WithGrip = 9200
     pGrippers2InSlot = 9300
     pGrippers2AfterSlot = 9400
-    pVTOL2Charger1WithBatt = 9500
-    pVTOL2Charger1Slot1WithBatt = 9600
+    # pVTOL2Charger1WithBatt = 9500  # удалено
+    # pVTOL2Charger1Slot1WithBatt = 9600  # удалено
     pVTOL2Charger1InSlot1 = 9700
     pVTOL2Charger1AfterSlot1 = 9800
-    pVTOL2Charger1Slot2WithBatt = 9900
+    # pVTOL2Charger1Slot2WithBatt = 9900  # удалено
     pVTOL2Charger1InSlot2 = 10000
     pVTOL2Charger1AfterSlot2 = 10100
-    pVTOL2Charger2WithBatt = 10200
-    pVTOL2Charger2Slot1WithBatt = 10300
+    # pVTOL2Charger2WithBatt = 10200  # удалено
+    # pVTOL2Charger2Slot1WithBatt = 10300  # удалено
     pVTOL2Charger2InSlot1 = 10400
     pVTOL2Charger2AfterSlot1 = 10500
-    pVTOL2Charger2Slot2WithBatt = 10600
+    # pVTOL2Charger2Slot2WithBatt = 10600  # удалено
     pVTOL2Charger2InSlot2 = 10700
     pVTOL2Charger2AfterSlot2 = 10800
-    pHelicopter2Charger1WithBatt = 10900
-    pHelicopter2Charger1Slot1WithBatt = 11000
+    # pHelicopter2Charger1WithBatt = 10900  # удалено
+    # pHelicopter2Charger1Slot1WithBatt = 11000  # удалено
     pHelicopter2Charger1InSlot1 = 11100
     pHelicopter2Charger1AfterSlot1 = 11200
-    pHelicopter2Charger1Slot2WithBatt = 11300
+    # pHelicopter2Charger1Slot2WithBatt = 11300  # удалено
     pHelicopter2Charger1InSlot2 = 11400
     pHelicopter2Charger1AfterSlot2 = 11500
     pVTOL1PayloadWithPL = 11600
@@ -186,9 +163,9 @@ class RobotPoints(enum.Enum):
     pVTOL2BatteryOut = 99004  # test
     pVTOL2Charger1BeforeSlot1_pre = 99005
     pHelicopter2Charger1_bef = 99005
-    pHelicopter2Charger1Slot1WithBatt2 = 99005
+    # pHelicopter2Charger1Slot1WithBatt2 = 99005  # удалено
     pHelicopter2Charger1BeforeSlot1_2 = 99005
-    pHelicopter2Charger1Slot1WithBatt_3 = 99005
+    # pHelicopter2Charger1Slot1WithBatt_3 = 99005  # удалено
     pVTOL2Charger1_mid = 99005
     pVTOL2Charger1InSlot1_pre = 99005
     pVTOL2Charger1InSlot1_pre2 = 99005
@@ -243,12 +220,12 @@ class RobotTrajectories(enum.Enum):
     tGrippers_To_Grippers2 = 30
     tGrippers2_To_Grippers = 31
     tHomePosition_To_Charger = 32
-    tHomePosition_To_ChargerWithBatt = 33
+    # tHomePosition_To_ChargerWithBatt = 33  # удалено
     tCharger_To_HomePosition = 34
     tCharger_To_VTOL2Charger1 = 35
     tCharger_To_VTOL2Charger2 = 36
     tCharger_To_Helicopter2Charger1 = 37
-    tChargerWithBatt_To_Helicopter2Charger1WithBatt = 38
+    # tChargerWithBatt_To_Helicopter2Charger1WithBatt = 38  # удалено
     tHelicopter2Charger1_To_Charger = 39
     tHelicopter2Charger1_To_Helicopter2Charger1Slot1 = 40
     tHelicopter2Charger1_To_Helicopter2Charger1Slot2 = 41
@@ -259,24 +236,24 @@ class RobotTrajectories(enum.Enum):
     tHelicopter2Charger1InsideSlot1_To_Helicopter2Charger1Slot1 = 46
     tHelicopter2Charger1InsideSlot1_To_Helicopter2Charger1BeforeSlot1 = 47
     tHelicopter2Charger1BeforeSlot1_To_Helicopter2Charger1 = 48
-    tHelicopter2Charger1Slot1WithBatt_To_ChargerWithBatt = 49
-    tHelicopter2Charger1Slot1WithBatt_To_Helicopter2Charger1InSlot1 = 50
-    tHelicopter2Charger1Slot1WithBatt_To_Helicopter2Charger1AfterSlot1 = 51
-    tHelicopter2Charger1InSlot1_To_Helicopter2Charger1Slot1WithBatt = 52
-    tHelicopter2Charger1InSlot1_To_Helicopter2Charger1AfterSlot1 = 53
-    tHelicopter2Charger1AfterSlot1_To_ChargerWithBatt = 54
+    # tHelicopter2Charger1Slot1WithBatt_To_ChargerWithBatt = 49  # удалено
+    # tHelicopter2Charger1Slot1WithBatt_To_Helicopter2Charger1InSlot1 = 50  # удалено
+    # tHelicopter2Charger1Slot1WithBatt_To_Helicopter2Charger1AfterSlot1 = 51  # удалено
+    # tHelicopter2Charger1InSlot1_To_Helicopter2Charger1Slot1WithBatt = 52  # удалено
+    # tHelicopter2Charger1InSlot1_To_Helicopter2Charger1AfterSlot1 = 53  # удалено
+    # tHelicopter2Charger1AfterSlot1_To_ChargerWithBatt = 54  # удалено
     tHelicopter2Charger1Slot2_To_Helicopter2Charger1 = 55
     tHelicopter2Charger1Slot2_To_Helicopter2Charger1InsideSlot2 = 56
     tHelicopter2Charger1Slot2_To_Helicopter2Charger1BeforeSlot2 = 57
     tHelicopter2Charger1InsideSlot2_To_Helicopter2Charger1Slot2 = 58
     tHelicopter2Charger1InsideSlot2_To_Helicopter2Charger1BeforeSlot2 = 59
     tHelicopter2Charger1BeforeSlot2_To_Helicopter2Charger1 = 60
-    tHelicopter2Charger1Slot2WithBatt_To_ChargerWithBatt = 61
-    tHelicopter2Charger1Slot2WithBatt_To_Helicopter2Charger1InSlot2 = 62
-    tHelicopter2Charger1Slot2WithBatt_To_Helicopter2Charger1AfterSlot2 = 63
-    tHelicopter2Charger1InSlot2_To_Helicopter2Charger1Slot2WithBatt = 64
-    tHelicopter2Charger1InSlot2_To_Helicopter2Charger1AfterSlot2 = 65
-    tHelicopter2Charger1AfterSlot2_To_ChargerWithBatt = 66
+    # tHelicopter2Charger1Slot2WithBatt_To_ChargerWithBatt = 61  # удалено
+    # tHelicopter2Charger1Slot2WithBatt_To_Helicopter2Charger1InSlot2 = 62  # удалено
+    # tHelicopter2Charger1Slot2WithBatt_To_Helicopter2Charger1AfterSlot2 = 63  # удалено
+    # tHelicopter2Charger1InSlot2_To_Helicopter2Charger1Slot2WithBatt = 64  # удалено
+    # tHelicopter2Charger1InSlot2_To_Helicopter2Charger1AfterSlot2 = 65  # удалено
+    # tHelicopter2Charger1AfterSlot2_To_ChargerWithBatt = 66  # удалено
     tHelicopter1InsideSlot_To_Helicopter1Payload = 67
     tHelicopter1BeforeSlot_To_Helicopter1WithPL = 68
     tHelicopter2_To_Helicopter2Battery1 = 69
@@ -310,9 +287,9 @@ class RobotTrajectories(enum.Enum):
     tHelicopter2InSlot2_To_Helicopter2WithBatt2 = 97
     tHelicopter2InSlot2_To_Helicopter2AfterSlot2 = 98
     tHelicopter2AfterSlot2_To_Helicopter2WithSomeCargo = 99
-    tHelicopter2Charger1WithBatt_To_Helicopter2Charger1Slot1WithBatt = 100
-    tHelicopter2Charger1WithBatt_To_Helicopter2Charger1Slot2WithBatt = 101
-    tHelicopter2Charger1WithBatt_To_ChargerWithBatt = 102
+    # tHelicopter2Charger1WithBatt_To_Helicopter2Charger1Slot1WithBatt = 100  # удалено
+    # tHelicopter2Charger1WithBatt_To_Helicopter2Charger1Slot2WithBatt = 101  # удалено
+    # tHelicopter2Charger1WithBatt_To_ChargerWithBatt = 102  # удалено
     tHomePosition_To_VTOLModule = 103
     tHomePosition_To_VTOLModuleWithSomeCargo = 104
     tVTOLModule_To_HomePosition = 105
@@ -367,25 +344,25 @@ class RobotTrajectories(enum.Enum):
     tVTOL2Charger1Slot1_To_VTOL2Charger1BeforeSlot1 = 154
     tVTOL2Charger1InsideSlot1_To_VTOL2Charger1Slot1 = 155
     tVTOL2Charger1InsideSlot1_To_VTOL2Charger1BeforeSlot1 = 156
-    tVTOL2Charger1BeforeSlot1_To_VTOL2Charger1WithBatt = 157
-    tVTOL2Charger1Slot1WithBatt_To_pVTOL2Charger1WithBatt = 158
-    tVTOL2Charger1Slot1WithBatt_To_VTOL2Charger1InSlot1 = 159
-    tVTOL2Charger1Slot1WithBatt_To_VTOL2Charger1AfterSlot1 = 160
-    tVTOL2Charger1InSlot1_To_VTOL2Charger1Slot1WithBatt = 161
-    tVTOL2Charger1InSlot1_To_VTOL2Charger1AfterSlot1 = 162
-    tVTOL2Charger1AfterSlot1_To_VTOL2Charger1WithBatt = 163
+    # tVTOL2Charger1BeforeSlot1_To_VTOL2Charger1WithBatt = 157  # удалено
+    # tVTOL2Charger1Slot1WithBatt_To_pVTOL2Charger1WithBatt = 158  # удалено
+    # tVTOL2Charger1Slot1WithBatt_To_VTOL2Charger1InSlot1 = 159  # удалено
+    # tVTOL2Charger1Slot1WithBatt_To_VTOL2Charger1AfterSlot1 = 160  # удалено
+    # tVTOL2Charger1InSlot1_To_VTOL2Charger1Slot1WithBatt = 161  # удалено
+    # tVTOL2Charger1InSlot1_To_VTOL2Charger1AfterSlot1 = 162  # удалено
+    # tVTOL2Charger1AfterSlot1_To_VTOL2Charger1WithBatt = 163  # удалено
     tVTOL2Charger1Slot2_To_VTOL2Charger1 = 164
     tVTOL2Charger1Slot2_To_VTOL2Charger1InsideSlot2 = 165
     tVTOL2Charger1Slot2_To_VTOL2Charger1BeforeSlot2 = 166
     tVTOL2Charger1InsideSlot2_To_VTOL2Charger1Slot2 = 167
     tVTOL2Charger1InsideSlot2_To_VTOL2Charger1BeforeSlot2 = 168
-    tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1WithBatt = 169
-    tVTOL2Charger1Slot2WithBatt_To_pVTOL2Charger1WithBatt = 170
-    tVTOL2Charger1Slot2WithBatt_To_VTOL2Charger1InSlot2 = 171
-    tVTOL2Charger1Slot2WithBatt_To_VTOL2Charger1AfterSlot2 = 172
-    tVTOL2Charger1InSlot2_To_VTOL2Charger1Slot2WithBatt = 173
-    tVTOL2Charger1InSlot2_To_VTOL2Charger1AfterSlot2 = 174
-    tVTOL2Charger1AfterSlot2_To_VTOL2Charger1WithBatt = 175
+    # tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1WithBatt = 169  # удалено
+    # tVTOL2Charger1Slot2WithBatt_To_pVTOL2Charger1WithBatt = 170  # удалено
+    # tVTOL2Charger1Slot2WithBatt_To_VTOL2Charger1InSlot2 = 171  # удалено
+    # tVTOL2Charger1Slot2WithBatt_To_VTOL2Charger1AfterSlot2 = 172  # удалено
+    # tVTOL2Charger1InSlot2_To_VTOL2Charger1Slot2WithBatt = 173  # удалено
+    # tVTOL2Charger1InSlot2_To_VTOL2Charger1AfterSlot2 = 174  # удалено
+    # tVTOL2Charger1AfterSlot2_To_VTOL2Charger1WithBatt = 175  # удалено
     tVTOL2Charger2_To_Charger = 176
     tVTOL2Charger2_To_VTOL2Charger2Slot1 = 177
     tVTOL2Charger2_To_VTOL2Charger2Slot2 = 178
@@ -395,54 +372,42 @@ class RobotTrajectories(enum.Enum):
     tVTOL2Charger2Slot1_To_VTOL2Charger2BeforeSlot1 = 182
     tVTOL2Charger2InsideSlot1_To_VTOL2Charger2Slot1 = 183
     tVTOL2Charger2InsideSlot1_To_VTOL2Charger2BeforeSlot1 = 184
-    tVTOL2Charger2BeforeSlot1_To_VTOL2Charger2WithBatt = 185
-    tVTOL2Charger2Slot1WithBatt_To_pVTOL2Charger2WithBatt = 186
-    tVTOL2Charger2Slot1WithBatt_To_VTOL2Charger2InSlot1 = 187
-    tVTOL2Charger2Slot1WithBatt_To_VTOL2Charger2AfterSlot1 = 188
-    tVTOL2Charger2InSlot1_To_VTOL2Charger2Slot1WithBatt = 189
-    tVTOL2Charger2InSlot1_To_VTOL2Charger2AfterSlot1 = 190
-    tVTOL2Charger2AfterSlot1_To_VTOL2Charger2WithBatt = 191
+    # tVTOL2Charger2BeforeSlot1_To_VTOL2Charger2WithBatt = 185  # удалено
+    # tVTOL2Charger2Slot1WithBatt_To_pVTOL2Charger2WithBatt = 186  # удалено
+    # tVTOL2Charger2Slot1WithBatt_To_VTOL2Charger2InSlot1 = 187  # удалено
+    # tVTOL2Charger2Slot1WithBatt_To_VTOL2Charger2AfterSlot1 = 188  # удалено
+    # tVTOL2Charger2InSlot1_To_VTOL2Charger2Slot1WithBatt = 189  # удалено
+    # tVTOL2Charger2InSlot1_To_VTOL2Charger2AfterSlot1 = 190  # удалено
+    # tVTOL2Charger2AfterSlot1_To_VTOL2Charger2WithBatt = 191  # удалено
     tVTOL2Charger2Slot2_To_VTOL2Charger2 = 192
     tVTOL2Charger2Slot2_To_VTOL2Charger2InsideSlot2 = 193
     tVTOL2Charger2Slot2_To_VTOL2Charger2BeforeSlot2 = 194
     tVTOL2Charger2InsideSlot2_To_VTOL2Charger2Slot2 = 195
     tVTOL2Charger2InsideSlot2_To_VTOL2Charger2BeforeSlot2 = 196
-    tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2WithBatt = 197
-    tVTOL2Charger2Slot2WithBatt_To_pVTOL2Charger2WithBatt = 198
-    tVTOL2Charger2Slot2WithBatt_To_VTOL2Charger2InSlot2 = 199
-    tVTOL2Charger2Slot2WithBatt_To_VTOL2Charger2AfterSlot2 = 200
-    tVTOL2Charger2InSlot2_To_VTOL2Charger2Slot2WithBatt = 201
-    tVTOL2Charger2InSlot2_To_VTOL2Charger2AfterSlot2 = 202
-    tVTOL2Charger2AfterSlot2_To_VTOL2Charger2WithBatt = 203
+    # tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2WithBatt = 197  # удалено
+    # tVTOL2Charger2Slot2WithBatt_To_pVTOL2Charger2WithBatt = 198  # удалено
+    # tVTOL2Charger2Slot2WithBatt_To_VTOL2Charger2InSlot2 = 199  # удалено
+    # tVTOL2Charger2Slot2WithBatt_To_VTOL2Charger2AfterSlot2 = 200  # удалено
+    # tVTOL2Charger2InSlot2_To_VTOL2Charger2Slot2WithBatt = 201  # удалено
+    # tVTOL2Charger2InSlot2_To_VTOL2Charger2AfterSlot2 = 202  # удалено
+    # tVTOL2Charger2AfterSlot2_To_VTOL2Charger2WithBatt = 203  # удалено
     tPayload1_To_Payload1InsideSlot = 204
     tPayload1_To_Payload1BeforeSlot = 205
     tPayload2_To_Payload2InsideSlot = 206
     tPayload2_To_Payload2BeforeSlot = 207
     # ===== НОВЫЕ ТРАЕКТОРИИ (МОСТИКИ) =====
-    # Home
     tHomePosition_To_HomePositionWithSomeCargo = 208
     tHomePositionWithSomeCargo_To_HomePosition = 209
-
-    # Helicopter
     tHelicopterModule_To_HelicopterModuleWithSomeCargo = 210
     tHelicopterModuleWithSomeCargo_To_HelicopterModule = 211
-
-    # Payload
     tPayload_To_PayloadWithPL = 212
     tPayloadWithPL_To_Payload = 213
-
-    # Grippers
     tGrippers_To_GrippersWithGrip = 214
     tGrippersWithGrip_To_Grippers = 215
-
-    # Charger
-    tCharger_To_ChargerWithBatt = 216
-    tChargerWithBatt_To_Charger = 217
-
-    # VTOL
+    # tCharger_To_ChargerWithBatt = 216  # удалено
+    # tChargerWithBatt_To_Charger = 217  # удалено
     tVTOLModule_To_VTOLModuleWithSomeCargo = 218
     tVTOLModuleWithSomeCargo_To_VTOLModule = 219
-
     # ===== НЕДОСТАЮЩИЕ ТРАЕКТОРИИ ДЛЯ BEFORE SLOT =====
     tHelicopter1BeforeSlot_To_Helicopter1Payload = 220
     tPayload1BeforeSlot_To_Payload1 = 221
@@ -453,7 +418,6 @@ class RobotTrajectories(enum.Enum):
     tVTOL1BeforePayloadSlot_To_VTOL1Payload = 226
     tVTOL2BeforeBattery1Slot_To_VTOL2Battery1 = 227
     tVTOL2BeforeBattery2Slot_To_VTOL2Battery2 = 228
-
     # ===== НЕДОСТАЮЩИЕ ТРАЕКТОРИИ ДЛЯ AFTER SLOT (с грузом) =====
     tHelicopter1AfterSlot_To_Helicopter1PayloadWithPL = 229
     tPayload1AfterSlot_To_Payload1WithPL = 230
@@ -464,34 +428,29 @@ class RobotTrajectories(enum.Enum):
     tVTOL1AfterPayloadSlot_To_VTOL1PayloadWithPL = 235
     tVTOL2AfterBattery1Slot_To_VTOL2Battery1WithBatt = 236
     tVTOL2AfterBattery2Slot_To_VTOL2Battery2WithBatt = 237
-
     # ===== НЕДОСТАЮЩИЕ ТРАЕКТОРИИ ДЛЯ CHARGER (с грузом) =====
-    tVTOL2Charger1WithBatt_To_VTOL2Charger1 = 238
-    tVTOL2Charger2WithBatt_To_VTOL2Charger2 = 239
-    tHelicopter2Charger1WithBatt_To_Helicopter2Charger1 = 240
-
+    # tVTOL2Charger1WithBatt_To_VTOL2Charger1 = 238  # удалено
+    # tVTOL2Charger2WithBatt_To_VTOL2Charger2 = 239  # удалено
+    # tHelicopter2Charger1WithBatt_To_Helicopter2Charger1 = 240  # удалено
     # ===== ОБРАТНЫЕ ТРАЕКТОРИИ ДЛЯ PAYLOAD =====
     tPayload1InsideSlot_To_Payload1 = 241
     tPayload2InsideSlot_To_Payload2 = 242
-
     # ===== ОБРАТНЫЕ ТРАЕКТОРИИ ДЛЯ GRIPPERS =====
     tGrippers1InsideSlot_To_Grippers1 = 243
     tGrippers2InsideSlot_To_Grippers2 = 244
-
     # ===== ОБРАТНЫЕ ТРАЕКТОРИИ ДЛЯ VTOL =====
     tVTOL1InsideBatterySlot_To_VTOL1Battery = 245
     tVTOL1InsidePayloadSlot_To_VTOL1Payload = 246
     tVTOL2InsideBattery1Slot_To_VTOL2Battery1 = 247
     tVTOL2InsideBattery2Slot_To_VTOL2Battery2 = 248
-
     tHelicopter2BeforeBattery1Slot_To_Helicopter2 = 249
     tHelicopter2BeforeBattery2Slot_To_Helicopter2 = 250
     tVTOL2Charger1BeforeSlot1_To_VTOL2Charger1 = 251
     tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1 = 252
     tVTOL2Charger2BeforeSlot1_To_VTOL2Charger2 = 253
     tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2 = 254
-    tHelicopter2Charger1BeforeSlot1_To_Helicopter2Charger1WithBatt = 255
-    tHelicopter2Charger1BeforeSlot2_To_Helicopter2Charger1WithBatt = 256
+    # tHelicopter2Charger1BeforeSlot1_To_Helicopter2Charger1WithBatt = 255  # удалено
+    # tHelicopter2Charger1BeforeSlot2_To_Helicopter2Charger1WithBatt = 256  # удалено
     tVTOL2BeforeBattery1Slot_To_VTOL2WithBatt = 257
     tVTOL2BeforeBattery1Slot_To_VTOL2 = 258
     tVTOL2BeforeBattery2Slot_To_VTOL2WithBatt = 259
@@ -499,6 +458,31 @@ class RobotTrajectories(enum.Enum):
 
     tOpenCap = 261
 
+    tVTOL2Charger2Slot1_after_ejecting = 262
+    tVTOL2Charger2Slot1_before_taking = 263
+    tVTOL2Charger2Slot1_grab_batt = 264
+    tVTOL2Charger2Slot1_take_batt = 265
+    tVTOL2Charger2Slot1_remove_batt = 266
+    tVTOL2Charger2Slot1_stick_in_batt = 267
+    tVTOL2Charger2Slot1_put_batt = 268
+    tVTOL2Charger2Slot1_grab_in_batt = 269
+    tVTOL2Charger2Slot1_before_inject = 270
+    tVTOL2Charger2Slot1_move_batt = 271
+    tVTOL2Charger2Slot1_move_end_point_batt = 272
+    tVTOL2Charger2Slot1_after_sticking_batt = 273
+
+    tVTOL2Charger2Slot2_after_ejecting = 274
+    tVTOL2Charger2Slot2_before_taking = 275
+    tVTOL2Charger2Slot2_grab_batt = 276
+    tVTOL2Charger2Slot2_take_batt = 277
+    tVTOL2Charger2Slot2_remove_batt = 278
+    tVTOL2Charger2Slot2_stick_in_batt = 279
+    tVTOL2Charger2Slot2_put_batt = 280
+    tVTOL2Charger2Slot2_grab_in_batt = 281
+    tVTOL2Charger2Slot2_before_inject = 282
+    tVTOL2Charger2Slot2_move_batt = 283
+    tVTOL2Charger2Slot2_move_end_point_batt = 284
+    tVTOL2Charger2Slot2_after_sticking_batt = 285
 
 class RobotRoutes(enum.Enum):
     rHomePosition_To_Helicopter1 = 1
