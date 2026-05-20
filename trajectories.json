@@ -3475,6 +3475,438 @@
                     "motion": "joint"
                 }
             ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_after_ejecting",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_pre",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_pre2",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_before_taking",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4_5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_grab_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_take_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker7",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker8",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_remove_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker9",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker10",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker11",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_stick_in_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker11",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker10",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker9",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker8",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_put_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_taker7_5",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_taker7_6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker7",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_grab_in_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4_5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_before_inject",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_move_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_pre2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_pre",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_move_end_point_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InsideSlot2",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot1_after_sticking_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2InsideSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InsideSlot2_5",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_after_ejecting",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_pre",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_pre2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_pre3",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_before_taking",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4_5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_grab_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_take_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker7",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker8",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_remove_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker9",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker10",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker11",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_stick_in_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker11",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker10",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker9",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker8",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_put_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_taker7_5",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot1_taker7_6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker7",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_grab_in_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4_5",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_before_inject",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker4",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_move_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_pre3",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_pre2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_pre",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_move_end_point_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InsideSlot1",
+                    "motion": "joint"
+                }
+            ]
+        },
+        {
+            "name": "tVTOL2Charger2Slot2_after_sticking_batt",
+            "positions": [
+                {
+                    "name": "pVTOL2Charger2InsideSlot1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2InsideSlot2_5",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2",
+                    "motion": "joint"
+                }
+            ]
         }
     ]
 }

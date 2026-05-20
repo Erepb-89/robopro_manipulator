@@ -28,7 +28,6 @@ from config import (
 
 # Точки, требующие открытого люка соответствующего стола
 HATCH_BLOCK_MAP = {
-    "pHelicopter1Payload": "vt",
     "pHelicopter2Payload": "vt",
     "pVTOL1Payload": "vtol",
     "pVTOL1Battery": "vtol",
@@ -201,14 +200,8 @@ class TrajectoryMapWidget(QWidget):
 
     NODE_LAYOUT = {
         # ========== ВЕРХНЯЯ ПОЛОВИНА (с грузом) ==========
-        "pHomePositionWithSomeCargo": (510, 250, "Home+", False),
-
         # --- Helicopter cargo ---
         "pHelicopterModuleWithSomeCargo": (220, 250, "pH+", False),
-        "pHelicopter1WithPL": (130, 200, "pH1+", False),
-        "pHelicopter1PayloadWithPL": (100, 95, "pH1L+", False),
-        "pHelicopter1InSlot": (45, 130, "H1InS+", True),
-        "pHelicopter1AfterSlot": (45, 190, "H1Aft+", True),
 
         "pHelicopter2WithSomeCargo": (130, 300, "pH2+", False),
         "pHelicopter2WithBatt1": (100, 460, "H2+B1", False),
@@ -217,59 +210,11 @@ class TrajectoryMapWidget(QWidget):
         "pHelicopter2WithBatt2": (170, 460, "H2+B2", False),
         "pHelicopter2InSlot2": (220, 410, "H2InS2", True),
         "pHelicopter2AfterSlot2": (220, 330, "H2AftS2", True),
-        "pHelicopter2PayloadWithPL": (45, 250, "pH2L+", False),
-
-        # --- Payload cargo ---
-        "pPayloadWithPL": (390, 200, "pL+", False),
-        "pPayload1WithPL": (340, 150, "pL1+", False),
-        "pPayload1InSlot": (310, 95, "PL1InS+", True),
-        "pPayload1AfterSlot": (370, 95, "PL1Aft+", True),
-        "pPayload2WithPL": (440, 150, "pL2+", False),
-        "pPayload2InSlot": (470, 95, "PL2InS+", True),
-        "pPayload2AfterSlot": (410, 95, "PL2Aft+", True),
-
-        # --- Grippers cargo ---
-        "pGrippersWithGrip": (650, 200, "pG+", False),
-        "pGrippers1WithGrip": (600, 150, "pG1+", False),
-        "pGrippers1InSlot": (570, 95, "G1InS+", True),
-        "pGrippers1AfterSlot": (630, 95, "G1Aft+", True),
-        "pGrippers2WithGrip": (700, 150, "pG2+", False),
-        "pGrippers2InSlot": (730, 95, "G2InS+", True),
-        "pGrippers2AfterSlot": (670, 95, "G2Aft+", True),
 
         # --- Charger cargo ---
         "pChargerWithBatt": (500, 330, "pC+", False),
-        "pHelicopter2Charger1WithBatt": (390, 370, "H2Ch1+", False),
-        "pHelicopter2Charger1Slot1WithBatt": (340, 330, "H2Ch1S1+", False),
-        "pHelicopter2Charger1InSlot1": (310, 290, "H2Ch1InS1", True),
-        "pHelicopter2Charger1AfterSlot1": (370, 290, "H2Ch1Aft1+", True),
-        "pHelicopter2Charger1Slot2WithBatt": (340, 410, "H2Ch1S2+", False),
-        "pHelicopter2Charger1InSlot2": (310, 460, "H2Ch1InS2", True),
-        "pHelicopter2Charger1AfterSlot2": (370, 460, "H2Ch1Aft2+", True),
-
-        "pVTOL2Charger1WithBatt": (500, 410, "V2Ch1+", False),
-        "pVTOL2Charger1Slot1WithBatt": (600, 330, "V2Ch1S1+", False),
-        "pVTOL2Charger1InSlot1": (570, 290, "V2Ch1InS1", True),
-        "pVTOL2Charger1AfterSlot1": (630, 290, "V2Ch1Aft1+", True),
-        "pVTOL2Charger1Slot2WithBatt": (600, 410, "V2Ch1S2+", False),
-        "pVTOL2Charger1InSlot2": (570, 460, "V2Ch1InS2", True),
-        "pVTOL2Charger1AfterSlot2": (630, 460, "V2Ch1Aft2+", True),
-
-        "pVTOL2Charger2WithBatt": (650, 370, "V2Ch2+", False),
-        "pVTOL2Charger2Slot1WithBatt": (700, 330, "V2Ch2S1+", False),
-        "pVTOL2Charger2InSlot1": (670, 290, "V2Ch2InS1", True),
-        "pVTOL2Charger2AfterSlot1": (730, 290, "V2Ch2Aft1+", True),
-        "pVTOL2Charger2Slot2WithBatt": (700, 410, "V2Ch2S2+", False),
-        "pVTOL2Charger2InSlot2": (670, 460, "V2Ch2InS2", True),
-        "pVTOL2Charger2AfterSlot2": (730, 460, "V2Ch2Aft2+", True),
 
         # --- VTOL cargo ---
-        "pVTOLModuleWithSomeCargo": (810, 250, "pV+", False),
-        "pVTOL1WithSomeCargo": (890, 200, "pV1+", False),
-        "pVTOL1BatteryWithBatt": (860, 95, "V1B+", False),
-        "pVTOL1InBatterySlot": (810, 130, "V1BInS+", True),
-        "pVTOL1AfterBatterySlot": (810, 190, "V1BAft+", True),
-
         "pVTOL2WithBatt": (890, 300, "pV2+", False),
         "pVTOL2Battery1WithBatt": (860, 460, "V2B1+", False),
         "pVTOL2InBattery1Slot": (810, 410, "V2B1InS+", True),
@@ -284,9 +229,6 @@ class TrajectoryMapWidget(QWidget):
         # --- Helicopter ---
         "pHelicopterModule": (220, 750, "pH", False),
         "pHelicopter1": (130, 700, "pH1", False),
-        "pHelicopter1Payload": (100, 595, "pH1L", False),
-        "pHelicopter1InsideSlot": (45, 630, "H1In", True),
-        "pHelicopter1BeforeSlot": (45, 690, "H1Bef", True),
 
         "pHelicopter2": (130, 800, "pH2", False),
         "pHelicopter2Battery1": (100, 960, "H2B1", False),
@@ -343,11 +285,6 @@ class TrajectoryMapWidget(QWidget):
 
         # --- VTOL ---
         "pVTOLModule": (810, 750, "pV", False),
-        "pVTOL1": (890, 700, "pV1", False),
-        "pVTOL1Battery": (860, 595, "pV1B", False),
-        "pVTOL1InsideBatterySlot": (810, 630, "V1BIn", True),
-        "pVTOL1BeforeBatterySlot": (810, 690, "V1BBef", True),
-
         "pVTOL2": (890, 800, "pV2", False),
         "pVTOL2Battery1": (860, 960, "V2B1", False),
         "pVTOL2InsideBattery1Slot": (810, 910, "V2B1In", True),
@@ -355,8 +292,6 @@ class TrajectoryMapWidget(QWidget):
         "pVTOL2Battery2": (930, 960, "V2B2", False),
         "pVTOL2InsideBattery2Slot": (980, 910, "V2B2In", True),
         "pVTOL2BeforeBattery2Slot": (980, 830, "V2B2Bef", True),
-
-        "pVTOL2Battery2Charge": (980, 980, "V2C2С", True),
     }
 
     EDGES = [
@@ -371,9 +306,6 @@ class TrajectoryMapWidget(QWidget):
         # Helicopter ветка
         ("pHelicopterModule", "pHelicopter1"),
         ("pHelicopterModule", "pHelicopter2"),
-        ("pHelicopter1", "pHelicopter1Payload"),
-        ("pHelicopter1Payload", "pHelicopter1InsideSlot"),
-        ("pHelicopter1InsideSlot", "pHelicopter1BeforeSlot"),
 
         ("pHelicopter2", "pHelicopter2Payload"),
         ("pHelicopter2", "pHelicopter2Battery1"),
@@ -459,17 +391,10 @@ class TrajectoryMapWidget(QWidget):
         # ===== ТРАССА 2: С ГРУЗОМ =====
         # От Home с грузом
         ("pHomePositionWithSomeCargo", "pHelicopterModuleWithSomeCargo"),
-        ("pHomePositionWithSomeCargo", "pPayloadWithPL"),
-        ("pHomePositionWithSomeCargo", "pChargerWithBatt"),
         ("pHomePositionWithSomeCargo", "pVTOLModuleWithSomeCargo"),
-        ("pHomePositionWithSomeCargo", "pGrippersWithGrip"),
 
         # Helicopter ветка с грузом
-        ("pHelicopterModuleWithSomeCargo", "pHelicopter1WithPL"),
         ("pHelicopterModuleWithSomeCargo", "pHelicopter2WithSomeCargo"),
-        ("pHelicopter1WithPL", "pHelicopter1PayloadWithPL"),
-        ("pHelicopter1PayloadWithPL", "pHelicopter1InSlot"),
-        ("pHelicopter1InSlot", "pHelicopter1AfterSlot"),
 
         ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt1"),
         ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt2"),
@@ -492,16 +417,6 @@ class TrajectoryMapWidget(QWidget):
         ("pPayload2WithPL", "pPayload2InSlot"),
         ("pPayload2WithPL", "pPayload2AfterSlot"),
         ("pPayload2InSlot", "pPayload2AfterSlot"),
-
-        # Grippers ветка с грузом
-        ("pGrippersWithGrip", "pGrippers1WithGrip"),
-        ("pGrippersWithGrip", "pGrippers2WithGrip"),
-        ("pGrippers1WithGrip", "pGrippers1InSlot"),
-        ("pGrippers1WithGrip", "pGrippers1AfterSlot"),
-        ("pGrippers1InSlot", "pGrippers1AfterSlot"),
-        ("pGrippers2WithGrip", "pGrippers2InSlot"),
-        ("pGrippers2WithGrip", "pGrippers2AfterSlot"),
-        ("pGrippers2InSlot", "pGrippers2AfterSlot"),
 
         # Charger ветка с грузом
         ("pChargerWithBatt", "pHelicopter2Charger1WithBatt"),
@@ -556,10 +471,7 @@ class TrajectoryMapWidget(QWidget):
         ("pVTOL2InBattery2Slot", "pVTOL2AfterBattery2Slot"),
 
         # ===== МОСТИКИ между состояниями (без груза ↔ с грузом) =====
-        ("pHomePosition", "pHomePositionWithSomeCargo"),
         ("pHelicopterModule", "pHelicopterModuleWithSomeCargo"),
-        ("pPayload", "pPayloadWithPL"),
-        ("pGrippers", "pGrippersWithGrip"),
         ("pCharger", "pChargerWithBatt"),
         ("pVTOLModule", "pVTOLModuleWithSomeCargo"),
     ]
@@ -567,9 +479,6 @@ class TrajectoryMapWidget(QWidget):
     ZONES = [
         # --- Верхняя половина (с грузом) ---
         (20, 50, 230, 450, "helicopter_cargo", "Вертолёт (с грузом)"),
-        (280, 50, 220, 190, "payload_cargo", "Нагрузка (с грузом)"),
-        (530, 50, 220, 190, "grippers_cargo", "Захваты (с грузом)"),
-        (280, 260, 470, 240, "charger_cargo", ""),
         (780, 50, 230, 450, "vtol_cargo", "ВТОЛ (с грузом)"),
 
         # --- Нижняя половина (без груза) ---
