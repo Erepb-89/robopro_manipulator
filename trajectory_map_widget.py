@@ -211,15 +211,6 @@ class TrajectoryMapWidget(QWidget):
         "pHelicopter2InSlot2": (220, 410, "H2InS2", True),
         "pHelicopter2AfterSlot2": (220, 330, "H2AftS2", True),
 
-        # --- VTOL cargo ---
-        "pVTOL2WithBatt": (890, 300, "pV2+", False),
-        "pVTOL2Battery1WithBatt": (860, 460, "V2B1+", False),
-        "pVTOL2InBattery1Slot": (810, 410, "V2B1InS+", True),
-        "pVTOL2AfterBattery1Slot": (810, 330, "V2B1Aft+", True),
-        "pVTOL2Battery2WithBatt": (930, 460, "V2B2+", False),
-        "pVTOL2InBattery2Slot": (980, 410, "V2B2InS+", True),
-        "pVTOL2AfterBattery2Slot": (980, 330, "V2B2Aft+", True),
-
         # ========== НИЖНЯЯ ПОЛОВИНА (без груза) (Y + 500) ==========
         "pHomePosition": (510, 750, "Home", False),
 
@@ -282,6 +273,7 @@ class TrajectoryMapWidget(QWidget):
 
         # --- VTOL ---
         "pVTOLModule": (810, 750, "pV", False),
+        "pVTOL1": (890, 700, "pV1", False),
         "pVTOL2": (890, 800, "pV2", False),
         "pVTOL2Battery1": (860, 960, "V2B1", False),
         "pVTOL2InsideBattery1Slot": (810, 910, "V2B1In", True),
@@ -395,7 +387,6 @@ class TrajectoryMapWidget(QWidget):
 
         ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt1"),
         ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt2"),
-        ("pHelicopter2WithSomeCargo", "pHelicopter2PayloadWithPL"),
         ("pHelicopter2WithSomeCargo", "pHelicopter2AfterSlot1"),
         ("pHelicopter2WithSomeCargo", "pHelicopter2AfterSlot2"),
         ("pHelicopter2WithBatt1", "pHelicopter2InSlot1"),
@@ -405,16 +396,7 @@ class TrajectoryMapWidget(QWidget):
         ("pHelicopter2WithBatt2", "pHelicopter2AfterSlot2"),
         ("pHelicopter2InSlot2", "pHelicopter2AfterSlot2"),
 
-        # Payload ветка с грузом
-        ("pPayloadWithPL", "pPayload1WithPL"),
-        ("pPayloadWithPL", "pPayload2WithPL"),
-        ("pPayload1WithPL", "pPayload1InSlot"),
-        ("pPayload1WithPL", "pPayload1AfterSlot"),
-        ("pPayload1InSlot", "pPayload1AfterSlot"),
-        ("pPayload2WithPL", "pPayload2InSlot"),
-        ("pPayload2WithPL", "pPayload2AfterSlot"),
-        ("pPayload2InSlot", "pPayload2AfterSlot"),
-
+        # Charger ветка с грузом
         ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot1WithBatt"),
         ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot2WithBatt"),
         ("pVTOL2Charger1Slot1WithBatt", "pVTOL2Charger1InSlot1"),
@@ -435,23 +417,11 @@ class TrajectoryMapWidget(QWidget):
 
         # VTOL ветка с грузом
         ("pVTOLModuleWithSomeCargo", "pVTOL1WithSomeCargo"),
-        ("pVTOLModuleWithSomeCargo", "pVTOL2WithBatt"),
         ("pVTOL1WithSomeCargo", "pVTOL1BatteryWithBatt"),
         ("pVTOL1WithSomeCargo", "pVTOL1AfterBatterySlot"),
         ("pVTOL1BatteryWithBatt", "pVTOL1InBatterySlot"),
         ("pVTOL1BatteryWithBatt", "pVTOL1AfterBatterySlot"),
         ("pVTOL1InBatterySlot", "pVTOL1AfterBatterySlot"),
-
-        ("pVTOL2WithBatt", "pVTOL2Battery1WithBatt"),
-        ("pVTOL2WithBatt", "pVTOL2Battery2WithBatt"),
-        ("pVTOL2WithBatt", "pVTOL2AfterBattery1Slot"),
-        ("pVTOL2WithBatt", "pVTOL2AfterBattery2Slot"),
-        ("pVTOL2Battery1WithBatt", "pVTOL2InBattery1Slot"),
-        ("pVTOL2Battery1WithBatt", "pVTOL2AfterBattery1Slot"),
-        ("pVTOL2InBattery1Slot", "pVTOL2AfterBattery1Slot"),
-        ("pVTOL2Battery2WithBatt", "pVTOL2InBattery2Slot"),
-        ("pVTOL2Battery2WithBatt", "pVTOL2AfterBattery2Slot"),
-        ("pVTOL2InBattery2Slot", "pVTOL2AfterBattery2Slot"),
 
         # ===== МОСТИКИ между состояниями (без груза ↔ с грузом) =====
         ("pHelicopterModule", "pHelicopterModuleWithSomeCargo"),
@@ -461,7 +431,6 @@ class TrajectoryMapWidget(QWidget):
     ZONES = [
         # --- Верхняя половина (с грузом) ---
         (20, 50, 230, 450, "helicopter_cargo", "Вертолёт (с грузом)"),
-        (780, 50, 230, 450, "vtol_cargo", "ВТОЛ (с грузом)"),
 
         # --- Нижняя половина (без груза) ---
         (20, 550, 230, 450, "helicopter", "Вертолёт"),
@@ -482,10 +451,6 @@ class TrajectoryMapWidget(QWidget):
     DRONE_LABELS_CARGO = [
         (145, 105, "ВТ-30Е", QColor(41, 98, 255)),
         (140, 500, "Альфа-Е", QColor(41, 98, 255)),
-        (920, 105, "InnoVTOL-3e", QColor(76, 175, 80)),
-        (900, 500, "Легионер Е29", QColor(76, 175, 80)),
-        (340, 500, "Зарядка (с грузом)", QColor(156, 39, 176, 180).darker(120)),
-
     ]
 
     def __init__(self, parent=None):
