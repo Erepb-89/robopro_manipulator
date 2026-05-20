@@ -1750,19 +1750,6 @@
             ]
         },
         {
-            "name": "tVTOL2BeforeBattery1Slot_To_VTOL2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2BeforeBattery1Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2BeforeBattery1Slot_To_VTOL2",
             "positions": [
                 {
@@ -1815,19 +1802,6 @@
             ]
         },
         {
-            "name": "tVTOL2BeforeBattery2Slot_To_VTOL2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2BeforeBattery2Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2BeforeBattery2Slot_To_VTOL2",
             "positions": [
                 {
@@ -1862,58 +1836,6 @@
                 },
                 {
                     "name": "pVTOL1AfterPayloadSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Battery1WithBatt_To_VTOL2InBattery1Slot",
-            "positions": [
-                {
-                    "name": "pVTOL2Battery1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2InBattery1Slot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2InBattery1Slot_To_VTOL2AfterBattery1Slot",
-            "positions": [
-                {
-                    "name": "pVTOL2InBattery1Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2AfterBattery1Slot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Battery2WithBatt_To_VTOL2InBattery2Slot",
-            "positions": [
-                {
-                    "name": "pVTOL2Battery2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2InBattery2Slot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2InBattery2Slot_To_VTOL2AfterBattery2Slot",
-            "positions": [
-                {
-                    "name": "pVTOL2InBattery2Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2AfterBattery2Slot",
                     "motion": "joint"
                 }
             ]
