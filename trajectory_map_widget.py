@@ -211,9 +211,6 @@ class TrajectoryMapWidget(QWidget):
         "pHelicopter2InSlot2": (220, 410, "H2InS2", True),
         "pHelicopter2AfterSlot2": (220, 330, "H2AftS2", True),
 
-        # --- Charger cargo ---
-        "pChargerWithBatt": (500, 330, "pC+", False),
-
         # --- VTOL cargo ---
         "pVTOL2WithBatt": (890, 300, "pV2+", False),
         "pVTOL2Battery1WithBatt": (860, 460, "V2B1+", False),
@@ -418,20 +415,6 @@ class TrajectoryMapWidget(QWidget):
         ("pPayload2WithPL", "pPayload2AfterSlot"),
         ("pPayload2InSlot", "pPayload2AfterSlot"),
 
-        # Charger ветка с грузом
-        ("pChargerWithBatt", "pHelicopter2Charger1WithBatt"),
-        ("pChargerWithBatt", "pVTOL2Charger1WithBatt"),
-        ("pChargerWithBatt", "pVTOL2Charger2WithBatt"),
-
-        ("pHelicopter2Charger1WithBatt", "pHelicopter2Charger1Slot1WithBatt"),
-        ("pHelicopter2Charger1WithBatt", "pHelicopter2Charger1Slot2WithBatt"),
-        ("pHelicopter2Charger1Slot1WithBatt", "pHelicopter2Charger1InSlot1"),
-        ("pHelicopter2Charger1Slot1WithBatt", "pHelicopter2Charger1AfterSlot1"),
-        ("pHelicopter2Charger1InSlot1", "pHelicopter2Charger1AfterSlot1"),
-        ("pHelicopter2Charger1Slot2WithBatt", "pHelicopter2Charger1InSlot2"),
-        ("pHelicopter2Charger1Slot2WithBatt", "pHelicopter2Charger1AfterSlot2"),
-        ("pHelicopter2Charger1InSlot2", "pHelicopter2Charger1AfterSlot2"),
-
         ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot1WithBatt"),
         ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot2WithBatt"),
         ("pVTOL2Charger1Slot1WithBatt", "pVTOL2Charger1InSlot1"),
@@ -472,7 +455,6 @@ class TrajectoryMapWidget(QWidget):
 
         # ===== МОСТИКИ между состояниями (без груза ↔ с грузом) =====
         ("pHelicopterModule", "pHelicopterModuleWithSomeCargo"),
-        ("pCharger", "pChargerWithBatt"),
         ("pVTOLModule", "pVTOLModuleWithSomeCargo"),
     ]
 
