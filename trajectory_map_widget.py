@@ -380,7 +380,6 @@ class TrajectoryMapWidget(QWidget):
         # ===== ТРАССА 2: С ГРУЗОМ =====
         # От Home с грузом
         ("pHomePositionWithSomeCargo", "pHelicopterModuleWithSomeCargo"),
-        ("pHomePositionWithSomeCargo", "pVTOLModuleWithSomeCargo"),
 
         # Helicopter ветка с грузом
         ("pHelicopterModuleWithSomeCargo", "pHelicopter2WithSomeCargo"),
@@ -416,7 +415,6 @@ class TrajectoryMapWidget(QWidget):
         ("pVTOL2Charger2InSlot2", "pVTOL2Charger2AfterSlot2"),
 
         # VTOL ветка с грузом
-        ("pVTOLModuleWithSomeCargo", "pVTOL1WithSomeCargo"),
         ("pVTOL1WithSomeCargo", "pVTOL1BatteryWithBatt"),
         ("pVTOL1WithSomeCargo", "pVTOL1AfterBatterySlot"),
         ("pVTOL1BatteryWithBatt", "pVTOL1InBatterySlot"),
@@ -425,7 +423,6 @@ class TrajectoryMapWidget(QWidget):
 
         # ===== МОСТИКИ между состояниями (без груза ↔ с грузом) =====
         ("pHelicopterModule", "pHelicopterModuleWithSomeCargo"),
-        ("pVTOLModule", "pVTOLModuleWithSomeCargo"),
     ]
 
     ZONES = [
