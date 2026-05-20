@@ -762,7 +762,7 @@
                     "motion": "joint"
                 },
                 {
-                    "name": "pVTOL2Charger1_mid",
+                    "name": "pVTOL2Charger1_pre",
                     "motion": "joint"
                 },
                 {
@@ -1025,7 +1025,7 @@
                     "motion": "joint"
                 },
                 {
-                    "name": "pVTOL2Charger1_mid",
+                    "name": "pVTOL2Charger1_pre",
                     "motion": "joint"
                 },
                 {
@@ -2066,6 +2066,10 @@
             "name": "tVTOL2Charger2Slot1_grab_in_batt",
             "positions": [
                 {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker5",
+                    "motion": "joint"
+                },
+                {
                     "name": "pVTOL2Charger2BeforeSlot2_taker4_5",
                     "motion": "joint"
                 }
@@ -2281,6 +2285,10 @@
         {
             "name": "tVTOL2Charger2Slot2_grab_in_batt",
             "positions": [
+                {
+                    "name": "pVTOL2Charger2BeforeSlot2_taker5",
+                    "motion": "joint"
+                },
                 {
                     "name": "pVTOL2Charger2BeforeSlot2_taker4_5",
                     "motion": "joint"
