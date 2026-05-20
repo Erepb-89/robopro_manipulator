@@ -14,32 +14,6 @@
             ]
         },
         {
-            "name": "tHomePosition_To_HomePositionWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHomePosition",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHomePositionWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHomePositionWithSomeCargo_To_HomePosition",
-            "positions": [
-                {
-                    "name": "pHomePositionWithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHomePosition",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopterModule_To_HomePosition",
             "positions": [
                 {
@@ -74,32 +48,6 @@
                 },
                 {
                     "name": "pHelicopterModule",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1_To_Helicopter1Payload",
-            "positions": [
-                {
-                    "name": "pHelicopter1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1Payload",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1Payload_To_Helicopter1",
-            "positions": [
-                {
-                    "name": "pHelicopter1Payload",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1",
                     "motion": "joint"
                 }
             ]
@@ -386,19 +334,6 @@
                 },
                 {
                     "name": "pHelicopter2WithBatt2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithSomeCargo_To_Helicopter2PayloadWithPL",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2PayloadWithPL",
                     "motion": "joint"
                 }
             ]
@@ -867,62 +802,6 @@
             ]
         },
         {
-            "name": "tChargerWithBatt_To_Helicopter2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt_pre",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tChargerWithBatt_To_HomePositionWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHomePositionWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tChargerWithBatt_To_VTOL2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tChargerWithBatt_To_VTOL2Charger2WithBatt",
-            "positions": [
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopter2Charger1_To_Charger",
             "positions": [
                 {
@@ -1061,101 +940,6 @@
             ]
         },
         {
-            "name": "tHelicopter2Charger1BeforeSlot1_To_Helicopter2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1BeforeSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Slot1WithBatt_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Slot1WithBatt_To_Helicopter2Charger1InSlot1",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1InSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Slot1WithBatt_To_Helicopter2Charger1AfterSlot1",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1InSlot1_To_Helicopter2Charger1Slot1WithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1InSlot1_To_Helicopter2Charger1AfterSlot1",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1AfterSlot1_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1AfterSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopter2Charger1Slot2_To_Helicopter2Charger1",
             "positions": [
                 {
@@ -1229,140 +1013,6 @@
                 },
                 {
                     "name": "pHelicopter2Charger1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1BeforeSlot2_To_Helicopter2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1BeforeSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Slot2WithBatt_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Slot2WithBatt_To_Helicopter2Charger1InSlot2",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1InSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Slot2WithBatt_To_Helicopter2Charger1AfterSlot2",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1InSlot2_To_Helicopter2Charger1Slot2WithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1InSlot2_To_Helicopter2Charger1AfterSlot2",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1AfterSlot2_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1AfterSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1WithBatt_To_Helicopter2Charger1Slot1WithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1WithBatt_To_Helicopter2Charger1Slot2WithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1WithBatt_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt_pre",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1493,19 +1143,6 @@
             ]
         },
         {
-            "name": "tVTOL2Charger1BeforeSlot1_To_VTOL2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1BeforeSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2Charger1BeforeSlot1_To_VTOL2Charger1",
             "positions": [
                 {
@@ -1514,88 +1151,6 @@
                 },
                 {
                     "name": "pVTOL2Charger1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1Slot1WithBatt_To_pVTOL2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1Slot1WithBatt_To_VTOL2Charger1InSlot1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1InSlot1_pre",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1InSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1Slot1WithBatt_To_VTOL2Charger1AfterSlot1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1InSlot1_To_VTOL2Charger1Slot1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1InSlot1_To_VTOL2Charger1AfterSlot1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1AfterSlot1_To_VTOL2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1AfterSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1666,19 +1221,6 @@
             ]
         },
         {
-            "name": "tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1BeforeSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1",
             "positions": [
                 {
@@ -1687,123 +1229,6 @@
                 },
                 {
                     "name": "pVTOL2Charger1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1Slot2WithBatt_To_pVTOL2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1Slot2WithBatt_To_VTOL2Charger1InSlot2",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1InSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1Slot2WithBatt_To_VTOL2Charger1AfterSlot2",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1InSlot2_To_VTOL2Charger1Slot2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1Slot2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1InSlot2_To_VTOL2Charger1AfterSlot2",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1AfterSlot2_To_VTOL2Charger1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1AfterSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1WithBatt_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1WithBatt_To_VTOL2Charger1Slot1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1Slot1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger1WithBatt_To_VTOL2Charger1Slot2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1Slot2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -1926,19 +1351,6 @@
             ]
         },
         {
-            "name": "tVTOL2Charger2BeforeSlot1_To_VTOL2Charger2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2BeforeSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2Charger2BeforeSlot1_To_VTOL2Charger2",
             "positions": [
                 {
@@ -1947,84 +1359,6 @@
                 },
                 {
                     "name": "pVTOL2Charger2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2Slot1WithBatt_To_pVTOL2Charger2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2Slot1WithBatt_To_VTOL2Charger2InSlot1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2InSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2Slot1WithBatt_To_VTOL2Charger2AfterSlot1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2Slot1WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2InSlot1_To_VTOL2Charger2Slot1WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2Slot1WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2InSlot1_To_VTOL2Charger2AfterSlot1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2AfterSlot1_To_VTOL2Charger2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2AfterSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -2095,19 +1429,6 @@
             ]
         },
         {
-            "name": "tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2BeforeSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2",
             "positions": [
                 {
@@ -2116,84 +1437,6 @@
                 },
                 {
                     "name": "pVTOL2Charger2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2Slot2WithBatt_To_pVTOL2Charger2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2Slot2WithBatt_To_VTOL2Charger2InSlot2",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2InSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2Slot2WithBatt_To_VTOL2Charger2AfterSlot2",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2Slot2WithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2InSlot2_To_VTOL2Charger2Slot2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2Slot2WithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2InSlot2_To_VTOL2Charger2AfterSlot2",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2AfterSlot2_To_VTOL2Charger2WithBatt",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2AfterSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2WithBatt",
                     "motion": "joint"
                 }
             ]
@@ -2251,58 +1494,6 @@
             ]
         },
         {
-            "name": "tVTOL1_To_VTOL1Payload",
-            "positions": [
-                {
-                    "name": "pVTOL1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1Payload",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1Payload_To_VTOL1",
-            "positions": [
-                {
-                    "name": "pVTOL1Payload",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1_To_VTOL1Battery",
-            "positions": [
-                {
-                    "name": "pVTOL1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1Battery",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1Battery_To_VTOL1",
-            "positions": [
-                {
-                    "name": "pVTOL1Battery",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOLModule_To_VTOL2",
             "positions": [
                 {
@@ -2311,143 +1502,6 @@
                 },
                 {
                     "name": "pVTOL2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2_To_VTOLModule",
-            "positions": [
-                {
-                    "name": "pVTOL2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryOut",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryPreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryOnCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryPreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryUp",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryPreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryOnCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryPreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2BatteryOut",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Out",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Out",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2OutPreMove",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2OutMove",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Up",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreStation",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Charge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2AfterCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2AfterCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Charge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2AfterCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreStation",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Up",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2OutMove2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreMove2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2BatteryIn",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreStop",
                     "motion": "joint"
                 }
             ]
@@ -2514,103 +1568,6 @@
             ]
         },
         {
-            "name": "tVTOL2Battery_To_VTOL2",
-            "positions": [
-                {
-                    "name": "pVTOL2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Out",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Out",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2OutPreMove",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2OutMove",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Up",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreStation",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Charge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2AfterCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2AfterCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Charge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2AfterCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreCharge",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreStation",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2Up",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2OutMove2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreMove2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2BatteryIn",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Battery2PreStop",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2_To_VTOL2Battery1",
             "positions": [
                 {
@@ -2650,71 +1607,6 @@
             ]
         },
         {
-            "name": "tHelicopterModule_To_HomePositionWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopterModule",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHomePositionWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopterModule_To_Helicopter1WithPL",
-            "positions": [
-                {
-                    "name": "pHelicopterModule",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1WithPL",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1WithPL_To_HelicopterModuleWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopter1WithPL",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopterModuleWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1InsideSlot_To_Helicopter1BeforeSlot",
-            "positions": [
-                {
-                    "name": "pHelicopter1InsideSlot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1BeforeSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1BeforeSlot_To_Helicopter1WithPL",
-            "positions": [
-                {
-                    "name": "pHelicopter1BeforeSlot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1WithPL",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopterModule_To_Helicopter2WithPL",
             "positions": [
                 {
@@ -2728,84 +1620,6 @@
             ]
         },
         {
-            "name": "tHelicopter1WithPL_To_Helicopter1PayloadWithPL",
-            "positions": [
-                {
-                    "name": "pHelicopter1WithPL",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1PayloadWithPL",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHomePosition_To_PayloadWithPL",
-            "positions": [
-                {
-                    "name": "pHomePosition",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pPayloadWithPL",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tPayload_To_HomePositionWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pPayload",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHomePositionWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHomePosition_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pHomePosition",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHomePosition_To_VTOLModuleWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHomePosition",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOLModuleWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOLModule_To_HomePositionWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pVTOLModule",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHomePositionWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2Battery2_To_VTOL2_withVTOL2Batt2",
             "positions": [
                 {
@@ -2814,32 +1628,6 @@
                 },
                 {
                     "name": "pVTOL2_withVTOL2Batt2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1Payload_To_Helicopter1InsideSlot",
-            "positions": [
-                {
-                    "name": "pHelicopter1Payload",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1InsideSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1Payload_To_Helicopter1BeforeSlot",
-            "positions": [
-                {
-                    "name": "pHelicopter1Payload",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1BeforeSlot",
                     "motion": "joint"
                 }
             ]
@@ -2918,32 +1706,6 @@
                 },
                 {
                     "name": "pVTOL1BeforePayloadSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1Battery_To_VTOL1InsideBatterySlot",
-            "positions": [
-                {
-                    "name": "pVTOL1Battery",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1InsideBatterySlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1InsideBattery1Slot_To_VTOL1BeforeBatterySlot",
-            "positions": [
-                {
-                    "name": "pVTOL1InsideBattery1Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1BeforeBatterySlot",
                     "motion": "joint"
                 }
             ]
@@ -3079,97 +1841,6 @@
             ]
         },
         {
-            "name": "tHelicopter1PayloadWithPL_To_Helicopter1InSlot",
-            "positions": [
-                {
-                    "name": "pHelicopter1PayloadWithPL",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1InSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter1InSlot_To_Helicopter1AfterSlot",
-            "positions": [
-                {
-                    "name": "pHelicopter1InSlot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter1AfterSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tPayload1WithPL_To_Payload1InSlot",
-            "positions": [
-                {
-                    "name": "pPayload1WithPL",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pPayload1InSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tGrippers1InSlot_To_Grippers1AfterSlot",
-            "positions": [
-                {
-                    "name": "pGrippers1InSlot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pGrippers1AfterSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tGrippers1WithGrip_To_Grippers1InSlot",
-            "positions": [
-                {
-                    "name": "pGrippers1WithGrip",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pGrippers1InSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tGrippers2WithGrip_To_Grippers2InSlot",
-            "positions": [
-                {
-                    "name": "pGrippers2WithGrip",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pGrippers2InSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tGrippers2InSlot_To_Grippers2AfterSlot",
-            "positions": [
-                {
-                    "name": "pGrippers2InSlot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pGrippers2AfterSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL1PayloadWithPL_To_VTOL1InPayloadSlot",
             "positions": [
                 {
@@ -3191,32 +1862,6 @@
                 },
                 {
                     "name": "pVTOL1AfterPayloadSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1BatteryWithBatt_To_VTOL1InBatterySlot",
-            "positions": [
-                {
-                    "name": "pVTOL1BatteryWithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1InBatterySlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1InBattery1Slot_To_VTOL1AfterBatterySlot",
-            "positions": [
-                {
-                    "name": "pVTOL1InBattery1Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1AfterBatterySlot",
                     "motion": "joint"
                 }
             ]
@@ -3274,40 +1919,6 @@
             ]
         },
         {
-            "name": "tCharger_To_ChargerWithBatt",
-            "positions": [
-                {
-                    "name": "pCharger",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1_mid",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tChargerWithBatt_To_Charger",
-            "positions": [
-                {
-                    "name": "pChargerWithBatt",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1_mid",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pCharger",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopterModule_To_HelicopterModuleWithSomeCargo",
             "positions": [
                 {
@@ -3329,84 +1940,6 @@
                 },
                 {
                     "name": "pHelicopterModule",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tPayload_To_PayloadWithPL",
-            "positions": [
-                {
-                    "name": "pPayload",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pPayloadWithPL",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tPayloadWithPL_To_Payload",
-            "positions": [
-                {
-                    "name": "pPayloadWithPL",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pPayload",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tGrippers_To_GrippersWithGrip",
-            "positions": [
-                {
-                    "name": "pGrippers",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pGrippersWithGrip",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tGrippersWithGrip_To_Grippers",
-            "positions": [
-                {
-                    "name": "pGrippersWithGrip",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pGrippers",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOLModule_To_VTOLModuleWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pVTOLModule",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOLModuleWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOLModuleWithSomeCargo_To_VTOLModule",
-            "positions": [
-                {
-                    "name": "pVTOLModuleWithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOLModule",
                     "motion": "joint"
                 }
             ]
