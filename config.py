@@ -265,6 +265,7 @@ ZONE_BORDER_COLORS = {
 
 # ── Карта траекторий: цвета узлов ─────────────────────────────
 NODE_BASE_COLOR = QColor(41, 98, 255)
+NODE_MAJOR_COLOR = QColor(255, 163, 7)
 NODE_ENDPOINT_COLOR = QColor(255, 87, 34)
 NODE_HOME_COLOR = QColor(244, 67, 54)
 NODE_CURRENT_COLOR = QColor(76, 175, 80)
