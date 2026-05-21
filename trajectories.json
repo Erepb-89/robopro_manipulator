@@ -196,19 +196,6 @@
             ]
         },
         {
-            "name": "tHelicopter2BeforeBattery1Slot_To_Helicopter2WithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopter2BeforeBattery1Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopter2BeforeBattery1Slot_To_Helicopter2",
             "positions": [
                 {
@@ -287,19 +274,6 @@
             ]
         },
         {
-            "name": "tHelicopter2BeforeBattery2Slot_To_Helicopter2WithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopter2BeforeBattery2Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopter2BeforeBattery2Slot_To_Helicopter2",
             "positions": [
                 {
@@ -308,214 +282,6 @@
                 },
                 {
                     "name": "pHelicopter2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithSomeCargo_To_Helicopter2WithBatt1",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithBatt1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithSomeCargo_To_Helicopter2WithBatt2",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithBatt2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithSomeCargo_To_Helicopter2AfterSlot1",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithSomeCargo_To_Helicopter2AfterSlot2",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithBatt1_To_Helicopter2WithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithBatt1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithBatt1_To_Helicopter2InSlot1",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithBatt1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2InSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithBatt1_To_Helicopter2AfterSlot1",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithBatt1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2InSlot1_To_Helicopter2WithBatt1",
-            "positions": [
-                {
-                    "name": "pHelicopter2InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithBatt1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2InSlot1_To_Helicopter2AfterSlot1",
-            "positions": [
-                {
-                    "name": "pHelicopter2InSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2AfterSlot1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2AfterSlot1_To_Helicopter2WithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopter2AfterSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithBatt2_To_Helicopter2WithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithBatt2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithBatt2_To_Helicopter2InSlot2",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithBatt2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2InSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2WithBatt2_To_Helicopter2AfterSlot2",
-            "positions": [
-                {
-                    "name": "pHelicopter2WithBatt2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2InSlot2_To_Helicopter2WithBatt2",
-            "positions": [
-                {
-                    "name": "pHelicopter2InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithBatt2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2InSlot2_To_Helicopter2AfterSlot2",
-            "positions": [
-                {
-                    "name": "pHelicopter2InSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2AfterSlot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2AfterSlot2_To_Helicopter2WithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopter2AfterSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2WithSomeCargo",
                     "motion": "joint"
                 }
             ]
@@ -1594,19 +1360,6 @@
             ]
         },
         {
-            "name": "tHomePosition_To_HelicopterModuleWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHomePosition",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopterModuleWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopterModule_To_Helicopter2WithPL",
             "positions": [
                 {
@@ -1680,19 +1433,6 @@
                 },
                 {
                     "name": "pGrippers2BeforeSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1Payload_To_VTOL1InsidePayloadSlot",
-            "positions": [
-                {
-                    "name": "pVTOL1Payload",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1InsidePayloadSlot",
                     "motion": "joint"
                 }
             ]
@@ -1810,58 +1550,6 @@
                 },
                 {
                     "name": "pVTOL2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1PayloadWithPL_To_VTOL1InPayloadSlot",
-            "positions": [
-                {
-                    "name": "pVTOL1PayloadWithPL",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1InPayloadSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL1InPayloadSlot_To_VTOL1AfterPayloadSlot",
-            "positions": [
-                {
-                    "name": "pVTOL1InPayloadSlot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL1AfterPayloadSlot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopterModule_To_HelicopterModuleWithSomeCargo",
-            "positions": [
-                {
-                    "name": "pHelicopterModule",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopterModuleWithSomeCargo",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopterModuleWithSomeCargo_To_HelicopterModule",
-            "positions": [
-                {
-                    "name": "pHelicopterModuleWithSomeCargo",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopterModule",
                     "motion": "joint"
                 }
             ]
