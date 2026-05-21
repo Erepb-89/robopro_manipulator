@@ -23,7 +23,7 @@ from config import (
     PEN_NORMAL, PEN_DIM, PEN_HL, PEN_BACK_ARROW,
     MAP_STATUS_OK, MAP_STATUS_WARN, MAP_STATUS_ALM, MAP_STATUS_OFF,
     ZONE_BLOCK_MAP, GROUPS, SEP_COLOR, PORT_TYPE,
-    STATIONARY_PORT_COLOR, MOBILE_PORT_COLOR,
+    STATIONARY_PORT_COLOR, MOBILE_PORT_COLOR, NODE_MAJOR_COLOR,
 )
 
 # Точки, требующие открытого люка соответствующего стола
@@ -75,13 +75,15 @@ class NodeItem(QGraphicsEllipseItem):
     """Интерактивная точка (узел) на карте траекторий."""
 
     def __init__(self, point_name, display_name, x, y, radius=18,
-                 color=NODE_BASE_COLOR, is_endpoint=False, parent_widget=None):
+                 color=NODE_BASE_COLOR, is_endpoint=False, parent_widget=None,
+                 is_major=False):
         super().__init__(-radius, -radius, radius * 2, radius * 2)
         self.point_name = point_name
         self.display_name = display_name
         self.radius = radius
         self.base_color = color
         self.is_endpoint = is_endpoint
+        self.is_major = is_major
         self.parent_widget = parent_widget
         self._is_blocked = False
 
@@ -141,9 +143,14 @@ class NodeItem(QGraphicsEllipseItem):
                 # Восстанавливаем заблокированный вид
                 self._apply_blocked_style()
             else:
-                color = (NODE_HOME_COLOR if "pHomePosition" in self.point_name
-                         else NODE_ENDPOINT_COLOR if self.is_endpoint
-                else NODE_BASE_COLOR)
+                if "pHomePosition" in self.point_name:
+                    color = NODE_HOME_COLOR
+                elif self.is_major:
+                    color = NODE_MAJOR_COLOR
+                elif self.is_endpoint:
+                    color = NODE_ENDPOINT_COLOR
+                else:
+                    color = NODE_BASE_COLOR
                 self.base_color = color
                 self.setBrush(QBrush(color))
                 self.setPen(QPen(color.darker(140), 2))
@@ -155,9 +162,14 @@ class NodeItem(QGraphicsEllipseItem):
             self._apply_blocked_style()
             self._tooltip.setPlainText(f"{self.point_name}\n🔒 {reason}")
         else:
-            color = (NODE_HOME_COLOR if "pHomePosition" in self.point_name
-                     else NODE_ENDPOINT_COLOR if self.is_endpoint
-            else NODE_BASE_COLOR)
+            if "pHomePosition" in self.point_name:
+                color = NODE_HOME_COLOR
+            elif self.is_major:
+                color = NODE_MAJOR_COLOR
+            elif self.is_endpoint:
+                color = NODE_ENDPOINT_COLOR
+            else:
+                color = NODE_BASE_COLOR
             self.base_color = color
             self.setBrush(QBrush(color))
             self.setPen(QPen(color.darker(140), 2))
@@ -199,75 +211,69 @@ class TrajectoryMapWidget(QWidget):
     node_clicked = pyqtSignal(str)
 
     NODE_LAYOUT = {
-        "pHomePosition": (510, 750, "Home", False),
+        "pHomePosition": (510, 750, "Home", False, True),  # Home – основная
 
-        # --- Helicopter ---
-        "pHelicopterModule": (220, 750, "pH", False),
-        "pHelicopter1": (130, 700, "pH1", False),
+        "pHelicopterModule": (220, 750, "pH", False, True),  # основная
+        "pHelicopter1": (130, 700, "pH1", False, True),  # основной узел
+        "pHelicopter2": (130, 800, "pH2", False, True),  # основной узел
+        "pHelicopter2Battery1": (100, 960, "H2B1", False, False),
+        "pHelicopter2InsideBattery1Slot": (45, 910, "H2B1In", True, False),
+        "pHelicopter2BeforeBattery1Slot": (45, 830, "H2B1Bef", True, False),
+        "pHelicopter2Battery2": (170, 960, "H2B2", False, False),
+        "pHelicopter2InsideBattery2Slot": (220, 910, "H2B2In", True, False),
+        "pHelicopter2BeforeBattery2Slot": (220, 830, "H2B2Bef", True, False),
+        "pHelicopter2Payload": (45, 750, "pH2L", False, False),
 
-        "pHelicopter2": (130, 800, "pH2", False),
-        "pHelicopter2Battery1": (100, 960, "H2B1", False),
-        "pHelicopter2InsideBattery1Slot": (45, 910, "H2B1In", True),
-        "pHelicopter2BeforeBattery1Slot": (45, 830, "H2B1Bef", True),
-        "pHelicopter2Battery2": (170, 960, "H2B2", False),
-        "pHelicopter2InsideBattery2Slot": (220, 910, "H2B2In", True),
-        "pHelicopter2BeforeBattery2Slot": (220, 830, "H2B2Bef", True),
-        "pHelicopter2Payload": (45, 750, "pH2L", False),
+        "pPayload": (390, 700, "pL", False, True),  # основная
+        "pPayload1": (340, 650, "pL1", False, False),
+        "pPayload1InsideSlot": (310, 595, "PL1In", True, False),
+        "pPayload1BeforeSlot": (370, 595, "PL1Bef", True, False),
+        "pPayload2": (440, 650, "pL2", False, False),
+        "pPayload2InsideSlot": (470, 595, "PL2In", True, False),
+        "pPayload2BeforeSlot": (410, 595, "PL2Bef", True, False),
 
-        # --- Payload ---
-        "pPayload": (390, 700, "pL", False),
-        "pPayload1": (340, 650, "pL1", False),
-        "pPayload1InsideSlot": (310, 595, "PL1In", True),
-        "pPayload1BeforeSlot": (370, 595, "PL1Bef", True),
-        "pPayload2": (440, 650, "pL2", False),
-        "pPayload2InsideSlot": (470, 595, "PL2In", True),
-        "pPayload2BeforeSlot": (410, 595, "PL2Bef", True),
+        "pGrippers": (650, 700, "pG", False, True),  # основная
+        "pGrippers1": (600, 650, "pG1", False, False),
+        "pGrippers1InsideSlot": (570, 595, "G1In", True, False),
+        "pGrippers1BeforeSlot": (630, 595, "G1Bef", True, False),
+        "pGrippers2": (700, 650, "pG2", False, False),
+        "pGrippers2InsideSlot": (730, 595, "G2In", True, False),
+        "pGrippers2BeforeSlot": (670, 595, "G2Bef", True, False),
 
-        # --- Grippers ---
-        "pGrippers": (650, 700, "pG", False),
-        "pGrippers1": (600, 650, "pG1", False),
-        "pGrippers1InsideSlot": (570, 595, "G1In", True),
-        "pGrippers1BeforeSlot": (630, 595, "G1Bef", True),
-        "pGrippers2": (700, 650, "pG2", False),
-        "pGrippers2InsideSlot": (730, 595, "G2In", True),
-        "pGrippers2BeforeSlot": (670, 595, "G2Bef", True),
+        "pCharger": (500, 830, "pC", False, True),  # основная
+        "pHelicopter2Charger1": (390, 870, "H2Ch1", False, True),  # основной узел
+        "pHelicopter2Charger1Slot1": (340, 830, "H2Ch1S1", False, False),
+        "pHelicopter2Charger1InsideSlot1": (310, 790, "H2Ch1In1", True, False),
+        "pHelicopter2Charger1BeforeSlot1": (370, 790, "H2Ch1Bef1", True, False),
+        "pHelicopter2Charger1Slot2": (340, 910, "H2Ch1S2", False, False),
+        "pHelicopter2Charger1InsideSlot2": (310, 960, "H2Ch1In2", True, False),
+        "pHelicopter2Charger1BeforeSlot2": (370, 960, "H2Ch1Bef2", True, False),
 
-        # --- Charger ---
-        "pCharger": (500, 830, "pC", False),
-        "pHelicopter2Charger1": (390, 870, "H2Ch1", False),
-        "pHelicopter2Charger1Slot1": (340, 830, "H2Ch1S1", False),
-        "pHelicopter2Charger1InsideSlot1": (310, 790, "H2Ch1In1", True),
-        "pHelicopter2Charger1BeforeSlot1": (370, 790, "H2Ch1Bef1", True),
-        "pHelicopter2Charger1Slot2": (340, 910, "H2Ch1S2", False),
-        "pHelicopter2Charger1InsideSlot2": (310, 960, "H2Ch1In2", True),
-        "pHelicopter2Charger1BeforeSlot2": (370, 960, "H2Ch1Bef2", True),
+        "pVTOL2Charger1": (525, 905, "V2Ch1", False, True),  # основной узел
+        "pVTOL2Charger1Slot1": (450, 910, "V2Ch1S1", False, False),
+        "pVTOL2Charger1InsideSlot1": (420, 960, "V2Ch1In1", True, False),
+        "pVTOL2Charger1BeforeSlot1": (480, 960, "V2Ch1Bef1", True, False),
+        "pVTOL2Charger1Slot2": (600, 910, "V2Ch1S2", False, False),
+        "pVTOL2Charger1InsideSlot2": (570, 960, "V2Ch1In2", True, False),
+        "pVTOL2Charger1BeforeSlot2": (630, 960, "V2Ch1Bef2", True, False),
 
-        "pVTOL2Charger1": (500, 910, "V2Ch1", False),
-        "pVTOL2Charger1Slot1": (600, 830, "V2Ch1S1", False),
-        "pVTOL2Charger1InsideSlot1": (570, 790, "V2Ch1In1", True),
-        "pVTOL2Charger1BeforeSlot1": (630, 790, "V2Ch1Bef1", True),
-        "pVTOL2Charger1Slot2": (600, 910, "V2Ch1S2", False),
-        "pVTOL2Charger1InsideSlot2": (570, 960, "V2Ch1In2", True),
-        "pVTOL2Charger1BeforeSlot2": (630, 960, "V2Ch1Bef2", True),
+        "pVTOL2Charger2": (650, 870, "V2Ch2", False, True),  # основной узел
+        "pVTOL2Charger2Slot1": (700, 830, "V2Ch2S1", False, False),
+        "pVTOL2Charger2InsideSlot1": (670, 790, "V2Ch2In1", True, False),
+        "pVTOL2Charger2BeforeSlot1": (730, 790, "V2Ch2Bef1", True, False),
+        "pVTOL2Charger2Slot2": (700, 910, "V2Ch2S2", False, False),
+        "pVTOL2Charger2InsideSlot2": (670, 960, "V2Ch2In2", True, False),
+        "pVTOL2Charger2BeforeSlot2": (730, 960, "V2Ch2Bef2", True, False),
 
-        "pVTOL2Charger2": (650, 870, "V2Ch2", False),
-        "pVTOL2Charger2Slot1": (700, 830, "V2Ch2S1", False),
-        "pVTOL2Charger2InsideSlot1": (670, 790, "V2Ch2In1", True),
-        "pVTOL2Charger2BeforeSlot1": (730, 790, "V2Ch2Bef1", True),
-        "pVTOL2Charger2Slot2": (700, 910, "V2Ch2S2", False),
-        "pVTOL2Charger2InsideSlot2": (670, 960, "V2Ch2In2", True),
-        "pVTOL2Charger2BeforeSlot2": (730, 960, "V2Ch2Bef2", True),
-
-        # --- VTOL ---
-        "pVTOLModule": (810, 750, "pV", False),
-        "pVTOL1": (890, 700, "pV1", False),
-        "pVTOL2": (890, 800, "pV2", False),
-        "pVTOL2Battery1": (860, 960, "V2B1", False),
-        "pVTOL2InsideBattery1Slot": (810, 910, "V2B1In", True),
-        "pVTOL2BeforeBattery1Slot": (810, 830, "V2B1Bef", True),
-        "pVTOL2Battery2": (930, 960, "V2B2", False),
-        "pVTOL2InsideBattery2Slot": (980, 910, "V2B2In", True),
-        "pVTOL2BeforeBattery2Slot": (980, 830, "V2B2Bef", True),
+        "pVTOLModule": (810, 750, "pV", False, True),  # основная
+        "pVTOL1": (890, 700, "pV1", False, True),  # основной узел
+        "pVTOL2": (890, 800, "pV2", False, True),  # основной узел
+        "pVTOL2Battery1": (860, 960, "V2B1", False, False),
+        "pVTOL2InsideBattery1Slot": (810, 910, "V2B1In", True, False),
+        "pVTOL2BeforeBattery1Slot": (810, 830, "V2B1Bef", True, False),
+        "pVTOL2Battery2": (930, 960, "V2B2", False, False),
+        "pVTOL2InsideBattery2Slot": (980, 910, "V2B2In", True, False),
+        "pVTOL2BeforeBattery2Slot": (980, 830, "V2B2Bef", True, False),
     }
 
     EDGES = [
@@ -369,9 +375,9 @@ class TrajectoryMapWidget(QWidget):
     ]
 
     DRONE_LABELS = [
-        (145, 605, "ВТ-30Е", QColor(41, 98, 255)),
+        (140, 605, "ВТ-30Е", QColor(41, 98, 255)),
         (140, 1000, "Альфа-Е", QColor(41, 98, 255)),
-        (920, 605, "InnoVTOL-3e", QColor(76, 175, 80)),
+        (900, 605, "InnoVTOL-3e", QColor(76, 175, 80)),
         (900, 1000, "Легионер Е29", QColor(76, 175, 80)),
         (310, 1000, "Зарядка", QColor(156, 39, 176, 180).darker(120)),
     ]
@@ -580,9 +586,11 @@ class TrajectoryMapWidget(QWidget):
             self._edge_items[(src, dst)] = [forward_arrow, backward_arrow]
 
         # 5) Узлы
-        for point_name, (node_x, node_y, display, is_endpoint) in self.NODE_LAYOUT.items():
+        for point_name, (node_x, node_y, display, is_endpoint, is_major) in self.NODE_LAYOUT.items():
             if "pHomePosition" in point_name:
-                color, radius = NODE_HOME_COLOR, 18
+                color, radius = NODE_HOME_COLOR, 20
+            elif is_major:
+                color, radius = NODE_MAJOR_COLOR, 18
             elif is_endpoint:
                 color, radius = NODE_ENDPOINT_COLOR, 16
             else:
@@ -590,8 +598,11 @@ class TrajectoryMapWidget(QWidget):
 
             node = NodeItem(
                 point_name, display, node_x, node_y,
-                radius=radius, color=color,
-                is_endpoint=is_endpoint, parent_widget=self,
+                radius=radius,
+                color=color,
+                is_endpoint=is_endpoint,
+                parent_widget=self,
+                is_major=is_major,
             )
             self._scene.addItem(node)
             self._nodes[point_name] = node

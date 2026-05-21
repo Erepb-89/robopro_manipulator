@@ -566,7 +566,8 @@ class MainWindow(QMainWindow):
                         return traj
             else:  # грипперы разжаты
                 for traj in AVAIL_TRAJS.get(src):
-                    if f"_To_{dst_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
+                    if f"_To_{dst_short}" in traj and 'With' not in (
+                    dst_short, src_short) and traj in self.Trajectories:
                         return traj
 
             # Обратное направление: из dst в src
@@ -576,7 +577,8 @@ class MainWindow(QMainWindow):
                         return traj
             else:  # грипперы разжаты
                 for traj in AVAIL_TRAJS.get(dst):
-                    if f"_To_{src_short}" in traj and 'With' not in (dst_short, src_short) and traj in self.Trajectories:
+                    if f"_To_{src_short}" in traj and 'With' not in (
+                    dst_short, src_short) and traj in self.Trajectories:
                         return traj
         except Exception as err:
             pass
@@ -651,9 +653,10 @@ class MainWindow(QMainWindow):
             return False
 
     def update_available_waypoints_combo_box(self) -> None:
-        current_point = self.nearest_info.get('waypoint')
-        items_model = QStandardItemModel()
         try:
+            current_point = self.nearest_info.get('waypoint')
+            items_model = QStandardItemModel()
+
             for point in AVAIL_PTS.get(current_point):
                 item = QStandardItem(point)
                 item.setData(point, Qt.UserRole)
