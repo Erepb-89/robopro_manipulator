@@ -199,19 +199,6 @@ class TrajectoryMapWidget(QWidget):
     node_clicked = pyqtSignal(str)
 
     NODE_LAYOUT = {
-        # ========== ВЕРХНЯЯ ПОЛОВИНА (с грузом) ==========
-        # --- Helicopter cargo ---
-        "pHelicopterModuleWithSomeCargo": (220, 250, "pH+", False),
-
-        "pHelicopter2WithSomeCargo": (130, 300, "pH2+", False),
-        "pHelicopter2WithBatt1": (100, 460, "H2+B1", False),
-        "pHelicopter2InSlot1": (45, 410, "H2InS1", True),
-        "pHelicopter2AfterSlot1": (45, 330, "H2AftS1", True),
-        "pHelicopter2WithBatt2": (170, 460, "H2+B2", False),
-        "pHelicopter2InSlot2": (220, 410, "H2InS2", True),
-        "pHelicopter2AfterSlot2": (220, 330, "H2AftS2", True),
-
-        # ========== НИЖНЯЯ ПОЛОВИНА (без груза) (Y + 500) ==========
         "pHomePosition": (510, 750, "Home", False),
 
         # --- Helicopter ---
@@ -284,7 +271,6 @@ class TrajectoryMapWidget(QWidget):
     }
 
     EDGES = [
-        # ===== ТРАССА 1: БЕЗ ГРУЗА =====
         # От Home
         ("pHomePosition", "pHelicopterModule"),
         ("pHomePosition", "pPayload"),
@@ -361,11 +347,6 @@ class TrajectoryMapWidget(QWidget):
         # VTOL ветка
         ("pVTOLModule", "pVTOL1"),
         ("pVTOLModule", "pVTOL2"),
-        ("pVTOL1", "pVTOL1Payload"),
-        ("pVTOL1", "pVTOL1Battery"),
-        ("pVTOL1Battery", "pVTOL1InsideBatterySlot"),
-        ("pVTOL1Battery", "pVTOL1BeforeBatterySlot"),
-        ("pVTOL1InsideBatterySlot", "pVTOL1BeforeBatterySlot"),
 
         ("pVTOL2", "pVTOL2Battery1"),
         ("pVTOL2", "pVTOL2Battery2"),
@@ -376,59 +357,9 @@ class TrajectoryMapWidget(QWidget):
         ("pVTOL2Battery2", "pVTOL2BeforeBattery2Slot"),
         ("pVTOL2InsideBattery2Slot", "pVTOL2BeforeBattery2Slot"),
         ("pVTOL2Battery2", "pVTOL2Battery2Charge"),
-
-        # ===== ТРАССА 2: С ГРУЗОМ =====
-        # От Home с грузом
-        ("pHomePositionWithSomeCargo", "pHelicopterModuleWithSomeCargo"),
-
-        # Helicopter ветка с грузом
-        ("pHelicopterModuleWithSomeCargo", "pHelicopter2WithSomeCargo"),
-
-        ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt1"),
-        ("pHelicopter2WithSomeCargo", "pHelicopter2WithBatt2"),
-        ("pHelicopter2WithSomeCargo", "pHelicopter2AfterSlot1"),
-        ("pHelicopter2WithSomeCargo", "pHelicopter2AfterSlot2"),
-        ("pHelicopter2WithBatt1", "pHelicopter2InSlot1"),
-        ("pHelicopter2WithBatt1", "pHelicopter2AfterSlot1"),
-        ("pHelicopter2InSlot1", "pHelicopter2AfterSlot1"),
-        ("pHelicopter2WithBatt2", "pHelicopter2InSlot2"),
-        ("pHelicopter2WithBatt2", "pHelicopter2AfterSlot2"),
-        ("pHelicopter2InSlot2", "pHelicopter2AfterSlot2"),
-
-        # Charger ветка с грузом
-        ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot1WithBatt"),
-        ("pVTOL2Charger1WithBatt", "pVTOL2Charger1Slot2WithBatt"),
-        ("pVTOL2Charger1Slot1WithBatt", "pVTOL2Charger1InSlot1"),
-        ("pVTOL2Charger1Slot1WithBatt", "pVTOL2Charger1AfterSlot1"),
-        ("pVTOL2Charger1InSlot1", "pVTOL2Charger1AfterSlot1"),
-        ("pVTOL2Charger1Slot2WithBatt", "pVTOL2Charger1InSlot2"),
-        ("pVTOL2Charger1Slot2WithBatt", "pVTOL2Charger1AfterSlot2"),
-        ("pVTOL2Charger1InSlot2", "pVTOL2Charger1AfterSlot2"),
-
-        ("pVTOL2Charger2WithBatt", "pVTOL2Charger2Slot1WithBatt"),
-        ("pVTOL2Charger2WithBatt", "pVTOL2Charger2Slot2WithBatt"),
-        ("pVTOL2Charger2Slot1WithBatt", "pVTOL2Charger2InSlot1"),
-        ("pVTOL2Charger2Slot1WithBatt", "pVTOL2Charger2AfterSlot1"),
-        ("pVTOL2Charger2InSlot1", "pVTOL2Charger2AfterSlot1"),
-        ("pVTOL2Charger2Slot2WithBatt", "pVTOL2Charger2InSlot2"),
-        ("pVTOL2Charger2Slot2WithBatt", "pVTOL2Charger2AfterSlot2"),
-        ("pVTOL2Charger2InSlot2", "pVTOL2Charger2AfterSlot2"),
-
-        # VTOL ветка с грузом
-        ("pVTOL1WithSomeCargo", "pVTOL1BatteryWithBatt"),
-        ("pVTOL1WithSomeCargo", "pVTOL1AfterBatterySlot"),
-        ("pVTOL1BatteryWithBatt", "pVTOL1InBatterySlot"),
-        ("pVTOL1BatteryWithBatt", "pVTOL1AfterBatterySlot"),
-        ("pVTOL1InBatterySlot", "pVTOL1AfterBatterySlot"),
-
-        # ===== МОСТИКИ между состояниями (без груза ↔ с грузом) =====
-        ("pHelicopterModule", "pHelicopterModuleWithSomeCargo"),
     ]
 
     ZONES = [
-        # --- Верхняя половина (с грузом) ---
-        (20, 50, 230, 450, "helicopter_cargo", "Вертолёт (с грузом)"),
-
         # --- Нижняя половина (без груза) ---
         (20, 550, 230, 450, "helicopter", "Вертолёт"),
         (280, 550, 220, 190, "payload", "Нагрузка"),
@@ -443,11 +374,6 @@ class TrajectoryMapWidget(QWidget):
         (920, 605, "InnoVTOL-3e", QColor(76, 175, 80)),
         (900, 1000, "Легионер Е29", QColor(76, 175, 80)),
         (310, 1000, "Зарядка", QColor(156, 39, 176, 180).darker(120)),
-    ]
-
-    DRONE_LABELS_CARGO = [
-        (145, 105, "ВТ-30Е", QColor(41, 98, 255)),
-        (140, 500, "Альфа-Е", QColor(41, 98, 255)),
     ]
 
     def __init__(self, parent=None):
@@ -616,15 +542,6 @@ class TrajectoryMapWidget(QWidget):
 
         # 3) Подписи моделей дронов
         for (drone_x, drone_y, drone_text, drone_color) in self.DRONE_LABELS:
-            lbl = QGraphicsTextItem(drone_text)
-            lbl.setFont(QFont("Segoe UI", 7))
-            lbl.setDefaultTextColor(drone_color.darker(130))
-            br = lbl.boundingRect()
-            lbl.setPos(drone_x - br.width() / 2, drone_y - br.height())
-            lbl.setZValue(1)
-            self._scene.addItem(lbl)
-
-        for (drone_x, drone_y, drone_text, drone_color) in self.DRONE_LABELS_CARGO:
             lbl = QGraphicsTextItem(drone_text)
             lbl.setFont(QFont("Segoe UI", 7))
             lbl.setDefaultTextColor(drone_color.darker(130))

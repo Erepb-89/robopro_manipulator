@@ -1,4 +1,4 @@
-# available_trajectories.py
+# available_trajectories_cleaned.py
 
 available_trajectories = {
     "pHomePosition": [
@@ -12,7 +12,6 @@ available_trajectories = {
         "tHelicopterModule_To_HomePosition",
         "tHelicopterModule_To_Helicopter1",
         "tHelicopterModule_To_Helicopter2",
-        "tHelicopterModule_To_HelicopterModuleWithSomeCargo",
     ],
     "pHelicopter1": [
         "tHelicopter1_To_HelicopterModule",
@@ -37,7 +36,6 @@ available_trajectories = {
     ],
     "pHelicopter2BeforeBattery1Slot": [
         "tHelicopter2BeforeBattery1Slot_To_Helicopter2",
-        "tHelicopter2BeforeBattery1Slot_To_Helicopter2WithSomeCargo",
     ],
     "pHelicopter2Battery2": [
         "tHelicopter2Battery2_To_Helicopter2",
@@ -50,37 +48,6 @@ available_trajectories = {
     ],
     "pHelicopter2BeforeBattery2Slot": [
         "tHelicopter2BeforeBattery2Slot_To_Helicopter2",
-        "tHelicopter2BeforeBattery2Slot_To_Helicopter2WithSomeCargo",
-    ],
-    "pHelicopter2WithSomeCargo": [
-        "tHelicopter2WithSomeCargo_To_Helicopter2WithBatt1",
-        "tHelicopter2WithSomeCargo_To_Helicopter2WithBatt2",
-        "tHelicopter2WithSomeCargo_To_Helicopter2AfterSlot1",
-        "tHelicopter2WithSomeCargo_To_Helicopter2AfterSlot2",
-    ],
-    "pHelicopter2WithBatt1": [
-        "tHelicopter2WithBatt1_To_Helicopter2WithSomeCargo",
-        "tHelicopter2WithBatt1_To_Helicopter2InSlot1",
-        "tHelicopter2WithBatt1_To_Helicopter2AfterSlot1",
-    ],
-    "pHelicopter2InSlot1": [
-        "tHelicopter2InSlot1_To_Helicopter2WithBatt1",
-        "tHelicopter2InSlot1_To_Helicopter2AfterSlot1",
-    ],
-    "pHelicopter2AfterSlot1": [
-        "tHelicopter2AfterSlot1_To_Helicopter2WithSomeCargo",
-    ],
-    "pHelicopter2WithBatt2": [
-        "tHelicopter2WithBatt2_To_Helicopter2WithSomeCargo",
-        "tHelicopter2WithBatt2_To_Helicopter2InSlot2",
-        "tHelicopter2WithBatt2_To_Helicopter2AfterSlot2",
-    ],
-    "pHelicopter2InSlot2": [
-        "tHelicopter2InSlot2_To_Helicopter2WithBatt2",
-        "tHelicopter2InSlot2_To_Helicopter2AfterSlot2",
-    ],
-    "pHelicopter2AfterSlot2": [
-        "tHelicopter2AfterSlot2_To_Helicopter2WithSomeCargo",
     ],
     "pPayload": [
         "tPayload_To_HomePosition",
@@ -273,11 +240,5 @@ available_trajectories = {
     ],
     "pVTOL2BeforeBattery2Slot": [
         "tVTOL2BeforeBattery2Slot_To_VTOL2",
-    ],
-    "pVTOL2Battery2Charge": [
-        "tVTOL2Battery2_To_VTOL2Battery2Charge",
-    ],
-    "pHelicopterModuleWithSomeCargo": [
-        "tHelicopterModuleWithSomeCargo_To_HelicopterModule",
     ],
 }

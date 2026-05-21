@@ -1,4 +1,4 @@
-# available_points.py
+# available_points_cleaned.py
 
 available_points = {
     "pHomePosition": [
@@ -12,10 +12,8 @@ available_points = {
         "pHomePosition",
         "pHelicopter1",
         "pHelicopter2",
-        "pHelicopterModuleWithSomeCargo",
     ],
-    "pHelicopterModuleWithSomeCargo": [
-        "pHelicopter2WithSomeCargo",
+    "pHelicopter1": [
         "pHelicopterModule",
     ],
     "pHelicopter2": [
@@ -37,7 +35,6 @@ available_points = {
         "pHelicopter2BeforeBattery1Slot",
     ],
     "pHelicopter2BeforeBattery1Slot": [
-        "pHelicopter2WithSomeCargo",
         "pHelicopter2",
     ],
     "pHelicopter2Battery2": [
@@ -50,41 +47,7 @@ available_points = {
         "pHelicopter2BeforeBattery2Slot",
     ],
     "pHelicopter2BeforeBattery2Slot": [
-        "pHelicopter2WithSomeCargo",
         "pHelicopter2",
-    ],
-    "pHelicopter2WithSomeCargo": [
-        "pHelicopter2WithBatt1",
-        "pHelicopter2WithBatt2",
-        "pHelicopter2AfterSlot1",
-        "pHelicopter2AfterSlot2",
-    ],
-    "pHelicopter2WithBatt1": [
-        "pHelicopter2WithSomeCargo",
-        "pHelicopter2InSlot1",
-        "pHelicopter2AfterSlot1",
-    ],
-    "pHelicopter2InSlot1": [
-        "pHelicopter2WithBatt1",
-        "pHelicopter2AfterSlot1",
-    ],
-    "pHelicopter2AfterSlot1": [
-        "pHelicopter2WithSomeCargo",
-    ],
-    "pHelicopter2WithBatt2": [
-        "pHelicopter2WithSomeCargo",
-        "pHelicopter2InSlot2",
-        "pHelicopter2AfterSlot2",
-    ],
-    "pHelicopter2InSlot2": [
-        "pHelicopter2WithBatt2",
-        "pHelicopter2AfterSlot2",
-    ],
-    "pHelicopter2AfterSlot2": [
-        "pHelicopter2WithSomeCargo",
-    ],
-    "pHelicopter1": [
-        "pHelicopterModule",
     ],
     "pPayload": [
         "pHomePosition",
@@ -247,6 +210,7 @@ available_points = {
     "pVTOL1": [
         "pVTOLModule",
         "pVTOL1Payload",
+        "pVTOL1InsidePayloadSlot",
     ],
     "pVTOL1Payload": [
         "pVTOL1",
