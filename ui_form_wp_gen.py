@@ -560,26 +560,15 @@ class MainWindow(QMainWindow):
         state = self.RobotController.get_state_snapshot()
         # Прямое направление: из src в dst
         try:
-            if state.gripper_cmd:  # грипперы сжаты
-                for traj in AVAIL_TRAJS.get(src):
-                    if f"_To_{dst_short}" in traj and 'With' in dst_short and traj in self.Trajectories:
-                        return traj
-            else:  # грипперы разжаты
-                for traj in AVAIL_TRAJS.get(src):
-                    if f"_To_{dst_short}" in traj and 'With' not in (
-                    dst_short, src_short) and traj in self.Trajectories:
-                        return traj
+            for traj in AVAIL_TRAJS.get(src):
+                if f"_To_{dst_short}" in traj and traj in self.Trajectories:
+                    return traj
 
             # Обратное направление: из dst в src
-            if state.gripper_cmd:  # грипперы сжаты
-                for traj in AVAIL_TRAJS.get(dst):
-                    if f"_To_{src_short}" in traj and 'With' in src_short and traj in self.Trajectories:
-                        return traj
-            else:  # грипперы разжаты
-                for traj in AVAIL_TRAJS.get(dst):
-                    if f"_To_{src_short}" in traj and 'With' not in (
-                    dst_short, src_short) and traj in self.Trajectories:
-                        return traj
+            for traj in AVAIL_TRAJS.get(dst):
+                if f"_To_{src_short}" in traj and traj in self.Trajectories:
+                    return traj
+
         except Exception as err:
             pass
 
@@ -745,11 +734,11 @@ class MainWindow(QMainWindow):
         self.ui.ActionName.setText(internal)
 
     def trajectory_selected(self, _display_name) -> None:
-        internal = self.ui.TrajectoriesComboBox.currentData(Qt.UserRole) or _display_name
+        internal = self.ui.TrajectoriesComboBox.currentData(Qt.UserRole)
         self.ui.TrajectoryName.setText(internal)
 
     def available_trajectory_selected(self, _display_name) -> None:
-        internal = self.ui.availableTrajectoriesComboBox.currentData(Qt.UserRole) or _display_name
+        internal = self.ui.availableTrajectoriesComboBox.currentData(Qt.UserRole)
         self.ui.TrajectoryName.setText(internal)
 
     def available_waypoint_selected(self, _display_name) -> None:
@@ -916,6 +905,7 @@ class MainWindow(QMainWindow):
         self._add_log_entry("Стоп", "→", LOG_COLOR_STOP)
         self.manipulator_command(
             Command(CmdType.STOP_MOVE, {}, source="GUI"))
+        self.opc_handler.set_trajectory(0)
 
     def power_off(self) -> None:
         self._add_log_entry("Питание ВЫКЛ", "→", LOG_COLOR_NEUTRAL)

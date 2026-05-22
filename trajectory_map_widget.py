@@ -241,6 +241,7 @@ class TrajectoryMapWidget(QWidget):
         "pGrippers2BeforeSlot": (670, 595, "G2Bef", True, False),
 
         "pCharger": (500, 830, "pC", False, True),  # основная
+        "pHelicopter2Charger1_bef": (440, 830, "pC_bef", False, False),
         "pHelicopter2Charger1": (390, 870, "H2Ch1", False, True),  # основной узел
         "pHelicopter2Charger1Slot1": (340, 830, "H2Ch1S1", False, False),
         "pHelicopter2Charger1InsideSlot1": (310, 790, "H2Ch1In1", True, False),
@@ -249,10 +250,15 @@ class TrajectoryMapWidget(QWidget):
         "pHelicopter2Charger1InsideSlot2": (310, 960, "H2Ch1In2", True, False),
         "pHelicopter2Charger1BeforeSlot2": (370, 960, "H2Ch1Bef2", True, False),
 
-        "pVTOL2Charger1": (525, 905, "V2Ch1", False, True),  # основной узел
-        "pVTOL2Charger1Slot1": (450, 910, "V2Ch1S1", False, False),
-        "pVTOL2Charger1InsideSlot1": (420, 960, "V2Ch1In1", True, False),
-        "pVTOL2Charger1BeforeSlot1": (480, 960, "V2Ch1Bef1", True, False),
+        "pHelicopter2Charger1Buttons": (450, 910, "H2Ch1Btn", True, True),  # основной узел
+        "pHelicopter2Charger1Slot1Button": (420, 960, "V2Ch1B1", True, False),
+        "pHelicopter2Charger1Slot2Button": (480, 960, "V2Ch1B2", True, False),
+
+        "pVTOL2Charger1": (545, 870, "V2Ch1", False, True),  # основной узел
+        "pVTOL2Charger1Slot1": (600, 830, "V2Ch1S1", False, False),
+        "pVTOL2Charger1InsideSlot1": (570, 790, "V2Ch1In1", True, False),
+        "pVTOL2Charger1BeforeSlot1": (630, 790, "V2Ch1Bef1", True, False),
+
         "pVTOL2Charger1Slot2": (600, 910, "V2Ch1S2", False, False),
         "pVTOL2Charger1InsideSlot2": (570, 960, "V2Ch1In2", True, False),
         "pVTOL2Charger1BeforeSlot2": (630, 960, "V2Ch1Bef2", True, False),
@@ -282,6 +288,8 @@ class TrajectoryMapWidget(QWidget):
         ("pHomePosition", "pPayload"),
         ("pHomePosition", "pGrippers"),
         ("pHomePosition", "pCharger"),
+        ("pHomePosition", "pVTOL2Charger1"),
+        ("pHomePosition", "pVTOL2Charger2"),
         ("pHomePosition", "pVTOLModule"),
 
         # Helicopter ветка
@@ -319,9 +327,11 @@ class TrajectoryMapWidget(QWidget):
         ("pGrippers2InsideSlot", "pGrippers2BeforeSlot"),
 
         # Charger ветка
-        ("pCharger", "pHelicopter2Charger1"),
-        ("pCharger", "pVTOL2Charger1"),
-        ("pCharger", "pVTOL2Charger2"),
+        ("pCharger", "pHelicopter2Charger1_bef"),
+        ("pCharger", "pHelicopter2Charger1Buttons"),
+        ("pHelicopter2Charger1Buttons", "pHelicopter2Charger1Slot1Button"),
+        ("pHelicopter2Charger1Buttons", "pHelicopter2Charger1Slot2Button"),
+        ("pHelicopter2Charger1_bef", "pHelicopter2Charger1"),
         ("pHelicopter2Charger1", "pHelicopter2Charger1Slot1"),
         ("pHelicopter2Charger1", "pHelicopter2Charger1Slot2"),
         ("pHelicopter2Charger1", "pHelicopter2Charger1BeforeSlot1"),

@@ -502,11 +502,6 @@ class RobotController:
 
             self.exec_available_trajectory(nearest_wp, trajectory)
 
-        except AddWaypointError as e:
-            if trajectory:
-                self.state.update(trajectory_state=trajectory.value + EXCEPTION)
-            self.state.update(last_error=LastError.err_waypoint)
-            self.log.error(f"Error adding waypoint: {e}")
         except FunctionTimeOutError as e:
             self.state.update(last_error=LastError.err_timeout_trajectory)
             self.log.error(f"Timeout executing trajectory: {e}")
