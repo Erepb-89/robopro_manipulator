@@ -1,4 +1,4 @@
-# available_points_cleaned.py
+# available_points.py
 
 available_points = {
     "pHomePosition": [
@@ -7,6 +7,8 @@ available_points = {
         "pGrippers",
         "pCharger",
         "pVTOLModule",
+        "pVTOL2Charger1",
+        "pVTOL2Charger2",
     ],
     "pHelicopterModule": [
         "pHomePosition",
@@ -36,6 +38,8 @@ available_points = {
     ],
     "pHelicopter2BeforeBattery1Slot": [
         "pHelicopter2",
+        "pHelicopter2Battery1",
+        "pHelicopter2InsideBattery1Slot",
     ],
     "pHelicopter2Battery2": [
         "pHelicopter2",
@@ -48,6 +52,8 @@ available_points = {
     ],
     "pHelicopter2BeforeBattery2Slot": [
         "pHelicopter2",
+        "pHelicopter2Battery2",
+        "pHelicopter2InsideBattery2Slot",
     ],
     "pPayload": [
         "pHomePosition",
@@ -65,6 +71,7 @@ available_points = {
     ],
     "pPayload1BeforeSlot": [
         "pPayload1",
+        "pPayload1InsideSlot",
     ],
     "pPayload2": [
         "pPayload",
@@ -77,6 +84,7 @@ available_points = {
     ],
     "pPayload2BeforeSlot": [
         "pPayload2",
+        "pPayload2InsideSlot",
     ],
     "pGrippers": [
         "pHomePosition",
@@ -94,6 +102,8 @@ available_points = {
     ],
     "pGrippers1BeforeSlot": [
         "pGrippers",
+        "pGrippers1",
+        "pGrippers1InsideSlot",
     ],
     "pGrippers2": [
         "pGrippers",
@@ -106,17 +116,21 @@ available_points = {
     ],
     "pGrippers2BeforeSlot": [
         "pGrippers",
+        "pGrippers2",
+        "pGrippers2InsideSlot",
     ],
     "pCharger": [
         "pHomePosition",
         "pVTOL2Charger1",
         "pVTOL2Charger2",
         "pHelicopter2Charger1",
+        "pHelicopter2Charger1Mid",
     ],
     "pVTOL2Charger1": [
         "pCharger",
         "pVTOL2Charger1Slot1",
         "pVTOL2Charger1Slot2",
+        "pHomePosition",
     ],
     "pVTOL2Charger1Slot1": [
         "pVTOL2Charger1",
@@ -130,6 +144,8 @@ available_points = {
     ],
     "pVTOL2Charger1BeforeSlot1": [
         "pVTOL2Charger1",
+        "pVTOL2Charger1InsideSlot1",
+        "pVTOL2Charger1Slot1",
     ],
     "pVTOL2Charger1Slot2": [
         "pVTOL2Charger1",
@@ -142,11 +158,14 @@ available_points = {
     ],
     "pVTOL2Charger1BeforeSlot2": [
         "pVTOL2Charger1",
+        "pVTOL2Charger1InsideSlot2",
+        "pVTOL2Charger1Slot2",
     ],
     "pVTOL2Charger2": [
         "pCharger",
         "pVTOL2Charger2Slot1",
         "pVTOL2Charger2Slot2",
+        "pHomePosition",
     ],
     "pVTOL2Charger2Slot1": [
         "pVTOL2Charger2",
@@ -159,6 +178,8 @@ available_points = {
     ],
     "pVTOL2Charger2BeforeSlot1": [
         "pVTOL2Charger2",
+        "pVTOL2Charger2InsideSlot1",
+        "pVTOL2Charger2Slot1",
     ],
     "pVTOL2Charger2Slot2": [
         "pVTOL2Charger2",
@@ -171,12 +192,15 @@ available_points = {
     ],
     "pVTOL2Charger2BeforeSlot2": [
         "pVTOL2Charger2",
+        "pVTOL2Charger2InsideSlot2",
+        "pVTOL2Charger2Slot2",
     ],
     "pHelicopter2Charger1": [
         "pCharger",
         "pHelicopter2Charger1Slot1",
         "pHelicopter2Charger1Slot2",
         "pHelicopter2Charger1BeforeSlot1",
+        "pHelicopter2Charger1Mid",
     ],
     "pHelicopter2Charger1Slot1": [
         "pHelicopter2Charger1",
@@ -189,6 +213,8 @@ available_points = {
     ],
     "pHelicopter2Charger1BeforeSlot1": [
         "pHelicopter2Charger1",
+        "pHelicopter2Charger1InsideSlot1",
+        "pHelicopter2Charger1Slot1",
     ],
     "pHelicopter2Charger1Slot2": [
         "pHelicopter2Charger1",
@@ -201,6 +227,8 @@ available_points = {
     ],
     "pHelicopter2Charger1BeforeSlot2": [
         "pHelicopter2Charger1",
+        "pHelicopter2Charger1InsideSlot2",
+        "pHelicopter2Charger1Slot2",
     ],
     "pVTOLModule": [
         "pHomePosition",
@@ -211,16 +239,6 @@ available_points = {
         "pVTOLModule",
         "pVTOL1Payload",
         "pVTOL1InsidePayloadSlot",
-    ],
-    "pVTOL1Payload": [
-        "pVTOL1",
-        "pVTOL1InsidePayloadSlot",
-    ],
-    "pVTOL1InsidePayloadSlot": [
-        "pVTOL1BeforePayloadSlot",
-    ],
-    "pVTOL1BeforePayloadSlot": [
-        "pVTOL1Payload",
     ],
     "pVTOL2": [
         "pVTOLModule",
@@ -238,6 +256,8 @@ available_points = {
     ],
     "pVTOL2BeforeBattery1Slot": [
         "pVTOL2",
+        "pVTOL2Battery1",
+        "pVTOL2InsideBattery1Slot",
     ],
     "pVTOL2Battery2": [
         "pVTOL2",
@@ -250,5 +270,23 @@ available_points = {
     ],
     "pVTOL2BeforeBattery2Slot": [
         "pVTOL2",
+        "pVTOL2Battery2",
+        "pVTOL2InsideBattery2Slot",
+    ],
+    "pHelicopter2Charger1Slot1Button": [
+        "pHelicopter2Charger1Buttons",
+    ],
+    "pHelicopter2Charger1Slot2Button": [
+        "pHelicopter2Charger1Buttons",
+    ],
+    "pHelicopter2Charger1Mid": [
+        "pCharger",
+        "pHelicopter2Charger1",
+        "pHelicopter2Charger1Buttons",
+    ],
+    "pHelicopter2Charger1Buttons": [
+        "pHelicopter2Charger1Slot1Button",
+        "pHelicopter2Charger1Slot2Button",
+        "pHelicopter2Charger1Mid",
     ],
 }

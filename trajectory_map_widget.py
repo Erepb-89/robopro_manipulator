@@ -29,7 +29,6 @@ from config import (
 # Точки, требующие открытого люка соответствующего стола
 HATCH_BLOCK_MAP = {
     "pHelicopter2Payload": "vt",
-    "pVTOL1Payload": "vtol",
     "pVTOL1Battery": "vtol",
     "pVTOL2Battery": "vtol",
 }
@@ -241,7 +240,7 @@ class TrajectoryMapWidget(QWidget):
         "pGrippers2BeforeSlot": (670, 595, "G2Bef", True, False),
 
         "pCharger": (500, 830, "pC", False, True),  # основная
-        "pHelicopter2Charger1_bef": (440, 830, "pC_bef", False, False),
+        "pHelicopter2Charger1Mid": (440, 830, "pCMid", False, False),
         "pHelicopter2Charger1": (390, 870, "H2Ch1", False, True),  # основной узел
         "pHelicopter2Charger1Slot1": (340, 830, "H2Ch1S1", False, False),
         "pHelicopter2Charger1InsideSlot1": (310, 790, "H2Ch1In1", True, False),
@@ -327,11 +326,11 @@ class TrajectoryMapWidget(QWidget):
         ("pGrippers2InsideSlot", "pGrippers2BeforeSlot"),
 
         # Charger ветка
-        ("pCharger", "pHelicopter2Charger1_bef"),
-        ("pCharger", "pHelicopter2Charger1Buttons"),
+        ("pCharger", "pHelicopter2Charger1Mid"),
         ("pHelicopter2Charger1Buttons", "pHelicopter2Charger1Slot1Button"),
         ("pHelicopter2Charger1Buttons", "pHelicopter2Charger1Slot2Button"),
-        ("pHelicopter2Charger1_bef", "pHelicopter2Charger1"),
+        ("pHelicopter2Charger1Mid", "pHelicopter2Charger1"),
+        ("pHelicopter2Charger1Mid", "pHelicopter2Charger1Buttons"),
         ("pHelicopter2Charger1", "pHelicopter2Charger1Slot1"),
         ("pHelicopter2Charger1", "pHelicopter2Charger1Slot2"),
         ("pHelicopter2Charger1", "pHelicopter2Charger1BeforeSlot1"),
@@ -372,7 +371,6 @@ class TrajectoryMapWidget(QWidget):
         ("pVTOL2Battery2", "pVTOL2InsideBattery2Slot"),
         ("pVTOL2Battery2", "pVTOL2BeforeBattery2Slot"),
         ("pVTOL2InsideBattery2Slot", "pVTOL2BeforeBattery2Slot"),
-        ("pVTOL2Battery2", "pVTOL2Battery2Charge"),
     ]
 
     ZONES = [
@@ -570,7 +568,7 @@ class TrajectoryMapWidget(QWidget):
         TRIM = 20
         for (src, dst) in self.EDGES:
             if src not in self.NODE_LAYOUT or dst not in self.NODE_LAYOUT:
-                continue
+                continue  # пропускаем отсутствующие узлы
             src_x, src_y = self.NODE_LAYOUT[src][:2]
             dst_x, dst_y = self.NODE_LAYOUT[dst][:2]
             edge_start, edge_end = QPointF(src_x, src_y), QPointF(dst_x, dst_y)
