@@ -201,6 +201,7 @@ available_points = {
         "pHelicopter2Charger1Slot2",
         "pHelicopter2Charger1BeforeSlot1",
         "pHelicopter2Charger1Mid",
+        "pHelicopter2Charger1Buttons",
     ],
     "pHelicopter2Charger1Slot1": [
         "pHelicopter2Charger1",
@@ -277,11 +278,6 @@ available_points = {
         "pHelicopter2Charger1Buttons",
     ],
     "pHelicopter2Charger1Slot2Button": [
-        "pHelicopter2Charger1Buttons",
-    ],
-    "pHelicopter2Charger1Mid": [
-        "pCharger",
-        "pHelicopter2Charger1",
         "pHelicopter2Charger1Buttons",
     ],
     "pHelicopter2Charger1Buttons": [

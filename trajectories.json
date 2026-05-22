@@ -196,19 +196,6 @@
             ]
         },
         {
-            "name": "tHelicopter2BeforeBattery1Slot_To_Helicopter2",
-            "positions": [
-                {
-                    "name": "pHelicopter2BeforeBattery1Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tHelicopter2Battery2_To_Helicopter2",
             "positions": [
                 {
@@ -269,19 +256,6 @@
                 },
                 {
                     "name": "pHelicopter2BeforeBattery2Slot",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2BeforeBattery2Slot_To_Helicopter2",
-            "positions": [
-                {
-                    "name": "pHelicopter2BeforeBattery2Slot",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pHelicopter2",
                     "motion": "joint"
                 }
             ]
@@ -858,19 +832,6 @@
             ]
         },
         {
-            "name": "tVTOL2Charger1BeforeSlot1_To_VTOL2Charger1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1BeforeSlot1",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2Charger1Slot2_To_VTOL2Charger1",
             "positions": [
                 {
@@ -936,32 +897,6 @@
             ]
         },
         {
-            "name": "tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger1BeforeSlot2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger1",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2_To_Charger",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pCharger",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
             "name": "tVTOL2Charger2_To_VTOL2Charger2Slot1",
             "positions": [
                 {
@@ -983,19 +918,6 @@
                 },
                 {
                     "name": "pVTOL2Charger2Slot2",
-                    "motion": "joint"
-                }
-            ]
-        },
-        {
-            "name": "tVTOL2Charger2_To_VTOL2Charger2BeforeSlot1",
-            "positions": [
-                {
-                    "name": "pVTOL2Charger2",
-                    "motion": "joint"
-                },
-                {
-                    "name": "pVTOL2Charger2BeforeSlot1",
                     "motion": "joint"
                 }
             ]
@@ -2249,28 +2171,6 @@
             ]
         },
         {
-            "name": "tCharger_To_Helicopter2Charger1Mid",
-            "positions": [
-                {
-                    "name": "pCharger"
-                },
-                {
-                    "name": "pHelicopter2Charger1Mid"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Mid_To_Charger",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Mid"
-                },
-                {
-                    "name": "pCharger"
-                }
-            ]
-        },
-        {
             "name": "tHelicopter2Charger1Slot1Button_To_Helicopter2Charger1Buttons",
             "positions": [
                 {
@@ -2289,50 +2189,6 @@
                 },
                 {
                     "name": "pHelicopter2Charger1Buttons"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Mid_To_Helicopter2Charger1",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Mid"
-                },
-                {
-                    "name": "pHelicopter2Charger1"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1_To_Helicopter2Charger1Mid",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1"
-                },
-                {
-                    "name": "pHelicopter2Charger1Mid"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Mid_To_Helicopter2Charger1Buttons",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Mid"
-                },
-                {
-                    "name": "pHelicopter2Charger1Buttons"
-                }
-            ]
-        },
-        {
-            "name": "tHelicopter2Charger1Buttons_To_Helicopter2Charger1Mid",
-            "positions": [
-                {
-                    "name": "pHelicopter2Charger1Buttons"
-                },
-                {
-                    "name": "pHelicopter2Charger1Mid"
                 }
             ]
         },

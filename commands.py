@@ -89,7 +89,6 @@ class RobotPoints(enum.Enum):
     pHelicopter2Charger1Buttons = 5700
     pHelicopter2Charger1Slot1Button = 5800
     pHelicopter2Charger1Slot2Button = 5900
-    pHelicopter2Charger1Mid = 6000
 
     pVTOL2Charger1BeforeSlot1_pre = 99001
     pHelicopter2Charger1BeforeSlot1_2 = 99002
@@ -257,40 +256,38 @@ class RobotTrajectories(enum.Enum):
     tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2InsideSlot2 = 140
     tVTOL2Charger2BeforeSlot2_To_VTOL2Charger2Slot2 = 141
     tVTOL2Charger2_To_HomePosition = 142
-    tCharger_To_Helicopter2Charger1Mid = 143
-    tHelicopter2Charger1Buttons_To_Helicopter2Charger1Mid = 144
-    tHelicopter2Charger1Mid_To_Charger = 145
-    tHelicopter2Charger1Mid_To_Helicopter2Charger1 = 146
-    tHelicopter2Charger1Mid_To_Helicopter2Charger1Buttons = 147
-    tHelicopter2Charger1_To_Helicopter2Charger1Mid = 148
+    tCharger_To_Helicopter2Charger1 = 143
+    tHelicopter2Charger1Buttons_To_Helicopter2Charger1 = 144
+    tHelicopter2Charger1_To_Charger = 145
+    tHelicopter2Charger1_To_Helicopter2Charger1Buttons = 146
 
-    tOpenCap = 149
+    tOpenCap = 147
 
-    tVTOL2Charger2Slot1_after_ejecting = 150
-    tVTOL2Charger2Slot1_before_taking = 151
-    tVTOL2Charger2Slot1_grab_batt = 152
-    tVTOL2Charger2Slot1_take_batt = 153
-    tVTOL2Charger2Slot1_remove_batt = 154
-    tVTOL2Charger2Slot1_stick_in_batt = 155
-    tVTOL2Charger2Slot1_put_batt = 156
-    tVTOL2Charger2Slot1_grab_in_batt = 157
-    tVTOL2Charger2Slot1_before_inject = 158
-    tVTOL2Charger2Slot1_move_batt = 159
-    tVTOL2Charger2Slot1_move_end_point_batt = 160
-    tVTOL2Charger2Slot1_after_sticking_batt = 161
+    tVTOL2Charger2Slot1_after_ejecting = 148
+    tVTOL2Charger2Slot1_before_taking = 149
+    tVTOL2Charger2Slot1_grab_batt = 150
+    tVTOL2Charger2Slot1_take_batt = 151
+    tVTOL2Charger2Slot1_remove_batt = 152
+    tVTOL2Charger2Slot1_stick_in_batt = 153
+    tVTOL2Charger2Slot1_put_batt = 154
+    tVTOL2Charger2Slot1_grab_in_batt = 155
+    tVTOL2Charger2Slot1_before_inject = 156
+    tVTOL2Charger2Slot1_move_batt = 157
+    tVTOL2Charger2Slot1_move_end_point_batt = 158
+    tVTOL2Charger2Slot1_after_sticking_batt = 159
+    tVTOL2Charger2Slot2_after_ejecting = 160
+    tVTOL2Charger2Slot2_before_taking = 161
 
-    tVTOL2Charger2Slot2_after_ejecting = 162
-    tVTOL2Charger2Slot2_before_taking = 163
-    tVTOL2Charger2Slot2_grab_batt = 164
-    tVTOL2Charger2Slot2_take_batt = 165
-    tVTOL2Charger2Slot2_remove_batt = 166
-    tVTOL2Charger2Slot2_stick_in_batt = 167
-    tVTOL2Charger2Slot2_put_batt = 168
-    tVTOL2Charger2Slot2_grab_in_batt = 169
-    tVTOL2Charger2Slot2_before_inject = 170
-    tVTOL2Charger2Slot2_move_batt = 171
-    tVTOL2Charger2Slot2_move_end_point_batt = 172
-    tVTOL2Charger2Slot2_after_sticking_batt = 173
+    tVTOL2Charger2Slot2_grab_batt = 162
+    tVTOL2Charger2Slot2_take_batt = 163
+    tVTOL2Charger2Slot2_remove_batt = 164
+    tVTOL2Charger2Slot2_stick_in_batt = 165
+    tVTOL2Charger2Slot2_put_batt = 166
+    tVTOL2Charger2Slot2_grab_in_batt = 167
+    tVTOL2Charger2Slot2_before_inject = 168
+    tVTOL2Charger2Slot2_move_batt = 169
+    tVTOL2Charger2Slot2_move_end_point_batt = 170
+    tVTOL2Charger2Slot2_after_sticking_batt = 171
 
 
 class RobotRoutes(enum.Enum):

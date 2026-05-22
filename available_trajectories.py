@@ -119,10 +119,7 @@ available_trajectories = {
     ],
     "pCharger": [
         "tCharger_To_HomePosition",
-        "tCharger_To_VTOL2Charger1",
-        "tCharger_To_VTOL2Charger2",
         "tCharger_To_Helicopter2Charger1",
-        "tCharger_To_Helicopter2Charger1Mid",
     ],
     "pHelicopter2Charger1": [
         "tHelicopter2Charger1_To_Charger",
@@ -130,7 +127,6 @@ available_trajectories = {
         "tHelicopter2Charger1_To_Helicopter2Charger1Slot2",
         "tHelicopter2Charger1_To_Helicopter2Charger1BeforeSlot1",
         "tHelicopter2Charger1_To_Helicopter2Charger1Buttons",
-        "tHelicopter2Charger1_To_Helicopter2Charger1Mid",
     ],
     "pHelicopter2Charger1Slot1": [
         "tHelicopter2Charger1Slot1_To_Helicopter2Charger1",
@@ -161,7 +157,6 @@ available_trajectories = {
         "tHelicopter2Charger1BeforeSlot2_To_Helicopter2Charger1Slot2",
     ],
     "pVTOL2Charger1": [
-        "tVTOL2Charger1_To_Charger",
         "tVTOL2Charger1_To_VTOL2Charger1Slot1",
         "tVTOL2Charger1_To_VTOL2Charger1Slot2",
         "tVTOL2Charger1_To_VTOL2Charger1BeforeSlot1",
@@ -196,7 +191,6 @@ available_trajectories = {
         "tVTOL2Charger1BeforeSlot2_To_VTOL2Charger1Slot2",
     ],
     "pVTOL2Charger2": [
-        "tVTOL2Charger2_To_Charger",
         "tVTOL2Charger2_To_VTOL2Charger2Slot1",
         "tVTOL2Charger2_To_VTOL2Charger2Slot2",
         "tVTOL2Charger2_To_VTOL2Charger2BeforeSlot1",
@@ -284,15 +278,9 @@ available_trajectories = {
     "pHelicopter2Charger1Slot2Button": [
         "tHelicopter2Charger1Slot2Button_To_Helicopter2Charger1Buttons",
     ],
-    "pHelicopter2Charger1Mid": [
-        "tHelicopter2Charger1Mid_To_Charger",
-        "tHelicopter2Charger1Mid_To_Helicopter2Charger1",
-        "tHelicopter2Charger1Mid_To_Helicopter2Charger1Buttons",
-    ],
     "pHelicopter2Charger1Buttons": [
         "tHelicopter2Charger1Buttons_To_Helicopter2Charger1",
         "tHelicopter2Charger1Buttons_To_Helicopter2Charger1Slot1Button",
         "tHelicopter2Charger1Buttons_To_Helicopter2Charger1Slot2Button",
-        "tHelicopter2Charger1Buttons_To_Helicopter2Charger1Mid",
     ],
 }
