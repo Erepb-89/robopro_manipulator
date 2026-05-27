@@ -99,6 +99,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pHelicopter2Battery1_pre",
+                    "motion": "joint"
+                },
+                {
                     "name": "pHelicopter2Battery1",
                     "motion": "joint"
                 }
@@ -109,6 +113,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Battery2_pre",
                     "motion": "joint"
                 },
                 {
@@ -138,6 +146,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pHelicopter2Battery1_pre",
+                    "motion": "joint"
+                },
+                {
                     "name": "pHelicopter2",
                     "motion": "joint"
                 }
@@ -148,6 +160,38 @@
             "positions": [
                 {
                     "name": "pHelicopter2Battery1",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot_pre_",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot_pre6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot_pre7",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot_pre8",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot_pre8_",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot_pre10_",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery1Slot_pre11_",
                     "motion": "joint"
                 },
                 {
@@ -203,6 +247,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pHelicopter2Battery2_pre",
+                    "motion": "joint"
+                },
+                {
                     "name": "pHelicopter2",
                     "motion": "joint"
                 }
@@ -213,6 +261,30 @@
             "positions": [
                 {
                     "name": "pHelicopter2Battery2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery2Slot_pre_",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery2Slot_pre6",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery2Slot_pre7",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery2Slot_pre8_",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery2Slot_pre9_",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2InsideBattery2Slot_pre10_",
                     "motion": "joint"
                 },
                 {
@@ -252,6 +324,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2InsideBattery2Slot",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2BeforeBattery2Slot_pre3",
                     "motion": "joint"
                 },
                 {
@@ -627,6 +703,10 @@
                     "motion": "joint"
                 },
                 {
+                    "name": "pHelicopter2Charger1BeforeSlot1_pre",
+                    "motion": "joint"
+                },
+                {
                     "name": "pHelicopter2Charger1BeforeSlot1",
                     "motion": "joint"
                 }
@@ -702,6 +782,10 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1InsideSlot2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pHelicopter2Charger1BeforeSlot2_pre",
                     "motion": "joint"
                 },
                 {
@@ -1472,12 +1556,28 @@
                 {
                     "name": "pVTOL2Charger2BeforeSlot2_taker11",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_bef_taker2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_bef_taker",
+                    "motion": "joint"
                 }
             ]
         },
         {
             "name": "tVTOL2Charger2Slot1_stick_in_batt",
             "positions": [
+                {
+                    "name": "pVTOL2_bef_taker",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_bef_taker2",
+                    "motion": "joint"
+                },
                 {
                     "name": "pVTOL2Charger2BeforeSlot2_taker11",
                     "motion": "joint"
@@ -1692,12 +1792,28 @@
                 {
                     "name": "pVTOL2Charger2BeforeSlot2_taker11",
                     "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_bef_taker2",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_bef_taker",
+                    "motion": "joint"
                 }
             ]
         },
         {
             "name": "tVTOL2Charger2Slot2_stick_in_batt",
             "positions": [
+                {
+                    "name": "pVTOL2_bef_taker",
+                    "motion": "joint"
+                },
+                {
+                    "name": "pVTOL2_bef_taker2",
+                    "motion": "joint"
+                },
                 {
                     "name": "pVTOL2Charger2BeforeSlot2_taker11",
                     "motion": "joint"
@@ -2210,6 +2326,9 @@
                     "name": "pHelicopter2Charger1BeforeSlot1"
                 },
                 {
+                    "name": "pHelicopter2Charger1BeforeSlot1_pre"
+                },
+                {
                     "name": "pHelicopter2Charger1InsideSlot1"
                 }
             ]
@@ -2230,6 +2349,9 @@
             "positions": [
                 {
                     "name": "pHelicopter2Charger1BeforeSlot2"
+                },
+                {
+                    "name": "pHelicopter2Charger1BeforeSlot2_pre"
                 },
                 {
                     "name": "pHelicopter2Charger1InsideSlot2"
@@ -2420,6 +2542,46 @@
                 },
                 {
                     "name": "pVTOL2InsideBattery2Slot"
+                }
+            ]
+        },
+        {
+            "name": "move_to_pVTOL2",
+            "positions": [
+                {
+                    "name": "pVTOL2_bef_taker"
+                },
+                {
+                    "name": "pVTOL2_bef"
+                },
+                {
+                    "name": "pVTOL2_bef5"
+                },
+                {
+                    "name": "pVTOL2_bef4"
+                },
+                {
+                    "name": "pVTOL2_bef3"
+                },
+                {
+                    "name": "pVTOL2_bef2"
+                }
+            ]
+        },
+        {
+            "name": "stick_big_batt_in_pVTOL2",
+            "positions": [
+                {
+                    "name": "pVTOL2_bef2"
+                },
+                {
+                    "name": "pVTOL2_in_batt_slot1_pre"
+                },
+                {
+                    "name": "pVTOL2_in_batt_slot1_pre2"
+                },
+                {
+                    "name": "pVTOL2_in_batt_slot1_pre3"
                 }
             ]
         }

@@ -163,6 +163,7 @@ class MainWindow(QMainWindow):
         toolbar.setFloatable(False)
 
         gripper_btn = QtWidgets.QPushButton("Гриппер")
+        gripper_btn.setCheckable(True)
         font = gripper_btn.font()
         font.setPointSize(14)
         font.setBold(True)
@@ -170,7 +171,7 @@ class MainWindow(QMainWindow):
         gripper_btn.setMinimumHeight(48)
         gripper_btn.setMinimumWidth(160)
         gripper_btn.setStyleSheet(GRIPPER_BTN_STYLE)
-        gripper_btn.clicked.connect(self.manipulator_gripper_control)
+        gripper_btn.toggled.connect(self.manipulator_gripper_control)
         toolbar.addWidget(gripper_btn)
 
         power_off_btn = QtWidgets.QPushButton("⏻  Питание ВЫКЛ")
