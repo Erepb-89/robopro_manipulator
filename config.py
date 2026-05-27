@@ -199,6 +199,16 @@ ACTIVATED_BTN_STYLE = (
 )
 
 # Кнопки верхнего тулбара
+GRIPPER_BTN_STYLE = (
+    "QPushButton {"
+    "  background-color: #626262;"
+    "  color: white;"
+    "  border-radius: 5px;"
+    "  padding: 4px 16px;"
+    "}"
+    "QPushButton:hover { background-color: #828282; }"
+    "QPushButton:pressed { background-color: #b71c1c; }"
+)
 STOP_BTN_STYLE = (
     "QPushButton {"
     "  background-color: #424242;"
@@ -216,7 +226,7 @@ POWER_OFF_BTN_STYLE = (
     "  border-radius: 5px;"
     "  padding: 4px 16px;"
     "}"
-    "QPushButton:hover { background-color: #616161; }"
+    "QPushButton:hover { background-color: #424242; }"
     "QPushButton:pressed { background-color: #212121; }"
 )
 MOVE_BTN_STYLE = (

@@ -17,7 +17,7 @@ from config import (POINTS_PATH, TRAJ_PATH, RED_COLOR,
                     STOP_BTN_STYLE, POWER_OFF_BTN_STYLE,
                     POWER_ON_ACTIVE_STYLE, POWER_OFF_ACTIVE_STYLE,
                     POWER_BTN_INACTIVE_STYLE, JOURNAL_COUNT, COMMON_BTN_STYLE,
-                    ACTIVATED_BTN_STYLE, LABEL_PADDING, GREEN_BTN_STYLE, MOVE_BTN_STYLE)
+                    ACTIVATED_BTN_STYLE, LABEL_PADDING, GREEN_BTN_STYLE, MOVE_BTN_STYLE, GRIPPER_BTN_STYLE)
 from robot_controller import RobotController
 from ui_form import Ui_Form
 from utils import atomic_write_json
@@ -162,16 +162,16 @@ class MainWindow(QMainWindow):
         toolbar.setMovable(False)
         toolbar.setFloatable(False)
 
-        stop_btn = QtWidgets.QPushButton("■  СТОП")
-        font = stop_btn.font()
+        gripper_btn = QtWidgets.QPushButton("Гриппер")
+        font = gripper_btn.font()
         font.setPointSize(14)
         font.setBold(True)
-        stop_btn.setFont(font)
-        stop_btn.setMinimumHeight(48)
-        stop_btn.setMinimumWidth(160)
-        stop_btn.setStyleSheet(STOP_BTN_STYLE)
-        stop_btn.clicked.connect(self.stop_drive)
-        toolbar.addWidget(stop_btn)
+        gripper_btn.setFont(font)
+        gripper_btn.setMinimumHeight(48)
+        gripper_btn.setMinimumWidth(160)
+        gripper_btn.setStyleSheet(GRIPPER_BTN_STYLE)
+        gripper_btn.clicked.connect(self.manipulator_gripper_control)
+        toolbar.addWidget(gripper_btn)
 
         power_off_btn = QtWidgets.QPushButton("⏻  Питание ВЫКЛ")
         power_off_btn.setFont(font)
@@ -181,7 +181,7 @@ class MainWindow(QMainWindow):
         power_off_btn.clicked.connect(self.power_off)
         toolbar.addWidget(power_off_btn)
 
-        move_to_nearest_btn = QtWidgets.QPushButton("> Двигаться к ближайшей точке")
+        move_to_nearest_btn = QtWidgets.QPushButton("> Двиг. к ближ. точке")
         font = move_to_nearest_btn.font()
         font.setPointSize(14)
         font.setBold(True)
@@ -220,6 +220,17 @@ class MainWindow(QMainWindow):
         move_to_btn.setStyleSheet(MOVE_BTN_STYLE)
         move_to_btn.clicked.connect(self.move_by_selected_trajectory)
         toolbar.addWidget(move_to_btn)
+
+        stop_btn = QtWidgets.QPushButton("■  СТОП")
+        font = stop_btn.font()
+        font.setPointSize(14)
+        font.setBold(True)
+        stop_btn.setFont(font)
+        stop_btn.setMinimumHeight(48)
+        stop_btn.setMinimumWidth(160)
+        stop_btn.setStyleSheet(STOP_BTN_STYLE)
+        stop_btn.clicked.connect(self.stop_drive)
+        toolbar.addWidget(stop_btn)
 
     def _init_status_bar(self) -> None:
         """Создаёт постоянную панель статуса робота в нижней строке окна."""

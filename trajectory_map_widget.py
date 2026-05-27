@@ -210,7 +210,7 @@ class TrajectoryMapWidget(QWidget):
     node_clicked = pyqtSignal(str)
 
     NODE_LAYOUT = {
-        "pHomePosition": (510, 750, "Home", False, True),  # Home – основная
+        "pHomePosition": (510, 750, "Home", False, False),  # Home – основная
 
         "pHelicopterModule": (220, 750, "pH", False, True),  # основная
         "pHelicopter1": (130, 700, "pH1", False, True),  # основной узел
@@ -430,8 +430,8 @@ class TrajectoryMapWidget(QWidget):
             ("Home", NODE_HOME_COLOR),
             ("Базовая точка", NODE_BASE_COLOR),
             ("Конечная точка", NODE_ENDPOINT_COLOR),
-            ("Текущая позиция", NODE_CURRENT_COLOR),
             ("Зона недоступна", NODE_BLOCKED_COLOR),
+            ("Текущая позиция", NODE_CURRENT_COLOR),
         ]:
             dot = QLabel("●")
             dot.setFont(QFont("Segoe UI", 14))
@@ -706,9 +706,9 @@ class TrajectoryMapWidget(QWidget):
     def _update_node_blocking(self, platform, vt=None, vtol=None) -> None:
         """Блокирует (серым) узлы зон, куда платформа ещё не подъехала или люк не открыт."""
         for point_name, node in self._nodes.items():
-            if point_name == "pHomePosition":
-                node.set_blocked(False)
-                continue
+            # if point_name == "pHomePosition":
+            #     node.set_blocked(False)
+            #     continue
             if point_name == self._current_point:
                 continue  # текущую позицию не трогаем
 
